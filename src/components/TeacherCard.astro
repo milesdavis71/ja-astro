@@ -1,0 +1,23 @@
+---
+import Card from './Card.astro'
+
+const { teacher, showImage = true } = Astro.props
+---
+
+<Card
+  href={`/tanar/${teacher.slug}`}
+  image={teacher.image}
+  imageAlt={teacher.name}
+  {showImage}
+  imageHeight="h-48"
+>
+  <p slot="header" class="mb-1 text-center text-sm text-gray-600">
+    {teacher.lessonTypes}
+  </p>
+  <h2 slot="title" class="mb-1 text-center text-base font-semibold">
+    {teacher.name}
+  </h2>
+  <p slot="subtitle" class="text-center text-sm text-pink-600">
+    {teacher.subject}
+  </p>
+</Card>

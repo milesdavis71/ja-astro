@@ -1,0 +1,46 @@
+---
+import '../styles/global.css'
+import global from '../data/global.yml'
+import MainContent from '../components/MainContent.astro'
+import TopBar from '../components/TopBar.astro'
+import DesktopLeftSidebar from '../components/DesktopLeftSidebar.astro'
+
+const { frontmatter } = Astro.props
+const { site } = global
+
+// This layout doesn't have the contextual right column, so TOC is never shown there.
+const showToc = false
+---
+
+<html lang="hu">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{frontmatter?.title ? `${frontmatter.title} – ${site.title}` : site.title}</title>
+    <meta name="description" content={frontmatter?.description || site.description} />
+  </head>
+
+  <body
+    class="min-h-screen bg-gray-100 text-gray-800"
+    x-data="{ sidebarOpen: false, tocOpen: false }"
+    :class="{ 'overflow-hidden': sidebarOpen || tocOpen }"
+    @keydown.window.escape="sidebarOpen = false; tocOpen = false"
+  >
+    <TopBar {showToc} />
+
+    <!-- Fő konténer - max 1440px, középre igazítva -->
+    <div class="relative mx-auto flex min-h-screen max-w-[1440px] flex-col bg-white lg:flex-row">
+      <DesktopLeftSidebar />
+
+      <MainContent {frontmatter}>
+        <slot />
+      </MainContent>
+
+      <!-- No right column in this layout -->
+    </div>
+
+    <script>
+      import '../scripts/alpine.js'
+    </script>
+  </body>
+</html>

@@ -1,0 +1,133 @@
+---
+import DefaultLayout from '../layouts/DefaultLayout.astro'
+import newsData from '../data/news.yml'
+import NewsCards from '../components/NewsCards.astro'
+import emeltSzintuErettsegi from '../assets/images/emelt-szintu-erettsegi-felkeszito-tanfolyam.jpg'
+import Tanfolyamokrol from '../components/tanfolyamokrol.mdx'
+import MiertErdemesHozzankJelentkezni from '../components/miert_erdemes_hozzank_jelentkezni.mdx'
+import FelveteliPontok from '../components/felveteli_pontok.mdx'
+import ArakFizetes from '../components/arak_fizetes.mdx'
+import Button from '../components/Button.astro'
+import Tantargyak from '../components/tantargyak.mdx'
+import TeachersGrid from '../components/TeachersGrid.astro'
+
+export const frontmatter = {
+  title: 'Emelt szintű érettségire felkészítő tanfolyamok',
+}
+
+const { news } = newsData
+// Csak az első 3 hírt jelenítjük meg
+const featuredNews = news.slice(0, 3)
+
+// Sections konfigurációja
+const sections = [
+  {
+    id: 'intro',
+    headingId: 'bevezetes',
+    title: '1. A tanfolyamokról',
+    component: Tanfolyamokrol,
+    isTeachers: false,
+  },
+  {
+    id: 'section1',
+    headingId: 'fejezet-1',
+    title: '2. Miért érdemes hozzánk jelentkezni?',
+    component: MiertErdemesHozzankJelentkezni,
+    isTeachers: false,
+  },
+  {
+    id: 'section2',
+    headingId: 'fejezet-2',
+    title: '3. Tantárgyak',
+    component: Tantargyak,
+    isTeachers: false,
+  },
+  {
+    id: 'section3',
+    headingId: 'felveteli-pontok',
+    title: '4. Felvételi pontok',
+    component: FelveteliPontok,
+    isTeachers: false,
+  },
+  {
+    id: 'section4',
+    headingId: 'tanarok',
+    title: '5. Oktatási formák, tanárok, tantárgyak',
+    component: null,
+    isTeachers: true,
+  },
+  {
+    id: 'section5',
+    headingId: 'arak-fizetes',
+    title: '6. Árak, fizetés módja',
+    component: ArakFizetes,
+    isTeachers: false,
+  },
+]
+---
+
+<!-- hello commit: egyszerű teszt módosítás az index oldalon -->
+<DefaultLayout {frontmatter}>
+  <!-- Hírek szekció -->
+  <section id="news" class="bg-gray-50 py-4">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <h2 id="hirek" class="text-center">Hírek</h2>
+
+      <NewsCards items={featuredNews} />
+    </div>
+  </section>
+
+  <section class="py-12">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 items-start gap-8 md:grid-cols-2">
+        <div>
+          <p>
+            Egyetemre készülsz? Szeretnél minél jobb felvételi eredményt elérni? Megalapoznád
+            egyetemi tanulmányaidat? Felvételi pontokat gyűjtenél?
+          </p>
+          <p>
+            Kerülj egy lépéssel közelebb az egyetemhez és jelentkezz emelt szintű érettségire
+            felkészítő tanfolyamainkra! Segítünk a továbbtanulásban!
+          </p>
+        </div>
+        <div>
+          <img
+            class="rounded-lg shadow-lg"
+            src={emeltSzintuErettsegi.src}
+            alt="Emelt szintű érettségi felkészítő tanfolyam"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="-mt-12 pb-4 text-center">
+    <p class="mt-8 mb-4 text-gray-600">Kérjük, tanulmányozd át a tanfolyam szabályzatát:</p>
+    <Button
+      link="/dokumentumok/emelt_szintu_eretts_felkeszit_tanfolyamok_szabalyzat_2025.pdf"
+      icon="lucide:file-text"
+      text="Tanfolyam Szabályzat"
+      target="_blank"
+    />
+    <hr class="mt-8 border-gray-200" />
+    <div class="mt-8 flex justify-center gap-4">
+      <Button link="#intro" text="Részletek" secondary icon="lucide:file-text" />
+      <Button link="/kapcsolat" text="Jelentkezés" />
+    </div>
+  </section>
+
+  {
+    sections.map((section) => (
+      <section id={section.id} class="py-12">
+        <h2 id={section.headingId}>{section.title}</h2>
+        {section.isTeachers ? (
+          <TeachersGrid showImage={false} />
+        ) : (
+          <div class="prose">
+            <section.component />
+          </div>
+        )}
+      </section>
+    ))
+  }
+</DefaultLayout>

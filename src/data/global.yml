@@ -1,0 +1,20 @@
+menu:
+  - id: intro
+    label: Főoldal
+    url: /
+  - id: section1
+    label: Érettségi felkészítő tanfolyamok tanárai
+    url: /erettsegi-felkeszito-tanfolyamok-tanarai
+  - id: section2
+    label: Érettségi felkészítő tanfolyamok órarendje
+    url: /erettsegi-felkeszito-tanfolyamok-orarendje
+  - id: section3
+    label: Kapcsolat
+    url: /kapcsolat
+
+site:
+  title: Érettségifelkészítő
+
+footer:
+  address: Szeged
+  email: info@example.com

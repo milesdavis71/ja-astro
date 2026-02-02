@@ -1,0 +1,66 @@
+---
+import Card from './Card.astro'
+
+type Variant = 'grid' | 'stack'
+
+interface NewsItem {
+  id: number
+  title: string
+  slug: string
+  date: string
+  excerpt: string
+  image: string
+  category: string
+}
+
+interface Props {
+  items: NewsItem[]
+  variant?: Variant
+  columns?: string
+}
+
+const { items = [], variant = 'grid', columns = 'grid-cols-1 md:grid-cols-3' }: Props = Astro.props
+
+const isStack = variant === 'stack'
+const wrapperClass = isStack ? 'flex flex-col gap-4' : `grid ${columns} gap-6`
+const imageHeight = isStack ? 'h-28' : 'h-32 sm:h-40 md:h-48'
+const excerptClass = isStack ? 'hidden' : 'text-gray-600 text-sm line-clamp-3 hidden md:block'
+const indicatorClass = isStack
+  ? 'mt-auto h-1 w-16 rounded-full bg-blue-100'
+  : 'mt-auto h-1 w-16 rounded-full bg-blue-100 md:hidden'
+---
+
+<div class={wrapperClass}>
+  {
+    items.map((item) => (
+      <Card
+        href={`/news/${item.slug}`}
+        variant={variant}
+        image={item.image}
+        imageAlt={item.title}
+        imageHeight={imageHeight}
+        excerptClass={excerptClass}
+        indicatorClass={indicatorClass}
+      >
+        <div slot="header" class="mb-2 flex items-center justify-between">
+          <time class="text-xs text-gray-500">
+            {new Date(item.date).toLocaleDateString('hu-HU', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </time>
+        </div>
+        <h3
+          slot="title"
+          class="mb-2 line-clamp-2 text-lg font-semibold text-gray-900 transition-colors duration-300 group-hover:text-[var(--link-hover-color)]"
+        >
+          {item.title}
+        </h3>
+        <p slot="description" class={excerptClass}>
+          {item.excerpt}
+        </p>
+      </Card>
+    ))
+  }
+</div>

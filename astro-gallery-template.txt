@@ -1,0 +1,299 @@
+1. Telepítés
+-----
+npm install lightgallery \
+  lightgallery/plugins/thumbnail \
+  lightgallery/plugins/zoom \
+  lightgallery/plugins/fullscreen \
+  lightgallery/plugins/autoplay
+
+  2. Astro komponens – Tailwind grid + lightGallery
+  src/components/Gallery.astro:
+------
+import 'lightgallery/css/lightgallery.css';
+import 'lightgallery/css/lg-thumbnail.css';
+import 'lightgallery/css/lg-zoom.css';
+import 'lightgallery/css/lg-fullscreen.css';
+import 'lightgallery/css/lg-autoplay.css';
+
+// Itt statikusan felsorolod a képeket
+// (statikus oldalnál ez tipikus)
+const images = [
+  {
+    src: '/images/photo-1-large.jpg',
+    thumb: '/images/photo-1-thumb.jpg',
+    alt: 'Kép 1',
+    caption: 'Leírás 1',
+  },
+  {
+    src: '/images/photo-2-large.jpg',
+    thumb: '/images/photo-2-thumb.jpg',
+    alt: 'Kép 2',
+    caption: 'Leírás 2',
+  },
+  // ...
+];
+---
+
+<div
+  id="lightgallery"
+  class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
+>
+  {images.map((img) => (
+    <a
+      href={img.src}
+      data-sub-html={img.caption}
+      class="group block"
+    >
+      <div class="aspect-[4/3] overflow-hidden rounded-lg shadow bg-gray-100">
+        <img
+          src={img.thumb ?? img.src}
+          alt={img.alt}
+          class="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
+          loading="lazy"
+        />
+      </div>
+    </a>
+  ))}
+</div>
+
+<script is:inline>
+  if (typeof window !== 'undefined') {
+    (async () => {
+      const { default: lightGallery } = await import('lightgallery');
+      const { default: lgThumbnail } = await import('lightgallery/plugins/thumbnail');
+      const { default: lgZoom } = await import('lightgallery/plugins/zoom');
+      const { default: lgFullscreen } = await import('lightgallery/plugins/fullscreen');
+      const { default: lgAutoplay } = await import('lightgallery/plugins/autoplay');
+
+      const galleryEl = document.getElementById('lightgallery');
+      if (galleryEl && !galleryEl.dataset.lgInitialized) {
+        galleryEl.dataset.lgInitialized = 'true';
+
+        lightGallery(galleryEl, {
+          plugins: [lgThumbnail, lgZoom, lgFullscreen, lgAutoplay],
+          speed: 400,
+
+          // Thumbnails sáv
+          thumbnail: true,
+          showThumbByDefault: true,
+
+          // Slideshow
+          autoplay: true,
+          pause: 4000,
+          autoplayControls: true,
+          progressBar: true,
+
+          // Fullscreen gomb
+          fullScreen: true,
+
+          // Zoom (mobilon pinch‑zoom is)
+          zoom: true,
+
+          // Mobil specifikus beállítások
+          mobileSettings: {
+            controls: true,
+            showCloseIcon: true,
+            download: false,
+          },
+        });
+      }
+    })();
+  }
+</script>
+
+Használat egy oldalon, pl. src/pages/gallery.astro:
+
+---
+import Gallery from '../components/Gallery.astro';
+---
+
+<main class="max-w-5xl mx-auto px-4 py-8">
+  <h1 class="text-2xl font-semibold mb-6">Galéria</h1>
+  <Gallery />
+</main>
+
+
+1. YAML adatfájl – albumokkal
+
+src/data/gallery.yaml:
+
+albums:
+  - slug: nature
+    title: Természet
+    description: Erdős, hegyes képek
+    images:
+      - src: /images/nature/1-large.jpg
+        thumb: /images/nature/1-thumb.jpg
+        alt: Erdei ösvény
+        caption: Erdei ösvény naplementében
+      - src: /images/nature/2-large.jpg
+        thumb: /images/nature/2-thumb.jpg
+        alt: Hegycsúcs
+        caption: Havas hegycsúcs
+
+  - slug: city
+    title: Város
+    description: Városi hangulatok
+    images:
+      - src: /images/city/1-large.jpg
+        thumb: /images/city/1-thumb.jpg
+        alt: Éjszakai utca
+        caption: Éjszakai városi fények
+      - src: /images/city/2-large.jpg
+        thumb: /images/city/2-thumb.jpg
+        alt: Híd a folyón
+        caption: Híd naplementében
+
+
+
+
+src/components/Gallery.astro:
+
+---
+import galleryData from '../data/gallery.yaml';
+
+import 'lightgallery/css/lightgallery.css';
+import 'lightgallery/css/lg-thumbnail.css';
+import 'lightgallery/css/lg-zoom.css';
+import 'lightgallery/css/lg-fullscreen.css';
+import 'lightgallery/css/lg-autoplay.css';
+
+const albums = galleryData.albums;
+---
+
+<div class="space-y-6" id="albums-root">
+  <!-- Album tabok -->
+  <div class="flex flex-wrap gap-2">
+    {albums.map((album, index) => (
+      <button
+        type="button"
+        data-album-tab={album.slug}
+        class={
+          'px-3 py-1 rounded-full text-sm border transition ' +
+          (index === 0
+            ? 'bg-gray-900 text-white border-gray-900'
+            : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100')
+        }
+      >
+        {album.title}
+      </button>
+    ))}
+  </div>
+
+  <!-- Albumok tartalma -->
+  {albums.map((album, index) => (
+    <section
+      data-album-section={album.slug}
+      class={index === 0 ? 'space-y-3' : 'space-y-3 hidden'}
+    >
+      {album.description && (
+        <p class="text-sm text-gray-600">{album.description}</p>
+      )}
+
+      <div
+        class="js-gallery grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
+      >
+        {album.images?.map((img) => (
+          <a
+            href={img.src}
+            data-sub-html={img.caption}
+            class="group block"
+          >
+            <div class="aspect-[4/3] overflow-hidden rounded-lg shadow bg-gray-100">
+              <img
+                src={img.thumb ?? img.src}
+                alt={img.alt}
+                loading="lazy"
+                class="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
+              />
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+  ))}
+</div>
+
+<script is:inline>
+  if (typeof window !== 'undefined') {
+    (async () => {
+      const { default: lightGallery } = await import('lightgallery');
+      const { default: lgThumbnail } = await import('lightgallery/plugins/thumbnail');
+      const { default: lgZoom } = await import('lightgallery/plugins/zoom');
+      const { default: lgFullscreen } = await import('lightgallery/plugins/fullscreen');
+      const { default: lgAutoplay } = await import('lightgallery/plugins/autoplay');
+
+      // Album váltás (tabs)
+      const tabs = document.querySelectorAll('[data-album-tab]');
+      const sections = document.querySelectorAll('[data-album-section]');
+
+      const setActiveAlbum = (slug) => {
+        sections.forEach((section) => {
+          section.classList.toggle(
+            'hidden',
+            section.getAttribute('data-album-section') !== slug
+          );
+        });
+
+        tabs.forEach((btn) => {
+          const isActive = btn.getAttribute('data-album-tab') === slug;
+          btn.className =
+            'px-3 py-1 rounded-full text-sm border transition ' +
+            (isActive
+              ? 'bg-gray-900 text-white border-gray-900'
+              : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100');
+        });
+      };
+
+      tabs.forEach((btn, index) => {
+        if (index === 0) {
+          setActiveAlbum(btn.getAttribute('data-album-tab'));
+        }
+        btn.addEventListener('click', () => {
+          const slug = btn.getAttribute('data-album-tab');
+          setActiveAlbum(slug);
+        });
+      });
+
+      // LightGallery inicializálása minden album gridre
+      document.querySelectorAll('.js-gallery').forEach((galleryEl) => {
+        if (!galleryEl.dataset.lgInitialized) {
+          galleryEl.dataset.lgInitialized = 'true';
+
+          lightGallery(galleryEl, {
+            plugins: [lgThumbnail, lgZoom, lgFullscreen, lgAutoplay],
+            speed: 400,
+
+            thumbnail: true,
+            showThumbByDefault: true,
+
+            autoplay: true,
+            pause: 4000,
+            autoplayControls: true,
+            progressBar: true,
+
+            fullScreen: true,
+            zoom: true,
+
+            mobileSettings: {
+              controls: true,
+              showCloseIcon: true,
+              download: false,
+            },
+          });
+        }
+      });
+    })();
+  }
+</script>
+
+src/pages/gallery.astro:
+
+---
+import Gallery from '../components/Gallery.astro';
+---
+
+<main class="max-w-5xl mx-auto px-4 py-8">
+  <h1 class="text-2xl font-semibold mb-6">Galéria</h1>
+  <Gallery />
+</main>

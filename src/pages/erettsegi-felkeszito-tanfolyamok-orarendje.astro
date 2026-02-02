@@ -1,0 +1,21 @@
+---
+export const frontmatter = {
+  title: 'Tantermi érettségi felkészítő tanfolyamok órarendje',
+  description: '',
+  sidebarNewsCount: 2,
+}
+
+import DefaultLayout from '../layouts/DefaultLayout.astro'
+import ScheduleTable from '../components/ScheduleTable.astro'
+import schedule from '../data/schedule.yml'
+---
+
+<DefaultLayout {frontmatter}>
+  <section class="py-12">
+    <h2 class="mb-4 text-2xl font-semibold">Részletek</h2>
+    <p>Ez az oldal a Junior Akadémia különböző programjait mutatja be...</p>
+  </section>
+
+  <!-- Teljes órarend táblázat tanár oszloppal -->
+  <ScheduleTable title="Teljes órarend" rows={schedule} showTeacherColumn={true} />
+</DefaultLayout>

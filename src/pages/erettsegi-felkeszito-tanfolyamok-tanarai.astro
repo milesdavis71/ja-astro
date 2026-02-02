@@ -1,0 +1,16 @@
+---
+export const frontmatter = {
+  title: 'Érettségi felkészítő tanfolyamok tanárai',
+  description: 'Az SZTE Junior Akadémia tanárainak bemutatása.',
+  sidebarNewsCount: 2,
+}
+
+import DefaultLayout from '../layouts/DefaultLayout.astro'
+import TeachersGrid from '../components/TeachersGrid.astro'
+---
+
+<DefaultLayout {frontmatter}>
+  <section class="py-12">
+    <TeachersGrid showImage={true} />
+  </section>
+</DefaultLayout>

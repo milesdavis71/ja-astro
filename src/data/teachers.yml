@@ -1,0 +1,230 @@
+- slug: 'ago-maria-katalin'
+  name: 'Ágó Mária Katalin'
+  subject: 'történelem'
+  lessonTypes: 'tantermi órák'
+  image: '../images/tanarok/ago-maria-magyar.jpg'
+  thumbnail: '../images/tanarok/ago-maria-magyar-thumb.jpg'
+  pdf: '/dokumentumok/tanar-cv/ago-maria-cv.pdf'
+  bio: |
+    Magyar-történelem szakos középiskolai tanár. A Karolina Óvoda, Általános Iskola, Gimnázium, AMI és Kollégium tanára. Rendszeresen részt vesz a történelem emelt szintű érettségijének javításában, vizsgáztatásában. Középszintű érettségi elnökséget is gyakran vállal. Az SZTE Junior Akadémia történelem emelt szintű egyik tantermi tanfolyamát 2024 őszétől tartja.
+
+- slug: 'bekei-judit'
+  name: 'Békei Judit'
+  subject: 'angol'
+  lessonTypes: 'tantermi órák'
+  image: '../images/tanarok/bekei-judit-angol.jpg'
+  thumbnail: '../images/tanarok/bekei-judit-angol-thumb.jpg'
+  pdf: '/dokumentumok/tanar-cv/bekei-judit-cv.pdf'
+  bio: |
+    Békei Judit angol szakos középiskolai tanár, az SZSZC Vasvári Pál Gazdasági és Informatikai Technikum intézményében tanít, rendszeresen részt vesz az angol tantárgy emelt szintű érettségijének értékelésében. Az SZTE Junior Akadémiához az idei tanévben csatlakozott.
+
+- slug: 'biczok-laszlo'
+  name: 'Biczók László'
+  subject: 'matematika'
+  lessonTypes: 'tantermi és online órák'
+  image: '../images/tanarok/biczok-laszlo-matematika.jpg'
+  thumbnail: '../images/tanarok/biczok-laszlo-matematika-thumb.jpg'
+  pdf: '/dokumentumok/tanar-cv/biczok-laszlo-cv-pdf'
+  bio: |
+    „Mindannyian tanulunk, cselekszünk és tanítunk.” Richard Bach tanítási mottóval, több mint 25 éves tanítási tapasztalattal rendelkező, a Junior Akadémián a kezdetek óta (5-6 éve) tanító matematika szakos középiskolai tanár. Napi tevékenységében felmerülő problémákra keresi az optimális megoldást: pl. a lemorzsolódás csökkenése, tanulók motiválása, differenciált tanulási folyamatok tervezése, sikeres érettségire való felkészítés.
+
+- slug: 'biro-zsolt'
+  name: 'Bíró Zsolt'
+  subject: 'informatika'
+  lessonTypes: 'hibrid oktatás'
+  image: '../images/tanarok/biro-zsolt-informatika.jpg'
+  thumbnail: '../images/tanarok/biro-zsolt-informatika-thumb.jpg'
+  pdf: '/dokumentumok/tanar-cv/biro-zsolt-cv.pdf'
+  bio: |
+
+- slug: 'borosne-repasi-rita'
+  name: 'Borosné Repási Rita'
+  subject: 'biológia'
+  lessonTypes: 'online órák'
+  image: '../images/tanarok/borosne-repasi-rita-biologia.jpg'
+  thumbnail: '../images/tanarok/borosne-repasi-rita-biologia-thumb.jpg'
+  pdf: '/dokumentumok/tanar-cv/borosne-repasi-rita-cv.pdf'
+  bio: |
+    Biológia–földrajz–angol szakos középiskolai tanár, aki a biológia és angol nyelv emeltszintű érettségi felkészítésben és vizsgáztatásban 15 éve aktív szerepet vállal. A miskolci Lévay József Református Gimnázium és Diákotthon pedagógusa, immár 28 éve tanít. Az online biológia tanfolyam oktatásába kapcsolódott be.
+
+- slug: 'csizmadia-peter'
+  name: 'Csizmadia Péter'
+  subject: 'angol'
+  lessonTypes: 'online órák'
+  image: '../images/tanarok/csizmadia-peter-angol.jpg'
+  thumbnail: '../images/tanarok/csizmadia-peter-angol-thumb.jpg'
+  pdf: '/dokumentumok/tanar-cv/csizmadia-peter-cv.pdf'
+  bio: |
+    Csizmadia Péter, angol nyelv és kultúra tanára, az SZTE Idegennyelvi Kommunikációs Intézet nyelvtanára. 2008. óta nyelvvizsgáztat, 2019. óta vesz részt közép és emelt szintű angol érettségi vizsgáztatásban. Az SZTE Junior Akadémia angol emelt szintű érettségi tanfolyamát 2023. óta tartja.
+
+- slug: 'doka-erzsebet'
+  name: 'Dóka Erzsébet'
+  subject: 'kémia'
+  lessonTypes: 'online órák'
+  image: '../images/tanarok/doka-erzsebet-kemia.jpg'
+  thumbnail: '../images/tanarok/doka-erzsebet-kemia-thumb.jpg'
+  pdf: '/dokumentumok/tanar-cv/doka-erzsebet-cv.pdf'
+  bio: |
+    A miskolci Lévay József Református Gimnázium és Diákotthon kémia tanára. A kémia órák megtartása mellett 2012 óta a természettudományos laboratórium vezetőjeként koordinálja annak munkáját. A kétszintű érettségi bevezetése óta részt vesz az emelt és középszintű vizsgadolgozatok javításában, az emelt kémia érettségi tantárgyi bizottságok munkájában. 2018-ban indult az első digitális eszközökkel támogatott tehetséggondozó osztály a Lévayban, ahol kémia tanárként kapcsolódott be a digitális oktatásba..
+
+- slug: 'farkas-zsuzsanna'
+  name: 'Dr. Farkas Zsuzsanna'
+  subject: 'történelem'
+  lessonTypes: 'tantermi órák'
+  image: '../images/tanarok/farkas-zsuzsa-fizika.jpg'
+  thumbnail: '../images/tanarok/farkas-zsuzsa-fizika-thumb.jpg'
+  pdf: '/dokumentumok/tanar-cv/farkas-zsuzsanna-cv.pdf'
+  bio: |
+    Kémia-fizika szakos középiskolai tanár, egyetemi pályafutása során elsősorban fizika módszertannal és fizikatanár-képzéssel, illetve tudományos ismeretterjesztéssel foglalkozik. Több mint 15 éve szervez és tart fizika felvételi előkészítő foglalkozásokat a Juhász Gyula Pedagógusképző Kar fizika tanszékén, a Junior Akadémia elindulása után ennek szervezeti keretében. A szegedi székhelyű Maxim Kiadónál megjelent Út a tudáshoz középiskolai fizikatankönyv-családnak, illetve a hozzájuk tartozó digitális kiegészítő tananyagoknak, továbbá a Tematikus fizika feladatgyűjteménynek szerzője volt. 2006 óta a JGYPK fizika tanszéke – az ő szervezésében – ad otthont a fizika emelt szintű fizika érettségi vizsgák szóbeli fordulójának, részt vesz mind az írásbeli vizsgák javítóbizottságában, mind pedig a szóbeli vizsgákon elnökként és tagként is.
+
+- slug: 'farkas-judit'
+  name: 'Farkas Judit'
+  subject: 'fizika'
+  lessonTypes: 'tantermi órák és távoktatás'
+  image: '../images/tanarok/farkas-judit-tortenelem.jpg'
+  thumbnail: '../images/tanarok/farkas-judit-tortenelem-thumb.jpg'
+  pdf: '/dokumentumok/tanar-cv/farkas-judit-cv.pdf'
+  bio: |
+    fff.
+
+- slug: 'gal-bela'
+  name: 'Gál Béla'
+  subject: 'biológia'
+  lessonTypes: 'tantermi és online órák'
+  image: '../images/tanarok/gal-bela-biologia-old.jpg'
+  thumbnail: '../images/tanarok/gal-bela-biologia-old-thumb.jpg'
+  pdf: '/dokumentumok/tanar-cv/gal-bela-cv.pdf'
+  bio: |
+    fff.
+
+- slug: 'gavran-laszlo'
+  name: 'Gavran László'
+  subject: 'biológia'
+  lessonTypes: 'online órák'
+  image: '../images/tanarok/gavran-laszlo-biologia.jpg'
+  thumbnail: '../images/tanarok/gavran-laszlo-biologia-thumb.jpg'
+  pdf: '/dokumentumok/tanar-cv/gavran-laszlo-cv.pdf'
+  bio: |
+    fff.
+
+- slug: 'kosztolanyine-erzsebet'
+  name: 'Dr. Kosztolányiné Nagy Erzsébet'
+  subject: 'matematika'
+  lessonTypes: 'tantermi órák'
+  image: '../images/tanarok/kosztolanyine-erzsebet-matematika.jpg'
+  thumbnail: '../images/tanarok/kosztolanyine-erzsebet-matematika-thumb.jpg'
+  pdf: '/dokumentumok/tanar-cv/kosztolanyine-erzsebet-cv.pdf'
+  bio: |
+    Matematika–fizika szakos középiskolai tanár, a Szegedi Radnóti Miklós Kísérleti Gimnáziumban tanít. Több alkalommal részt vett a matematika tantárgy emelt szintű érettségijének értékelésében, rendszeresen készít fel diákokat emelt szintű matematika érettségire. Az SZTE Junior Akadémia emelt szintű matematika érettségi előkészítőjét 2025-től tartja.
+
+- slug: 'laszlo-imre'
+  name: 'László Imre'
+  subject: 'biológia'
+  lessonTypes: 'online órák'
+  image: '../images/tanarok/laszlo-imre-biologia.jpg'
+  thumbnail: '../images/tanarok/laszlo-imre-biologia-thumb.jpg'
+  pdf: '/dokumentumok/tanar-cv/laszlo-imre-cv.pdf'
+  bio: |
+    fff.
+
+- slug: 'mezo-tamas'
+  name: 'Dr. Mező Tamás'
+  subject: 'fizika'
+  lessonTypes: 'tantermi órák'
+  image: '../images/tanarok/mezo-tamas-fizika.jpg'
+  thumbnail: '../images/tanarok/mezo-tamas-fizika-thumb.jpg'
+  pdf: '/dokumentumok/tanar-cv/mezo-tamas-cv.pdf'
+  bio: |
+    Dr. Mező Tamás kémia-fizika szakos középiskolai tanár. Nyugdíjba vonulásáig a Radnóti Miklós Kísérleti Gimnázium mesterpedagógus – kutatótanára. Tankönyvszerző, több országos fizikaverseny szervezőbizottsági tagja. Kezdetektől részt vett a kétszintű fizika érettségi fejlesztésében, feladatsorainak lektorálásában, az emelt szintű írásbeli megyei javításvezetője volt, a szóbeli vizsgákon rendszeresen elnökként és kérdezőtanárként is közreműködött. Több, emelt szintű érettségiztetésre felkészítő továbbképzést tartott a megyében. Már a Junior Akadémia létrejötte előtt is tanított az SZTE által szervezett emelt szintű vizsgára felkészítő tanfolyamokon.
+
+- slug: 'nemeth-veronika'
+  name: 'Németh Veronika'
+  subject: 'kémia'
+  lessonTypes: 'tantermi órák'
+  image: '../images/tanarok/user.jpg'
+  thumbnail: '../images/tanarok/user-thumb.jpg'
+  pdf: '/dokumentumok/tanar-cv/sinkovicz-andrea-cv.pdf'
+  bio: |
+    Hamarosan…
+
+- slug: 'sinkovicz-andrea'
+  name: 'Sinkovicz Andrea'
+  subject: 'magyar'
+  lessonTypes: 'online órák'
+  image: '../images/tanarok/sinkovicz-andrea.jpg'
+  thumbnail: '../images/tanarok/sinkovicz-andrea-thumb.jpg'
+  pdf: '/dokumentumok/tanar-cv/sinkovicz-andrea-cv.pdf'
+  bio: |
+    Középiskolai magyartanárként tevékenykedik az egyetem elvégzése óta. Fókusza jelenleg az IT beépítése tanulási folyamatokba. Fejleszt digitális tananyagot, tervez és vezet tréningeket módszertani területeken. Részt vett az emelt szintű vizsgáztatásban és a szakirányú tanárképzésben vezető tanárként. Emelt szintű tanfolyamot 2023 óta tart.
+
+- slug: 'sos-katalin'
+  name: 'Dr. Sós Katalin'
+  subject: 'fizika'
+  lessonTypes: 'tantermi órák'
+  image: '../images/tanarok/sos-katalin-fizika.jpg'
+  thumbnail: '../images/tanarok/sos-katalin-fizika-thumb.jpg'
+  pdf: '/dokumentumok/tanar-cv/sos-katalin-cv.pdf'
+  bio: |
+    Dr. Sós Katalin kémia–fizika szakos középiskolai tanár, az SZTE JGYPK Technika Tanszékének oktatója. Oktatási feladatköre széles: többek között a Fizika BSc-n, a Fizikus MSc-n és a fizikatanárok képzésben tart kurzusokat. Az SZTE Junior Akadémia fizika emelt szintű érettségi tanfolyamán 2019 óta vesz részt.
+
+- slug: 'szaszakne-toth-judit'
+  name: 'Szaszakné Tóth Judit'
+  subject: 'földrajz'
+  lessonTypes: 'online órák'
+  image: '../images/tanarok/szaszakne-toth-judit-foldrajz.jpg'
+  thumbnail: '../images/tanarok/szaszakne-toth-judit-foldrajz-thumb.jpg'
+  pdf: '/dokumentumok/tanar-cv/szaszakne-toth-judit-cv.pdf'
+  bio: |
+    Az SZTE Báthory István Gyakorló Gimnázium és Általános Iskolában tanít 1995 óta földrajzot magyar és francia nyelven. A gimnáziumban az emelt szintű érettségi vizsgára való felkészítést végzi fakultációs órákon a 11-12. évfolyamokon. Rendszeresen részt vesz az emelt szintű földrajz érettségi vizsgák javításában, értékelésében.
+
+- slug: 'szeplaki-laura'
+  name: 'Szeplaki Laura'
+  subject: 'biológia'
+  lessonTypes: 'tantermi órák'
+  image: '../images/tanarok/szeplaki-laura-biologia.jpg'
+  thumbnail: '../images/tanarok/szeplaki-laura-biologia-thumb.jpg'
+  pdf: '/dokumentumok/tanar-cv/szeplaki-laura-cv.pdf'
+  bio: |
+    Széplaki Laura biológia-kémia szakos középiskolai tanár, a Szegedi Deák Ferenc Gimnáziumban tanít, rendszeresen részt vesz a biológia tantárgy emelt szintű érettségi vizsgáin írásbeli javító tanárként és szóbeli vizsgáztatóként egyaránt. Az SZTE Junior Akadémia biológia emelt szintű érettségi tanfolyamát 2023. óta tartja.
+
+- slug: 'szivos-adam'
+  name: 'Szivos Adam'
+  subject: 'kémia'
+  lessonTypes: 'tantermi órák'
+  image: '../images/tanarok/szivos-adam-kemia.jpg'
+  thumbnail: '../images/tanarok/szivos-adam-kemia-thumb.jpg'
+  pdf: '/dokumentumok/tanar-cv/szivos-adam-cv.pdf'
+  bio: |
+    Biológia-kémia szakos tanár 2019 óta tanít kémiát a Szegedi Radnóti Miklós Kísérleti Gimnáziumban. Rendszeresen részt vesz diákjai emelt szintű érettségire, illetve versenyekre való felkészítésében. A Junior Akadémia munkájába 2025-ben kapcsolódott be.
+
+- slug: 'toth-karoly'
+  name: 'Tóth Károly'
+  subject: 'ccc'
+  lessonTypes: 'tantermi órák'
+  image: '../images/tanarok/toth-karoly.jpg'
+  thumbnail: '../images/tanarok/toth-karoly-thumb.jpg'
+  pdf: '/dokumentumok/tanar-cv/toth-karoly-cv.pdf'
+  bio: |
+    Matematika-fizika szakos középiskolai tanár. Az SZTE Gyakorló Gimnázium szakvezető tanára. Rendszeresen részt vesz az emelt szintű fizika érettségi írásbeli dolgozatok javításában, és a szóbeli vizsgáztatásban. Az SZTE Junior Akadémia emelt szintű fizika érettségi felkészítő tanfolyamát 2022 óta tartja.
+
+- slug: 'toth-roland'
+  name: 'Tóth Roland'
+  subject: 'biológia'
+  lessonTypes: 'online órák'
+  image: '../images/tanarok/toth-roland-biologia.jpg'
+  thumbnail: '../images/tanarok/toth-roland-biologia-thumb.jpg'
+  pdf: '/dokumentumok/tanar-cv/toth-roland-cv.pdf'
+  bio: |
+    Biológia szakos középiskolai tanár, 1999-től a Szegedi Deák Ferenc Gimnáziumban tanít, 2005 óta vesz részt a biológia emelt szintű érettségijének értékelésében és szervezésében. Az SZTE Junior Akadémia biológia emelt szintű érettségi tanfolyamát 2023 óta tartja.
+
+- slug: 'vincze-istvan'
+  name: 'Vincze István'
+  subject: 'fizika'
+  lessonTypes: 'online órák'
+  image: '../images/tanarok/vincze-istvan-fizika.jpg'
+  thumbnail: '../images/tanarok/vincze-istvan-fizika-thumb.jpg'
+  pdf: '/dokumentumok/tanar-cv/vincze-istan-cv.pdf'
+  bio: |
+    fff.
+
+    TODO: tanár képek méretezése, optimalizálása

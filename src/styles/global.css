@@ -1,0 +1,99 @@
+@import 'tailwindcss';
+
+@layer base {
+  :root {
+    --link-base-color: rgb(27, 63, 123);
+    --link-hover-color: rgb(204, 7, 123);
+    --button-base-color: rgb(27, 63, 123);
+    --button-hover-color: rgb(183, 6, 103);
+  }
+
+  /* alap szövegszín mindenre */
+  body {
+    @apply text-gray-700;
+  }
+
+  /* MINDIG zárd ki a .prose-t, ha nem akarod felülírni a plugin stílusait */
+
+  :not(.prose) h1 {
+    @apply mb-3 text-3xl font-bold text-gray-700;
+    scroll-margin-top: 80px;
+  }
+  :not(.prose) h2 {
+    @apply mb-3 text-2xl font-bold text-gray-700;
+    scroll-margin-top: 80px;
+  }
+  :not(.prose) h3 {
+    @apply mb-2 text-xl font-bold text-gray-700;
+    scroll-margin-top: 80px;
+  }
+  :not(.prose) h4 {
+    @apply mb-2 text-lg font-bold text-gray-700;
+    scroll-margin-top: 80px;
+  }
+  :not(.prose) h5 {
+    @apply mb-1 text-base font-bold text-gray-700;
+    scroll-margin-top: 80px;
+  }
+  :not(.prose) h6 {
+    @apply mb-1 text-sm font-bold text-gray-700;
+    scroll-margin-top: 80px;
+  }
+
+  :not(.prose) p {
+    @apply mb-2 text-base leading-relaxed text-gray-700;
+  }
+
+  :not(.prose) ul {
+    @apply mb-2 list-disc pl-6 text-gray-700;
+  }
+
+  :not(.prose) a {
+    color: var(--link-base-color);
+    text-decoration: none;
+  }
+
+  :not(.prose) a:not(.btn):hover {
+    color: var(--link-hover-color);
+    text-decoration: underline;
+  }
+
+  :not(.prose) a:active,
+  :not(.prose) a:visited {
+    color: var(--link-hover-color);
+  }
+
+  /* --- BUTTON STYLES --- */
+  .btn {
+    @apply inline-flex items-center gap-2 rounded-md px-6 py-3 text-base font-semibold shadow-sm transition-colors duration-150;
+    text-decoration: none !important;
+  }
+
+  .btn-primary {
+    background-color: var(--button-base-color);
+    color: white !important;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--button-hover-color);
+  }
+
+  .btn-secondary {
+    @apply bg-gray-200 text-gray-800;
+  }
+
+  .btn-secondary:hover {
+    @apply bg-gray-300;
+  }
+  /* --- END BUTTON STYLES --- */
+
+  /* Card linkek underline eltávolítása */
+  :not(.prose) .card-link:not(.btn):hover,
+  :not(.prose) .card-link a:not(.btn):hover {
+    text-decoration: none;
+  }
+}
+
+[x-cloak] {
+  display: none !important;
+}

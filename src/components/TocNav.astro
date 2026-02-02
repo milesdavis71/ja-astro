@@ -1,0 +1,67 @@
+---
+const { variant = 'desktop' } = Astro.props
+const baseClasses = 'flex flex-col'
+const isMobile = variant === 'mobile'
+const containerClass = isMobile ? `${baseClasses} px-4 py-2 gap-4` : `${baseClasses} h-full px-6`
+const listClass = isMobile
+  ? 'list-none pl-0 space-y-2 text-base'
+  : 'list-none pl-0 space-y-2 text-sm'
+---
+
+<div x-data="tocNav" class={containerClass}>
+  <h2 class={`text-lg font-semibold mb-4 ${isMobile ? 'px-1' : ''}`}>Tartalomjegyzék</h2>
+  <nav>
+    <ul class={listClass}>
+      <template x-for="link in headings" :key="link.id">
+        <li>
+          <a
+            :href="'#' + link.id"
+            :class="activeId === link.id ? 'block pl-3 border-l-4 font-semibold transition no-underline' : 'block pl-3 border-l-4 border-transparent text-gray-700 hover:text-blue-600 hover:border-blue-200 transition no-underline'"
+            :style="activeId === link.id ? { color: 'var(--link-base-color)', borderColor: 'var(--link-base-color)' } : {}"
+            x-text="link.label"></a>
+        </li>
+      </template>
+    </ul>
+  </nav>
+</div>
+
+<script>
+  document.addEventListener('alpine:init', () => {
+    Alpine.data('tocNav', () => ({
+      activeId: '',
+      headings: [] as Array<{ id: string; label: string }>,
+      init() {
+        // Collect headings from main content
+        const headingElements = document.querySelectorAll(
+          'main h1[id], main h2[id], main h3[id], main h4[id], main h5[id], main h6[id]'
+        )
+        this.headings = Array.from(headingElements).map((h) => ({
+          id: h.id,
+          label: h.textContent.trim(),
+        }))
+        console.log('TocNav headings:', this.headings)
+
+        const onScroll = () => {
+          let currentId = ''
+          const topThreshold = 80
+          const headingsAboveThreshold = this.headings.filter((h) => {
+            const element = document.getElementById(h.id)
+            if (!element) return false
+            return element.getBoundingClientRect().top < topThreshold
+          })
+          if (headingsAboveThreshold.length > 0) {
+            currentId = headingsAboveThreshold[headingsAboveThreshold.length - 1].id
+          }
+          if (this.activeId !== currentId) {
+            this.activeId = currentId
+            console.log('Active section changed to:', currentId)
+          }
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true })
+        window.addEventListener('hashchange', onScroll)
+        onScroll()
+      },
+    }))
+  })
+</script>

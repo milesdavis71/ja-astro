@@ -1,0 +1,20 @@
+---
+export const frontmatter = {
+  title: 'Rólunk',
+  description: 'Ismerd meg az SZTE Junior Akadémia céljait és csapatát.',
+  sidebarNewsCount: 2,
+}
+
+import DefaultLayout from '../layouts/DefaultLayout.astro'
+---
+
+<DefaultLayout {frontmatter}>
+  <section class="py-12">
+    <h1 class="mb-4 text-3xl font-bold">Rólunk</h1>
+    <p class="max-w-3xl text-lg text-gray-700">
+      Az SZTE Junior Akadémia azért dolgozik, hogy a középiskolások és a felsőoktatás világát
+      közelebb hozza egymáshoz. Programjaink célja, hogy inspiráló környezetben, gyakorlatorientált
+      módon támogassuk a diákokat a továbbtanulási döntéseikben.
+    </p>
+  </section>
+</DefaultLayout>

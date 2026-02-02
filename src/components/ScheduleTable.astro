@@ -1,0 +1,88 @@
+---
+const { title, rows, showTeacherColumn = false } = Astro.props
+
+// Oszlop-definíciók – dinamikusan épül fel a tanár oszlop alapján
+const teacherColumn = { key: 'teacherName', label: 'Tanár', isTeacherLink: true }
+
+const baseColumns = [
+  { key: 'lessonTypes', label: 'Oktatási forma' },
+  { key: 'subject', label: 'Tantárgy' },
+  { key: 'day', label: 'Nap' },
+  { key: 'group', label: 'Csoport' },
+  { key: 'time', label: 'Időpont' },
+  { key: 'institution', label: 'Intézmény' },
+  { key: 'room', label: 'Terem' },
+  { key: 'location', label: 'Helyszín' },
+]
+
+// Ha showTeacherColumn true, akkor a tanár oszlopot az elejére tesszük
+const columns = showTeacherColumn ? [teacherColumn, ...baseColumns] : baseColumns
+
+const rowsJson = JSON.stringify(rows)
+const columnsJson = JSON.stringify(columns)
+---
+
+<section class="mb-10">
+  {title && <h2 class="mb-3 text-xl font-bold">{title}</h2>}
+
+  <div
+    x-data={`{
+      rows: ${rowsJson},
+      columns: ${columnsJson},
+      sortKey: '${showTeacherColumn ? 'teacherName' : 'lessonTypes'}',
+      sortAsc: true,
+      sortBy(key) {
+        if (this.sortKey === key) {
+          this.sortAsc = !this.sortAsc;
+        } else {
+          this.sortKey = key;
+          this.sortAsc = true;
+        }
+      },
+      get sortedRows() {
+        return [...this.rows].sort((a, b) => {
+          const va = (a[this.sortKey] || '').toString().toLowerCase();
+          const vb = (b[this.sortKey] || '').toString().toLowerCase();
+          if (va < vb) return this.sortAsc ? -1 : 1;
+          if (va > vb) return this.sortAsc ? 1 : -1;
+          return 0;
+        });
+      }
+    }`}
+    class="overflow-x-auto rounded-lg bg-white shadow"
+  >
+    <table class="min-w-full text-sm">
+      <thead class="bg-gray-100">
+        <tr>
+          <template x-for="col in columns" :key="col.key">
+            <th
+              class="cursor-pointer px-4 py-2 text-left whitespace-nowrap"
+              @click="sortBy(col.key)"
+              x-text="col.label"></th>
+          </template>
+        </tr>
+      </thead>
+      <tbody>
+        <template x-for="(row, idx) in sortedRows" :key="idx">
+          <tr class="border-t">
+            <template x-for="col in columns" :key="col.key">
+              <td class="px-4 py-2 whitespace-nowrap">
+                <!-- Ha ez a tanár oszlop, linkeljük -->
+                <template x-if="col.isTeacherLink">
+                  <a
+                    :href="`/tanar/${row.teacherSlug}`"
+                    class="text-blue-600 hover:text-blue-800 hover:underline"
+                    x-text="row[col.key]"></a>
+                </template>
+                <!-- Egyébként sima szöveg -->
+                <template x-if="!col.isTeacherLink">
+                  <span x-text="row[col.key]"></span>
+                </template>
+              </td>
+            </template>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+  </div>
+</section>

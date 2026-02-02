@@ -1,0 +1,27 @@
+---
+import { Icon } from 'astro-icon/components'
+
+// src/components/Button.astro
+export interface Props {
+  text: string
+  link: string
+  target?: '_blank' | '_self' | '_parent' | '_top'
+  secondary?: boolean
+  icon?: string // Icon name, e.g., "lucide:file-pdf"
+}
+
+// Alapértelmezetten primary (rózsaszín), secondary prop-pal lehet szürkét kérni
+const { text, link, target = '_self', secondary = false, icon } = Astro.props
+
+const buttonClasses = secondary ? 'btn btn-secondary' : 'btn btn-primary'
+---
+
+<a
+  href={link}
+  class={buttonClasses}
+  {target}
+  rel={target === '_blank' ? 'noopener noreferrer' : undefined}
+>
+  {icon && <Icon name={icon} />}
+  {text}
+</a>

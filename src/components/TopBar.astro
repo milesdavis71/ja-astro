@@ -1,0 +1,72 @@
+---
+// src/components/TopBar.astro
+import global from "../data/global.yml";
+
+const { site } = global;
+const { showToc } = Astro.props;
+---
+
+<header class="sticky top-0 z-40 w-full flex-none bg-white border-b border-gray-200 shadow-sm">
+  <div class="max-w-[1440px] mx-auto">
+    <div class="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
+      <!-- Desktop nézet -->
+<div class="hidden lg:flex items-center gap-4">
+  <a href="/" class="flex items-center gap-2">
+    <img
+      src="../images/ja-erettsegi-felkeszito-logo.svg"
+      alt="Logó"
+      class=""
+    />
+    <span class="text-xl font-semibold text-gray-900">{site.title}</span>
+  </a>
+</div>
+      <div class="hidden lg:flex items-center">
+        <div class="relative">
+          <input
+            type="search"
+            placeholder="Keresés..."
+            class="block w-full rounded-md border-0 py-1.5 pl-10 pr-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
+          />
+          <div class="absolute inset-y-0 left-0 flex items-center pl-3">
+            <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobil nézet -->
+      <div class="lg:hidden flex items-center justify-between w-full">
+        <button
+          type="button"
+          class="inline-flex items-center gap-2 rounded-md border border-gray-300 px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+          aria-controls="mobile-menu"
+          :aria-expanded="sidebarOpen"
+          @click="sidebarOpen = true; tocOpen = false"
+        >
+          <svg class="h-5 w-5 text-gray-800" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+          <span>Menü</span>
+        </button>
+        <div class="text-base font-semibold text-gray-900 text-center flex-1 mx-3 truncate">{site.title}</div>
+        {showToc ? (
+          <button
+            type="button"
+            class="inline-flex items-center gap-2 rounded-md border border-gray-300 px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+            aria-controls="mobile-toc"
+            :aria-expanded="tocOpen"
+            @click="tocOpen = true; sidebarOpen = false"
+          >
+            <svg class="h-5 w-5 text-gray-800" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 7h14M5 12h9M5 17h6" />
+            </svg>
+            <span>Tartalom</span>
+          </button>
+        ) : (
+          <div class="w-[101px]"></div> <!-- Placeholder to balance the layout -->
+        )}
+      </div>
+    </div>
+  </div>
+</header>

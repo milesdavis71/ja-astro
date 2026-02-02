@@ -1,0 +1,23 @@
+---
+import MarkdownLayout from '../../layouts/MarkdownLayout.astro'
+
+export async function getStaticPaths() {
+  const posts = await Astro.glob('./*.md')
+
+  return posts.map((post) => {
+    // A fájl elérési útjából (pl. "./elso-minta-hir.md") nyerjük ki a slug-ot.
+    const slug = post.file.split('/').pop().replace('.md', '')
+
+    return {
+      params: { slug: slug },
+      props: post,
+    }
+  })
+}
+
+const { Content, frontmatter } = Astro.props
+---
+
+<MarkdownLayout {frontmatter}>
+  <Content />
+</MarkdownLayout>

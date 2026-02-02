@@ -1,0 +1,50 @@
+---
+const { menu, customClass = "" } = Astro.props;
+const currentPath = Astro.url.pathname;
+
+/**
+ * Megvizsgálja, hogy egy adott menüpont linkje aktív-e az aktuális URL alapján.
+ * Kezeli a trailing slash-eket és az aloldalakat is.
+ * @param {string} itemUrl - A menüpont URL-je a `global.yml`-ből.
+ * @returns {boolean} - Igaz, ha a link aktív, egyébként hamis.
+ */
+function isLinkActive(itemUrl) {
+  // Normalizáljuk az URL-eket a trailing slash eltávolításával.
+  const normalizedItemUrl = itemUrl.replace(/\/$/, "");
+  const normalizedCurrentPath = currentPath.replace(/\/$/, "");
+
+  // A főoldal (itemUrl === "" a normalizálás után) csak akkor aktív, ha az aktuális útvonal is az.
+  if (normalizedItemUrl === "") {
+    return normalizedCurrentPath === "";
+  }
+
+  // Akkor aktív a link, ha az URL pontosan egyezik, vagy ha az aktuális URL
+  // a menüpont URL-jével kezdődik (aloldalak esete).
+  return normalizedCurrentPath === normalizedItemUrl || normalizedCurrentPath.startsWith(normalizedItemUrl + "/");
+}
+---
+
+<nav class={`p-4 ${customClass}`} aria-label="Fő navigáció">
+  <ul class="space-y-1 list-none pl-0">
+    {
+      menu.map((item: any) => {
+        const isActive = isLinkActive(item.url);
+        return (
+          <li>
+            <a
+              href={item.url}
+              class={`block px-4 py-2 rounded-md transition-colors duration-150 no-underline ${
+                isActive
+                  ? "bg-blue-100 font-semibold"
+                  : "text-gray-700 hover:text-blue-600 hover:bg-gray-50"
+              }`}
+              style={isActive ? "color: var(--link-base-color);" : ""}
+            >
+              {item.label}
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+</nav>

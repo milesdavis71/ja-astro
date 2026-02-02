@@ -1,0 +1,12 @@
+---
+import TeacherCard from './TeacherCard.astro'
+import teachersData from '../data/teachers.yml'
+const { showImage = true } = Astro.props
+const teachers = teachersData
+---
+
+<section>
+  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    {teachers.map((name) => <TeacherCard teacher={name} {showImage} />)}
+  </div>
+</section>

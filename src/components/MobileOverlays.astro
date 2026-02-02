@@ -1,0 +1,80 @@
+---
+// src/components/MobileOverlays.astro
+import NavigationMenu from "../components/NavigationMenu.astro";
+import TocNav from "../components/TocNav.astro";
+import global from "../data/global.yml";
+
+const { menu } = global;
+const { showToc } = Astro.props;
+---
+
+<!-- Mobil átfedések -->
+<div
+  class="lg:hidden fixed inset-0 bg-slate-900/40 z-40"
+  x-show="sidebarOpen || tocOpen"
+  x-transition.opacity
+  x-cloak
+  @click="sidebarOpen = false; tocOpen = false"
+></div>
+
+<section
+  id="mobile-menu"
+  class="lg:hidden fixed inset-y-0 left-0 z-50 w-72 max-w-[85%] bg-white shadow-xl transform"
+  x-show="sidebarOpen"
+  x-transition:enter="transition ease-out duration-300"
+  x-transition:enter-start="-translate-x-full"
+  x-transition:enter-end="translate-x-0"
+  x-transition:leave="transition ease-in duration-200"
+  x-transition:leave-start="translate-x-0"
+  x-transition:leave-end="-translate-x-full"
+  x-cloak
+  role="dialog"
+  aria-modal="true"
+  aria-label="Mobil menü"
+>
+  <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200">
+    <p class="text-base font-semibold text-gray-900">Navigáció</p>
+    <button
+      type="button"
+      class="text-sm font-medium text-gray-600 hover:text-gray-900"
+      @click="sidebarOpen = false"
+    >
+      Bezár
+    </button>
+  </div>
+  <div class="h-full overflow-y-auto" @click="$event.target.closest('a') && (sidebarOpen = false)">
+    <NavigationMenu menu={menu} customClass="text-base" />
+  </div>
+</section>
+
+{showToc && (
+  <section
+    id="mobile-toc"
+    class="lg:hidden fixed inset-x-0 bottom-0 z-50 max-h-[80vh] bg-white shadow-2xl rounded-t-2xl transform"
+    x-show="tocOpen"
+    x-transition:enter="transition ease-out duration-300"
+    x-transition:enter-start="translate-y-full"
+    x-transition:enter-end="translate-y-0"
+    x-transition:leave="transition ease-in duration-200"
+    x-transition:leave-start="translate-y-0"
+    x-transition:leave-end="translate-y-full"
+    x-cloak
+    role="dialog"
+    aria-modal="true"
+    aria-label="Tartalomjegyzék"
+  >
+    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200">
+      <p class="text-base font-semibold text-gray-900">Tartalomjegyzék</p>
+      <button
+        type="button"
+        class="text-sm font-medium text-gray-600 hover:text-gray-900"
+        @click="tocOpen = false"
+      >
+        Bezár
+      </button>
+    </div>
+    <div class="overflow-y-auto max-h-[70vh]" @click="$event.target.closest('a') && (tocOpen = false)">
+      <TocNav variant="mobile" />
+    </div>
+  </section>
+)}

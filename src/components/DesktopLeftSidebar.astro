@@ -1,0 +1,12 @@
+---
+import NavigationMenu from "./NavigationMenu.astro";
+import global from "../data/global.yml";
+
+const { menu } = global;
+---
+
+<aside class="hidden lg:flex w-64 border-r border-gray-100 bg-white shadow-sm flex-shrink-0">
+  <div class="sticky top-0 h-screen overflow-y-auto overflow-x-hidden" style="scrollbar-width: thin; scrollbar-color: rgb(203 213 225) transparent;">
+    <NavigationMenu menu={menu} />
+  </div>
+</aside>

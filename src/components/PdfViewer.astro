@@ -1,0 +1,359 @@
+---
+export interface Props {
+  pdfUrl?: string
+  debug?: boolean
+}
+
+// dev módban alapból kapcsoljuk be a debugot, hogy könnyebb legyen diagnosztizálni
+// (prod-ban továbbra is alapból kikapcsolt)
+const { pdfUrl, debug = import.meta.env.DEV } = Astro.props
+---
+
+<div
+  class="container mx-auto px-4 py-6"
+  x-data={`pdfViewer(${JSON.stringify(pdfUrl)}, ${debug})`}
+  x-init="init()"
+>
+  <!-- Fejléc vezérlőkkel -->
+  <div class="mb-4 rounded-lg bg-gray-50 p-4 shadow-sm">
+    <div class="flex flex-wrap items-center justify-between gap-4">
+      <!-- Navigációs gombok (csak több oldal esetén) -->
+      <div class="flex items-center gap-2" x-show="pageCount > 1">
+        <button
+          @click="prevPage()"
+          :disabled="pageNum <= 1"
+          class="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-400"
+        >
+          ◀ Előző
+        </button>
+        <button
+          @click="nextPage()"
+          :disabled="pageNum >= pageCount"
+          class="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-400"
+        >
+          Következő ▶
+        </button>
+      </div>
+
+      <!-- Zoom vezérlők -->
+      <div class="flex items-center gap-2">
+        <button
+          @click="zoomOut()"
+          class="rounded bg-gray-200 px-4 py-2 hover:bg-gray-300"
+          title="Kicsinyítés"
+        >
+          −
+        </button>
+        <button
+          @click="zoomIn()"
+          class="rounded bg-gray-200 px-4 py-2 hover:bg-gray-300"
+          title="Nagyítás"
+        >
+          +
+        </button>
+        <button @click="fitToPage()" class="rounded bg-gray-200 px-4 py-2 hover:bg-gray-300">
+          Laphoz igazít
+        </button>
+      </div>
+
+      <!-- Oldal információ -->
+      <div class="flex items-center gap-2">
+        <span class="text-sm font-medium text-gray-700">
+          Oldal: <span x-text="pageNum">1</span> / <span x-text="pageCount">?</span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PDF viewer konténer -->
+  <div
+    class="relative overflow-hidden rounded-lg bg-gray-100 shadow"
+    :style="`height: calc(100vh - 180px);`"
+  >
+    <canvas
+      x-ref="pdfCanvas"
+      class="mx-auto block"
+      :style="`transform-origin: top center; transition: transform 0.2s ease;`"></canvas>
+
+    <!-- Betöltés indikátor -->
+    <div
+      x-show="loading"
+      class="bg-opacity-80 absolute inset-0 flex items-center justify-center bg-white"
+    >
+      <div class="text-center">
+        <div
+          class="mb-2 h-8 w-8 animate-spin rounded-full border-4 border-blue-600 border-t-transparent"
+        >
+        </div>
+        <p class="text-gray-700">PDF betöltése...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hibaüzenet -->
+  <div
+    x-show="error"
+    class="mt-4 rounded-lg border border-red-300 bg-red-50 p-4 text-red-800"
+    x-text="error"
+  >
+  </div>
+
+  <!-- Debug információk (opcionális) -->
+  <!-- <template x-if="debug">
+    <div class="mt-4 rounded-lg border border-gray-300 bg-gray-50 p-4 text-sm">
+      <h3 class="font-bold">Debug információk</h3>
+      <div>PDF URL: <span x-text="pdfUrl"></span></div>
+      <div>Oldalak száma: <span x-text="pageCount"></span></div>
+      <div>Canvas szélesség: <span x-text="canvasWidth"></span></div>
+      <div>Canvas magasság: <span x-text="canvasHeight"></span></div>
+      <div>Viewer szélesség: <span x-text="viewerWidth"></span></div>
+      <div>Hiba: <span x-text="error || 'nincs'"></span></div>
+    </div>
+  </template>
+</div> -->
+
+  <!-- PDF.js CDN -->
+  <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"
+  ></script>
+
+  <script is:inline>
+    // PDF.js worker beállítása
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'
+
+    // Globális függvény az Alpine számára
+    window.pdfViewer = function (pdfUrl, debug = false) {
+      // FONTOS: Alpine a state-et Proxy-zza. A PDF.js belső objektumai private field-eket használnak,
+      // ami Proxy-n keresztül elhasalhat ("Cannot read private member #...").
+      // Ezért a pdfDoc-ot (és egyéb PDF.js objektumokat) closure-ben tartjuk, nem az Alpine state-ben.
+      let pdfDoc = null
+      let resizeHandler = null
+      let currentRenderTask = null
+      let initPromise = null
+      let loadPromise = null
+
+      return {
+        pdfUrl: pdfUrl,
+        debug,
+        pageNum: 1,
+        pageCount: 0,
+        pageRendering: false,
+        pageNumPending: null,
+        scale: 1,
+        isFitWidth: true,
+        loading: false,
+        error: null,
+        canvas: null,
+        ctx: null,
+        viewer: null,
+        canvasWidth: 0,
+        canvasHeight: 0,
+        viewerWidth: 0,
+
+        async init() {
+          // Védelem dupla inicializálás ellen (dev/HMR vagy véletlen többszöri Alpine init esetén)
+          if (initPromise) return initPromise
+
+          initPromise = (async () => {
+            if (this.debug) console.log('PDF Viewer init, pdfUrl:', this.pdfUrl)
+
+            // x-ref alapú canvas referencia (biztosabb több példány esetén is)
+            this.canvas = this.$refs?.pdfCanvas
+            if (!this.canvas) {
+              this.error = 'Canvas elem nem található.'
+              console.error('Canvas elem nem található.')
+              return
+            }
+            this.ctx = this.canvas.getContext('2d')
+            this.viewer = this.canvas.parentElement
+            this.viewerWidth = this.viewer?.clientWidth ?? 0
+            if (this.debug) console.log('Canvas és viewer inicializálva', this.canvas, this.viewer)
+
+            if (!this.pdfUrl) {
+              this.error = 'Nem található a PDF URL.'
+              console.error('Nem található a PDF URL.')
+              return
+            }
+
+            await this.loadPdf()
+          })()
+
+          return initPromise
+        },
+
+        async loadPdf() {
+          // ha már folyamatban van betöltés, ne indítsuk el még egyszer
+          if (loadPromise) return loadPromise
+
+          loadPromise = (async () => {
+            try {
+              if (this.debug) console.log('PDF betöltése elkezdődött:', this.pdfUrl)
+              this.loading = true
+              this.error = null
+
+              const loadingTask = pdfjsLib.getDocument(this.pdfUrl)
+              if (this.debug) console.log('Loading task létrehozva')
+              pdfDoc = await loadingTask.promise
+              if (this.debug)
+                console.log('PDF dokumentum betöltve, oldalak száma:', pdfDoc.numPages)
+              this.pageCount = pdfDoc.numPages
+
+              // Ablakméret változás figyelése
+              if (resizeHandler) window.removeEventListener('resize', resizeHandler)
+              resizeHandler = () => this.onWindowResize()
+              window.addEventListener('resize', resizeHandler)
+
+              // Első oldal renderelése
+              this.pageNum = 1
+              this.isFitWidth = true
+              this.scale = 1
+              await this.renderPage(this.pageNum)
+
+              this.loading = false
+              if (this.debug) console.log('PDF betöltése befejezve')
+            } catch (err) {
+              const message = err?.message ?? String(err)
+              console.error('Hiba a PDF betöltése közben:', message, err?.stack ?? err)
+              this.error = `Nem sikerült betölteni a PDF-et: ${message}`
+              this.loading = false
+            } finally {
+              loadPromise = null
+            }
+          })()
+
+          return loadPromise
+        },
+
+        async renderPage(num) {
+          if (this.debug) console.log(`renderPage hívás: ${num}`)
+          if (!pdfDoc || !this.canvas || !this.ctx || !this.viewer) {
+            console.error('Hiányzó komponens a renderPage-ben', {
+              pdfDoc: !!pdfDoc,
+              canvas: !!this.canvas,
+              ctx: !!this.ctx,
+              viewer: !!this.viewer,
+            })
+            return
+          }
+
+          // Ha közben új render indult (pl. resize / zoom / next), töröljük a futó render taskot.
+          // (pdf.js nem engedi ugyanarra a canvasra a párhuzamos renderelést.)
+          if (currentRenderTask) {
+            try {
+              currentRenderTask.cancel()
+            } catch {
+              // ignore
+            }
+            currentRenderTask = null
+          }
+
+          try {
+            this.pageRendering = true
+            const page = await pdfDoc.getPage(num)
+            if (this.debug) console.log('PDF oldal betöltve')
+
+            // Alap viewport scale=1-gyel
+            const unscaledViewport = page.getViewport({ scale: 1 })
+            if (this.debug)
+              console.log(
+                'Unscaled viewport:',
+                unscaledViewport.width,
+                'x',
+                unscaledViewport.height
+              )
+            let usedScale = this.scale
+
+            if (this.isFitWidth) {
+              this.viewerWidth = this.viewer.clientWidth
+              if (this.debug) console.log('Viewer szélessége:', this.viewerWidth)
+              // Biztonság: ha valamiért 0 a container szélessége (még nem layoutolt),
+              // ne számoljunk 0-s skálával, mert az PDF.js render hibát okozhat.
+              usedScale = this.viewerWidth > 0 ? this.viewerWidth / unscaledViewport.width : 1
+              this.scale = usedScale
+            }
+
+            if (!Number.isFinite(usedScale) || usedScale <= 0) {
+              usedScale = 1
+              this.scale = 1
+              this.isFitWidth = false
+            }
+            if (this.debug) console.log('Használt skála:', usedScale)
+
+            const viewport = page.getViewport({ scale: usedScale })
+            if (this.debug) console.log('Viewport mérete:', viewport.width, 'x', viewport.height)
+
+            this.canvas.width = viewport.width
+            this.canvas.height = viewport.height
+            this.canvasWidth = this.canvas.width
+            this.canvasHeight = this.canvas.height
+            if (this.debug)
+              console.log('Canvas mérete beállítva:', this.canvasWidth, 'x', this.canvasHeight)
+
+            const renderContext = {
+              canvasContext: this.ctx,
+              viewport: viewport,
+            }
+
+            if (this.debug) console.log('Renderelés megkezdése...')
+            currentRenderTask = page.render(renderContext)
+            await currentRenderTask.promise
+            currentRenderTask = null
+            if (this.debug) console.log('Renderelés kész')
+          } finally {
+            this.pageRendering = false
+          }
+
+          if (this.pageNumPending !== null) {
+            await this.renderPage(this.pageNumPending)
+            this.pageNumPending = null
+          }
+        },
+
+        queueRenderPage(num) {
+          if (this.pageRendering) {
+            this.pageNumPending = num
+          } else {
+            this.renderPage(num)
+          }
+        },
+
+        prevPage() {
+          if (this.pageNum <= 1) return
+          this.pageNum--
+          this.queueRenderPage(this.pageNum)
+        },
+
+        nextPage() {
+          if (this.pageNum >= this.pageCount) return
+          this.pageNum++
+          this.queueRenderPage(this.pageNum)
+        },
+
+        zoomIn() {
+          this.isFitWidth = false
+          this.scale *= 1.1
+          this.queueRenderPage(this.pageNum)
+        },
+
+        zoomOut() {
+          this.isFitWidth = false
+          this.scale = Math.max(0.3, this.scale / 1.1)
+          this.queueRenderPage(this.pageNum)
+        },
+
+        fitToPage() {
+          if (!pdfDoc) return
+          this.isFitWidth = true
+          this.queueRenderPage(this.pageNum)
+        },
+
+        onWindowResize() {
+          if (!pdfDoc) return
+          if (this.isFitWidth) {
+            this.queueRenderPage(this.pageNum)
+          }
+        },
+      }
+    }
+  </script>
+</div>

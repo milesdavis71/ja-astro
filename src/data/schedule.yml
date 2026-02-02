@@ -1,0 +1,736 @@
+- teacherSlug: biczok-laszlo
+  teacherName: Biczók László
+  lessonTypes: Online
+  subject: Matematika
+  day: Hétfő
+  group: A
+  time: 18:00–19:30
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: biczok-laszlo
+  teacherName: Biczók László
+  lessonTypes: Online
+  subject: Matematika
+  day: Szerda
+  group: A
+  time: 18:00–19:30
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: biczok-laszlo
+  teacherName: Biczók László
+  lessonTypes: Online
+  subject: Matematika
+  day: Kedd
+  group: B
+  time: 18:00–19:30
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: biczok-laszlo
+  teacherName: Biczók László
+  lessonTypes: Online
+  subject: Matematika
+  day: Csütörtök
+  group: B
+  time: 18:00–19:30
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: biro-zsolt
+  teacherName: Bíró Zsolt
+  lessonTypes: Hibrid
+  subject: Informatika
+  day: Kedd
+  group: '–'
+  time: 16:00–17:30
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: biro-zsolt
+  teacherName: Bíró Zsolt
+  lessonTypes: Hibrid
+  subject: Informatika
+  day: Csütörtök
+  group: '–'
+  time: 16:00–17:30
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: borosne-repasi-rita
+  teacherName: Borosné Répási Rita
+  lessonTypes: Online
+  subject: Biológia
+  day: Szombat
+  group: '–'
+  time: 09:00–12:30
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: csizmadia-peter
+  teacherName: Csizmadia Péter
+  lessonTypes: Online
+  subject: Angol
+  day: Hétfő
+  group: '–'
+  time: 17:00–18:30
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: csizmadia-peter
+  teacherName: Csizmadia Péter
+  lessonTypes: Online
+  subject: Angol
+  day: Csütörtök
+  group: '–'
+  time: 17:00–18:30
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: doka-erzsebet
+  teacherName: Dóka Erzsébet
+  lessonTypes: Online
+  subject: Kémia
+  day: Hétfő
+  group: A
+  time: 17:00–18:30
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: doka-erzsebet
+  teacherName: Dóka Erzsébet
+  lessonTypes: Online
+  subject: Kémia
+  day: Szerda
+  group: A
+  time: 17:00–18:30
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: doka-erzsebet
+  teacherName: Dóka Erzsébet
+  lessonTypes: Online
+  subject: Kémia
+  day: Kedd
+  group: B
+  time: 17:00–18:30
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: doka-erzsebet
+  teacherName: Dóka Erzsébet
+  lessonTypes: Online
+  subject: Kémia
+  day: Csütörtök
+  group: B
+  time: 18:00–19:30
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: farkas-judit
+  teacherName: Farkas Judit
+  lessonTypes: Távoktatás
+  subject: Történelem
+  day: távoktatás
+  group: ''
+  time: ''
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: gal-bela
+  teacherName: Gál Béla
+  lessonTypes: Online
+  subject: Biológia
+  day: Kedd
+  group: '–'
+  time: 18:00–19:45
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: gal-bela
+  teacherName: Gál Béla
+  lessonTypes: Online
+  subject: Biológia
+  day: Csütörtök
+  group: '–'
+  time: 18:00–19:45
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: gavran-laszlo
+  teacherName: Gavrán László
+  lessonTypes: Online
+  subject: Biológia
+  day: Szombat
+  group: A
+  time: 09:00–12:30
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: gavran-laszlo
+  teacherName: Gavrán László
+  lessonTypes: Online
+  subject: Biológia
+  day: Hétfő
+  group: B
+  time: 17:00–18:30
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: gavran-laszlo
+  teacherName: Gavrán László
+  lessonTypes: Online
+  subject: Biológia
+  day: Kedd
+  group: B
+  time: 17:00–18:30
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: laszlo-imre
+  teacherName: László Imre
+  lessonTypes: Online
+  subject: Biológia
+  day: Hétfő
+  group: A
+  time: 19:30–21:00
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: laszlo-imre
+  teacherName: László Imre
+  lessonTypes: Online
+  subject: Biológia
+  day: Péntek
+  group: A
+  time: 17:00–18:30
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: laszlo-imre
+  teacherName: László Imre
+  lessonTypes: Online
+  subject: Biológia
+  day: Kedd
+  group: B
+  time: 19:30–21:00
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: laszlo-imre
+  teacherName: László Imre
+  lessonTypes: Online
+  subject: Biológia
+  day: Csütörtök
+  group: B
+  time: 19:30–21:00
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: laszlo-imre
+  teacherName: László Imre
+  lessonTypes: Online
+  subject: Kémia
+  day: Hétfő
+  group: A
+  time: 18:00–19:30
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: laszlo-imre
+  teacherName: László Imre
+  lessonTypes: Online
+  subject: Kémia
+  day: Szerda
+  group: A
+  time: 18:00–19:30
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: laszlo-imre
+  teacherName: László Imre
+  lessonTypes: Online
+  subject: Kémia
+  day: Kedd
+  group: B
+  time: 18:00–19:30
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: laszlo-imre
+  teacherName: László Imre
+  lessonTypes: Online
+  subject: Kémia
+  day: Csütörtök
+  group: B
+  time: 18:00–19:30
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: sinkovicz-andrea
+  teacherName: Sinkovicz Andrea
+  lessonTypes: Online
+  subject: Magyar
+  day: Hétfő
+  group: '–'
+  time: 16:30–18:00
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: sinkovicz-andrea
+  teacherName: Sinkovicz Andrea
+  lessonTypes: Online
+  subject: Magyar
+  day: Szerda
+  group: '–'
+  time: 16:30–18:00
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: szaszakne-toth-judit
+  teacherName: Szaszákné Tóth Judit
+  lessonTypes: Online
+  subject: Földrajz
+  day: Hétfő
+  group: '–'
+  time: 18:00–19:30
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: szaszakne-toth-judit
+  teacherName: Szaszákné Tóth Judit
+  lessonTypes: Online
+  subject: Földrajz
+  day: Szerda
+  group: '–'
+  time: 18:00–19:30
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: toth-roland-szabolcs
+  teacherName: Tóth Roland Szabolcs
+  lessonTypes: Online
+  subject: Biológia
+  day: Kedd
+  group: A
+  time: 17:00–18:30
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: toth-roland-szabolcs
+  teacherName: Tóth Roland Szabolcs
+  lessonTypes: Online
+  subject: Biológia
+  day: Csütörtök
+  group: A
+  time: 17:00–18:30
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: toth-roland-szabolcs
+  teacherName: Tóth Roland Szabolcs
+  lessonTypes: Online
+  subject: Biológia
+  day: Szerda
+  group: B
+  time: 17:00–18:30
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: toth-roland-szabolcs
+  teacherName: Tóth Roland Szabolcs
+  lessonTypes: Online
+  subject: Biológia
+  day: Péntek
+  group: B
+  time: 17:00–18:30
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: vincze-istvan
+  teacherName: Vincze István
+  lessonTypes: Online
+  subject: Fizika
+  day: Hétfő
+  group: '–'
+  time: 17:00–18:30
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: vincze-istvan
+  teacherName: Vincze István
+  lessonTypes: Online
+  subject: Fizika
+  day: Szerda
+  group: '–'
+  time: 17:00–18:30
+  institution: ''
+  room: ''
+  location: ''
+
+- teacherSlug: ago-maria-katalin
+  teacherName: Ágó Mária
+  lessonTypes: Tantermi
+  subject: Történelem
+  day: Kedd
+  group: ''
+  time: 17:30–19:00
+  institution: '–'
+  room: '–'
+  location: '–'
+
+- teacherSlug: ago-maria-katalin
+  teacherName: Ágó Mária
+  lessonTypes: Tantermi
+  subject: Történelem
+  day: Csütörtök
+  group: ''
+  time: 17:00–18:30
+  institution: '–'
+  room: '–'
+  location: '–'
+
+- teacherSlug: bekei-judit
+  teacherName: Békei Judit
+  lessonTypes: Tantermi
+  subject: Angol
+  day: Kedd
+  group: '–'
+  time: 18:00–19:30
+  institution: '–'
+  room: '–'
+  location: '–'
+
+- teacherSlug: bekei-judit
+  teacherName: Békei Judit
+  lessonTypes: Tantermi
+  subject: Angol
+  day: Péntek
+  group: '–'
+  time: 18:00–19:30
+  institution: '–'
+  room: '–'
+  location: '–'
+
+- teacherSlug: biczok-laszlo
+  teacherName: Biczók László
+  lessonTypes: Tantermi
+  subject: Matematika
+  day: Szombat
+  group: A
+  time: 9:00–12:15
+  institution: '–'
+  room: '–'
+  location: '–'
+
+- teacherSlug: biczok-laszlo
+  teacherName: Biczók László
+  lessonTypes: Tantermi
+  subject: Matematika
+  day: Szombat
+  group: B
+  time: 12:30–15:45
+  institution: '–'
+  room: '–'
+  location: '–'
+
+- teacherSlug: biro-zsolt
+  teacherName: Bíró Zsolt
+  lessonTypes: Hibrid
+  subject: Informatika
+  day: Kedd
+  group: '–'
+  time: 16:00–17:30
+  institution: '–'
+  room: '–'
+  location: '–'
+
+- teacherSlug: biro-zsolt
+  teacherName: Bíró Zsolt
+  lessonTypes: Hibrid
+  subject: Informatika
+  day: Csütörtök
+  group: '–'
+  time: 16:00–17:30
+  institution: '–'
+  room: '–'
+  location: '–'
+
+- teacherSlug: dr-farkas-zsuzsanna
+  teacherName: Dr. Farkas Zsuzsanna
+  lessonTypes: Tantermi
+  subject: Fizika
+  day: Szombat
+  group: '–'
+  time: 09:00–12:30
+  institution: '–'
+  room: '–'
+  location: '–'
+
+- teacherSlug: dr-kosztolanyine-nagy-erzsebet
+  teacherName: Dr. Kosztolányiné Nagy Erzsébet
+  lessonTypes: Tantermi
+  subject: Matematika
+  day: Hétfő
+  group: ''
+  time: 16:30–18:00
+  institution: '–'
+  room: '–'
+  location: '–'
+
+- teacherSlug: dr-kosztolanyine-nagy-erzsebet
+  teacherName: Dr. Kosztolányiné Nagy Erzsébet
+  lessonTypes: Tantermi
+  subject: Matematika
+  day: Csütörtök
+  group: ''
+  time: 16:30–18:00
+  institution: '–'
+  room: '–'
+  location: '–'
+
+- teacherSlug: dr-mezo-tamas
+  teacherName: Dr. Mező Tamás
+  lessonTypes: Tantermi
+  subject: Fizika
+  day: Szombat
+  group: '–'
+  time: 09:00–12:30
+  institution: '–'
+  room: '–'
+  location: '–'
+
+- teacherSlug: dr-sos-katalin
+  teacherName: Dr. Sós Katalin
+  lessonTypes: Tantermi
+  subject: Fizika
+  day: Szombat
+  group: '–'
+  time: 09:00–12:30
+  institution: '–'
+  room: '–'
+  location: '–'
+
+- teacherSlug: farkas-judit
+  teacherName: Farkas Judit
+  lessonTypes: Tantermi
+  subject: Történelem
+  day: Hétfő
+  group: ''
+  time: 17:00–18:30
+  institution: '–'
+  room: '–'
+  location: '–'
+
+- teacherSlug: farkas-judit
+  teacherName: Farkas Judit
+  lessonTypes: Tantermi
+  subject: Történelem
+  day: Szerda
+  group: ''
+  time: 17:30–19:00
+  institution: '–'
+  room: '–'
+  location: '–'
+
+- teacherSlug: gal-bela
+  teacherName: Gál Béla
+  lessonTypes: Tantermi
+  subject: Biológia
+  day: Hétfő
+  group: A
+  time: 15:30–17:15
+  institution: '–'
+  room: '–'
+  location: '–'
+
+- teacherSlug: gal-bela
+  teacherName: Gál Béla
+  lessonTypes: Tantermi
+  subject: Biológia
+  day: Szerda
+  group: A
+  time: 15:30–17:15
+  institution: '–'
+  room: '–'
+  location: '–'
+
+- teacherSlug: gal-bela
+  teacherName: Gál Béla
+  lessonTypes: Tantermi
+  subject: Biológia
+  day: Hétfő
+  group: B
+  time: 17:25–19:10
+  institution: '–'
+  room: '–'
+  location: '–'
+
+- teacherSlug: gal-bela
+  teacherName: Gál Béla
+  lessonTypes: Tantermi
+  subject: Biológia
+  day: Csütörtök
+  group: B
+  time: 15:30–17:15
+  institution: '–'
+  room: '–'
+  location: '–'
+
+- teacherSlug: nemeth-veronika
+  teacherName: Németh Veronika
+  lessonTypes: Tantermi
+  subject: Kémia
+  day: Csütörtök
+  group: A
+  time: 16:30–18:00
+  institution: '–'
+  room: '–'
+  location: '–'
+
+- teacherSlug: nemeth-veronika
+  teacherName: Németh Veronika
+  lessonTypes: Tantermi
+  subject: Kémia
+  day: Péntek
+  group: A
+  time: 16:30–18:00
+  institution: '–'
+  room: '–'
+  location: '–'
+
+- teacherSlug: nemeth-veronika
+  teacherName: Németh Veronika
+  lessonTypes: Tantermi
+  subject: Kémia
+  day: Csütörtök
+  group: B
+  time: 18:15–19:45
+  institution: '–'
+  room: '–'
+  location: '–'
+
+- teacherSlug: nemeth-veronika
+  teacherName: Németh Veronika
+  lessonTypes: Tantermi
+  subject: Kémia
+  day: Péntek
+  group: B
+  time: 18:15–19:45
+  institution: '–'
+  room: '–'
+  location: '–'
+
+- teacherSlug: szeplaki-laura
+  teacherName: Széplaki Laura
+  lessonTypes: Tantermi
+  subject: Biológia
+  day: Szerda
+  group: A
+  time: 16:00–17:30
+  institution: '–'
+  room: '–'
+  location: '–'
+
+- teacherSlug: szeplaki-laura
+  teacherName: Széplaki Laura
+  lessonTypes: Tantermi
+  subject: Biológia
+  day: Csütörtök
+  group: A
+  time: 16:00–17:30
+  institution: '–'
+  room: '–'
+  location: '–'
+
+- teacherSlug: szeplaki-laura
+  teacherName: Széplaki Laura
+  lessonTypes: Tantermi
+  subject: Biológia
+  day: Szerda
+  group: B
+  time: 17:40–19:10
+  institution: '–'
+  room: '–'
+  location: '–'
+
+- teacherSlug: szeplaki-laura
+  teacherName: Széplaki Laura
+  lessonTypes: Tantermi
+  subject: Biológia
+  day: Csütörtök
+  group: B
+  time: 17:40–19:10
+  institution: '–'
+  room: '–'
+  location: '–'
+
+- teacherSlug: szivos-adam
+  teacherName: Szivós Ádám
+  lessonTypes: Tantermi
+  subject: Kémia
+  day: Hétfő
+  group: '–'
+  time: 17:00–18:30
+  institution: '–'
+  room: '–'
+  location: '–'
+
+- teacherSlug: szivos-adam
+  teacherName: Szivós Ádám
+  # lessonTypes: Tantermi
+  subject: Kémia
+  day: Szerda
+  group: '–'
+  time: 17:00–18:30
+  institution: '–'
+  room: '–'
+  location: '–'
+
+- teacherSlug: toth-karoly
+  teacherName: Tóth Károly
+  lessonTypes: Tantermi
+  subject: Fizika
+  day: Szombat
+  group: '–'
+  time: 09:00–12:30
+  institution: '–'
+  room: '–'
+  location: '–'
