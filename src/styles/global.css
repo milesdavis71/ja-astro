@@ -2,10 +2,12 @@
 
 @layer base {
   :root {
-    --link-base-color: rgb(27, 63, 123);
-    --link-hover-color: rgb(204, 7, 123);
-    --button-base-color: rgb(27, 63, 123);
-    --button-hover-color: rgb(183, 6, 103);
+    --primary-color: rgb(27, 63, 123);
+    --secondary-color: rgb(204, 7, 123);
+    --link-color: var(--primary-color);
+    --link-hover-color: var(--secondary-color);
+    --button-color: var(--primary-color);
+    --button-hover-color: var(--secondary-color);
   }
 
   /* alap szövegszín mindenre */
@@ -49,7 +51,7 @@
   }
 
   :not(.prose) a {
-    color: var(--link-base-color);
+    color: var(--link-color);
     text-decoration: none;
   }
 
@@ -70,7 +72,7 @@
   }
 
   .btn-primary {
-    background-color: var(--button-base-color);
+    background-color: var(--button-color);
     color: white !important;
   }
 
