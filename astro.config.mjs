@@ -11,5 +11,14 @@ export default defineConfig({
   integrations: [mdx(), icon()],
   vite: {
     plugins: [tailwindcss(), yaml()],
+    server: {
+      proxy: {
+        '/api': {
+          target: 'http://localhost:8080',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, ''),
+        },
+      },
+    },
   },
 })

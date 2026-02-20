@@ -1,0 +1,192 @@
+---
+import DefaultLayout from '../layouts/DefaultLayout.astro'
+
+// Az iskolák listája - tetszőlegesen bővíthető
+const schools = [
+  'Budapesti Fazekas Mihály Gyakorló Általános Iskola és Gimnázium',
+  'Szegedi Radnóti Miklós Kísérleti Gimnázium',
+  'Debreceni Ady Endre Gimnázium',
+  'Győri Kazinczy Ferenc Gimnázium',
+  'Pécsi Ciszterci Rend Nagy Lajos Gimnáziuma',
+]
+---
+
+<DefaultLayout title="Regisztráció - Junior Viadala">
+  <main class="mx-auto max-w-3xl p-6">
+    <div class="rounded-lg bg-white p-8 shadow-md">
+      <h1 class="mb-6 text-3xl font-bold text-blue-800">Jelentkezés a Junior Viadalára</h1>
+
+      <form id="registration-form" class="space-y-6">
+        <div class="space-y-2">
+          <label for="school-select" class="block font-bold">Válaszd ki az iskolád:</label>
+          <select
+            id="school-select"
+            name="school"
+            required
+            class="w-full rounded-md border-2 p-3 outline-none focus:border-blue-500"
+          >
+            <option value="">-- Válassz a listából --</option>
+            {schools.map((s) => <option value={s}>{s}</option>)}
+            <option value="none">Nincs a listában</option>
+          </select>
+        </div>
+
+        <div
+          id="school-error"
+          class="hidden border-l-4 border-red-500 bg-red-100 p-4 font-medium text-red-700"
+        >
+          Sajnos, ha nem találja az iskoláját a listában, akkor nem tud jelentkezni a Viadalra.
+        </div>
+
+        <div id="form-content" class="space-y-6">
+          <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div class="space-y-2">
+              <label class="block font-semibold">Saját email cím (belépéshez):</label>
+              <input type="email" name="email" required class="w-full rounded border p-2" />
+            </div>
+            <div class="space-y-2">
+              <label class="block font-semibold">Jelszó (későbbi szerkesztéshez):</label>
+              <input type="password" name="password" required class="w-full rounded border p-2" />
+            </div>
+          </div>
+
+          <hr class="my-6" />
+
+          <h2 class="text-xl font-bold text-gray-700">Három diáktárs adatai</h2>
+
+          <div class="grid grid-cols-1 gap-6">
+            <div class="rounded border bg-gray-50 p-4">
+              <h3 class="mb-2 font-bold text-blue-600">1. Diáktárs</h3>
+              <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
+                <input
+                  type="text"
+                  name="s1_n"
+                  placeholder="Név"
+                  required
+                  class="rounded border p-2"
+                />
+                <input
+                  type="email"
+                  name="s1_e"
+                  placeholder="Email cím"
+                  required
+                  class="rounded border p-2"
+                />
+              </div>
+            </div>
+
+            <div class="rounded border bg-gray-50 p-4">
+              <h3 class="mb-2 font-bold text-blue-600">2. Diáktárs</h3>
+              <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
+                <input
+                  type="text"
+                  name="s2_n"
+                  placeholder="Név"
+                  required
+                  class="rounded border p-2"
+                />
+                <input
+                  type="email"
+                  name="s2_e"
+                  placeholder="Email cím"
+                  required
+                  class="rounded border p-2"
+                />
+              </div>
+            </div>
+
+            <div class="rounded border bg-gray-50 p-4">
+              <h3 class="mb-2 font-bold text-blue-600">3. Diáktárs</h3>
+              <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
+                <input
+                  type="text"
+                  name="s3_n"
+                  placeholder="Név"
+                  required
+                  class="rounded border p-2"
+                />
+                <input
+                  type="email"
+                  name="s3_e"
+                  placeholder="Email cím"
+                  required
+                  class="rounded border p-2"
+                />
+              </div>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            id="submit-btn"
+            class="w-full rounded-lg bg-blue-600 py-4 text-lg font-bold text-white shadow-lg transition hover:bg-blue-700"
+          >
+            Jelentkezés beküldése
+          </button>
+        </div>
+      </form>
+
+      <div id="success-msg" class="hidden p-10 text-center">
+        <h2 class="text-2xl font-bold text-green-600">Sikeres regisztráció!</h2>
+        <p class="mt-2 text-gray-600">Most már bármikor beléphetsz az adataidat szerkeszteni.</p>
+        <a href="/szerkesztes" class="mt-4 inline-block text-blue-500 underline"
+          >Tovább a szerkesztéshez</a
+        >
+      </div>
+    </div>
+  </main>
+</DefaultLayout>
+
+<script>
+  const form = document.getElementById('registration-form') as HTMLFormElement
+  const schoolSelect = document.getElementById('school-select') as HTMLSelectElement
+  const schoolError = document.getElementById('school-error')
+  const formContent = document.getElementById('form-content')
+  const successMsg = document.getElementById('success-msg')
+
+  // Iskolaválasztó logika
+  schoolSelect?.addEventListener('change', () => {
+    if (schoolSelect.value === 'none') {
+      schoolError?.classList.remove('hidden')
+      formContent?.classList.add('hidden')
+    } else {
+      schoolError?.classList.add('hidden')
+      formContent?.classList.remove('hidden')
+    }
+  })
+
+  // Beküldés a PHP-nek
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    const btn = document.getElementById('submit-btn') as HTMLButtonElement
+    btn.disabled = true
+    btn.innerText = 'Küldés...'
+
+    const formData = new FormData(form)
+    const data = Object.fromEntries(formData)
+
+    try {
+      // Itt hívjuk a PHP-t
+      const res = await fetch('/api/handler.php?action=register_student', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      })
+
+      const result = await res.json()
+
+      if (result.success) {
+        form.classList.add('hidden')
+        successMsg?.classList.remove('hidden')
+      } else {
+        alert('Hiba: ' + result.message)
+        btn.disabled = false
+        btn.innerText = 'Jelentkezés beküldése'
+      }
+    } catch (err) {
+      alert('Szerver hiba történt. Ellenőrizd a PHP futását!')
+      btn.disabled = false
+      btn.innerText = 'Jelentkezés beküldése'
+    }
+  })
+</script>

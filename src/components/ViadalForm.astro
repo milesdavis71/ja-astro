@@ -1,0 +1,95 @@
+---
+const schools = ['Budapesti Gimnázium', 'Szegedi Technikum', 'Debreceni Akadémia']
+---
+
+<div class="mx-auto max-w-2xl rounded-lg bg-white p-6 shadow-lg">
+  <h2 class="mb-6 text-2xl font-bold">Junior Viadala Jelentkezés</h2>
+
+  <form id="main-form" class="space-y-4">
+    <select id="school-select" name="school" required class="w-full rounded border p-3">
+      <option value="">Válassza ki az iskoláját...</option>
+      {schools.map((s) => <option value={s}>{s}</option>)}
+      <option value="none">Nincs a listában</option>
+    </select>
+
+    <div id="error-msg" class="hidden rounded bg-red-100 p-4 text-red-700">
+      Sajnos, ha nem találja az iskoláját, nem tud jelentkezni a Viadalra.
+    </div>
+
+    <div id="form-content" class="space-y-4">
+      <div class="grid grid-cols-2 gap-4">
+        <input
+          type="email"
+          name="email"
+          placeholder="Saját Email (Belépéshez)"
+          required
+          class="rounded border p-2"
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Jelszó"
+          required
+          class="rounded border p-2"
+        />
+      </div>
+
+      <hr />
+      <h3 class="font-bold text-gray-700">Csapattársak adatai (3 fő)</h3>
+      <div class="space-y-2">
+        <input
+          type="text"
+          name="s1_n"
+          placeholder="1. társ neve"
+          required
+          class="w-full rounded border p-2"
+        />
+        <input
+          type="email"
+          name="s1_e"
+          placeholder="1. társ email"
+          required
+          class="w-full rounded border p-2"
+        />
+      </div>
+
+      <button
+        type="submit"
+        id="sub-btn"
+        class="w-full rounded-md bg-blue-600 py-3 font-bold text-white hover:bg-blue-700"
+      >
+        Jelentkezés beküldése
+      </button>
+    </div>
+  </form>
+</div>
+
+<script>
+  const select = document.getElementById('school-select') as HTMLSelectElement
+  const error = document.getElementById('error-msg')
+  const content = document.getElementById('form-content')
+  const btn = document.getElementById('sub-btn')
+
+  select.addEventListener('change', () => {
+    if (select.value === 'none') {
+      error.classList.remove('hidden')
+      content.classList.add('hidden')
+    } else {
+      error.classList.add('hidden')
+      content.classList.remove('hidden')
+    }
+  })
+
+  document.getElementById('main-form').addEventListener('submit', async (e) => {
+    e.preventDefault()
+    const formData = new FormData(e.target as HTMLFormElement)
+    const data = Object.fromEntries(formData)
+
+    const res = await fetch('/api/handler.php?action=register_student', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    })
+    const result = await res.json()
+    if (result.success) alert('Sikeres regisztráció!')
+  })
+</script>

@@ -1,0 +1,182 @@
+---
+import DefaultLayout from '../layouts/DefaultLayout.astro'
+---
+
+<DefaultLayout>
+  <DefaultLayout title="Adatok szerkesztése - Junior Viadala">
+    <main class="mx-auto max-w-2xl p-6">
+      <div id="login-section" class="rounded-lg bg-white p-8 shadow-md">
+        <h1 class="mb-4 text-2xl font-bold text-gray-800">Bejelentkezés szerkesztéshez</h1>
+        <p class="mb-4 text-sm text-gray-600">
+          Kérjük, adja meg a regisztrációkor használt adatait.
+        </p>
+
+        <form id="login-form" class="space-y-4">
+          <input
+            type="email"
+            id="login-email"
+            placeholder="Email cím"
+            required
+            class="w-full rounded border p-2"
+          />
+          <input
+            type="password"
+            id="login-pass"
+            placeholder="Jelszó"
+            required
+            class="w-full rounded border p-2"
+          />
+          <button
+            type="submit"
+            class="w-full rounded bg-blue-600 py-2 font-bold text-white hover:bg-blue-700"
+            >Belépés</button
+          >
+        </form>
+        <p id="login-error" class="mt-3 hidden text-sm font-bold text-red-500"></p>
+      </div>
+
+      <div id="edit-section" class="hidden rounded-lg bg-white p-8 shadow-md">
+        <h1 class="mb-4 text-2xl font-bold text-green-700">Csapattársak adatainak módosítása</h1>
+        <p class="mb-6 text-sm text-gray-600">Itt frissítheti a megadott három diáktárs adatait.</p>
+
+        <form id="edit-form" class="space-y-6">
+          <input type="hidden" id="auth-email" />
+          <input type="hidden" id="auth-pass" />
+
+          <div class="space-y-4">
+            <div class="border-l-4 border-blue-500 bg-gray-50 p-4">
+              <h3 class="mb-2 font-bold">1. Diáktárs</h3>
+              <input
+                type="text"
+                name="s1_n"
+                id="s1_n"
+                placeholder="Név"
+                required
+                class="mb-2 w-full rounded border p-2"
+              />
+              <input
+                type="email"
+                name="s1_e"
+                id="s1_e"
+                placeholder="Email"
+                required
+                class="w-full rounded border p-2"
+              />
+            </div>
+
+            <div class="border-l-4 border-blue-500 bg-gray-50 p-4">
+              <h3 class="mb-2 font-bold">2. Diáktárs</h3>
+              <input
+                type="text"
+                name="s2_n"
+                id="s2_n"
+                placeholder="Név"
+                required
+                class="mb-2 w-full rounded border p-2"
+              />
+              <input
+                type="email"
+                name="s2_e"
+                id="s2_e"
+                placeholder="Email"
+                required
+                class="w-full rounded border p-2"
+              />
+            </div>
+
+            <div class="border-l-4 border-blue-500 bg-gray-50 p-4">
+              <h3 class="mb-2 font-bold">3. Diáktárs</h3>
+              <input
+                type="text"
+                name="s3_n"
+                id="s3_n"
+                placeholder="Név"
+                required
+                class="mb-2 w-full rounded border p-2"
+              />
+              <input
+                type="email"
+                name="s3_e"
+                id="s3_e"
+                placeholder="Email"
+                required
+                class="w-full rounded border p-2"
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="w-full rounded bg-green-600 py-3 font-bold text-white transition hover:bg-green-700"
+          >
+            Módosítások mentése
+          </button>
+        </form>
+      </div>
+    </main>
+  </DefaultLayout>
+
+  <script>
+    const loginSection = document.getElementById('login-section')
+    const editSection = document.getElementById('edit-section')
+    const loginForm = document.getElementById('login-form')
+    const editForm = document.getElementById('edit-form')
+    const loginError = document.getElementById('login-error')
+
+    // BEJELENTKEZÉS KEZELÉSE
+    loginForm?.addEventListener('submit', async (e) => {
+      e.preventDefault()
+      const email = (document.getElementById('login-email') as HTMLInputElement).value
+      const password = (document.getElementById('login-pass') as HTMLInputElement).value
+
+      const res = await fetch('/api/handler.php?action=login_student', {
+        method: 'POST',
+        body: JSON.stringify({ email, password }),
+      })
+
+      const result = await res.json()
+
+      if (result.success) {
+        // Adatok betöltése az űrlapba
+        ;(document.getElementById('auth-email') as HTMLInputElement).value = email
+        ;(document.getElementById('auth-pass') as HTMLInputElement).value = password
+        ;(document.getElementById('s1_n') as HTMLInputElement).value = result.user.s1_name
+        ;(document.getElementById('s1_e') as HTMLInputElement).value = result.user.s1_email
+        ;(document.getElementById('s2_n') as HTMLInputElement).value = result.user.s2_name
+        ;(document.getElementById('s2_e') as HTMLInputElement).value = result.user.s2_email
+        ;(document.getElementById('s3_n') as HTMLInputElement).value = result.user.s3_name
+        ;(document.getElementById('s3_e') as HTMLInputElement).value = result.user.s3_email
+
+        loginSection?.classList.add('hidden')
+        editSection?.classList.remove('hidden')
+      } else {
+        loginError!.innerText = result.message
+        loginError?.classList.remove('hidden')
+      }
+    })
+
+    // MENTÉS KEZELÉSE
+    editForm?.addEventListener('submit', async (e) => {
+      e.preventDefault()
+      const formData = new FormData(editForm as HTMLFormElement)
+      const data = Object.fromEntries(formData)
+
+      // Hozzáadjuk a hitelesítő adatokat a kéréshez
+      data.email = (document.getElementById('auth-email') as HTMLInputElement).value
+      data.password = (document.getElementById('auth-pass') as HTMLInputElement).value
+
+      const res = await fetch('/api/handler.php?action=update_student', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      })
+
+      const result = await res.json()
+      if (result.success) {
+        alert('Az adatok sikeresen frissítve!')
+        window.location.reload() // Oldal frissítése a biztonság kedvéért
+      } else {
+        alert('Hiba történt: ' + result.message)
+      }
+    })
+  </script>
+</DefaultLayout>
