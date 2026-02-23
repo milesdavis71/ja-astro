@@ -8,5 +8,29 @@
     "editor.lineNumbers": "off",
     "editor.quickSuggestions": false,
     "editor.minimap.enabled": false
-  }
+  },
+  "frontMatter.data.files": [
+    {
+      "id": "news",
+      "title": "",
+      "slug": "",
+      "labelField": "name",
+      "singleEntry": false
+    },
+    {
+      "id": "news",
+      "title": "Hírek",
+      "file": "[[workspace]]/src/data/news.yml",
+      "labelField": "title",
+      "singleEntry": false
+    }
+  ]
 }
+
+
+id: 1
+    title: "Új érettségi felkészítő tanfolyam indul"
+    slug: "uj-erettsegi-felkeszito-tanfolyam-indul"
+    date: "2024-01-15"
+    excerpt: "Januárban új érettségi felkészítő tanfolyamot indítunk matematikából és magyar nyelv és irodalomból."
+    image

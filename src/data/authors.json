@@ -1,0 +1,15 @@
+[
+  {
+    "title": "Példa Szerző",
+    "email": "pelda@example.com",
+    "bio": "Ez egy példa szerző leírása",
+    "avatar": "/assets/authors/pelda.jpg",
+    "social": {
+      "twitter": "https://twitter.com/pelda",
+      "github": "https://github.com/pelda"
+    },
+    "posts": ["uj-erettsegi-felkeszito-tanfolyam-indul"],
+    "isActive": true,
+    "order": 1
+  }
+]

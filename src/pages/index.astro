@@ -1,6 +1,5 @@
 ---
 import DefaultLayout from '../layouts/DefaultLayout.astro'
-import newsData from '../data/news.yml'
 import NewsCards from '../components/NewsCards.astro'
 import emeltSzintuErettsegi from '../assets/images/emelt-szintu-erettsegi-felkeszito-tanfolyam.jpg'
 import Tanfolyamokrol from '../components/tanfolyamokrol.mdx'
@@ -15,9 +14,27 @@ export const frontmatter = {
   title: 'Főoldal',
 }
 
-const { news } = newsData
-// Csak az első 3 hírt jelenítjük meg
-const featuredNews = news.slice(0, 3)
+// Beolvassuk a components/news mappában lévő md fájlokat
+const newsPosts = await Astro.glob('../components/news/*.md')
+
+// Átalakítjuk a frontmatter adatokat a NewsCards komponens által várt formátumba
+const featuredNews = newsPosts
+  .map((post, index) => {
+    const slug = post.file?.split('/').pop()?.replace('.md', '') || `news-${index}`
+    return {
+      id: index + 1, // numerikus ID a NewsCards komponens számára
+      title: post.frontmatter?.title || 'Cím nélkül',
+      slug: slug,
+      date: post.frontmatter?.date
+        ? new Date(post.frontmatter.date).toISOString().split('T')[0]
+        : '2026-02-23',
+      excerpt: post.frontmatter?.excerpt || '',
+      image: post.frontmatter?.thumbnail || '/images/ja-logo-magenta-blue-fekvo-for-dark-bg.svg',
+      category: 'Hír',
+    }
+  })
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()) // dátum szerint csökkenő sorrend
+  .slice(0, 3) // Csak az első 3 hírt jelenítjük meg
 
 // Sections konfigurációja
 const sections = [
