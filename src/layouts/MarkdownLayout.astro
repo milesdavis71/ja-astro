@@ -1,7 +1,6 @@
 ---
 import '../styles/global.css'
 import global from '../data/global.yml'
-import newsData from '../data/news.yml'
 import MainContent from '../components/MainContent.astro'
 import TopBar from '../components/TopBar.astro'
 import DesktopLeftSidebar from '../components/DesktopLeftSidebar.astro'
@@ -9,8 +8,26 @@ import FooterSection from '../components/ContextualColumn.astro'
 
 const { frontmatter } = Astro.props
 const { site } = global
-const { news } = newsData
 const currentPath = Astro.url.pathname
+const postModules = import.meta.glob('../content/news/*.mdx', { eager: true })
+const news = Object.entries(postModules)
+  .map(([file, mod], index) => {
+    const post = mod as any
+    const rawDate = post.frontmatter?.date
+
+    return {
+      id: post.frontmatter?.id ?? index + 1,
+      title: post.frontmatter?.title || 'Cim nelkul',
+      slug: file.split('/').pop()?.replace(/\.mdx?$/, '') || `news-${index + 1}`,
+      date: rawDate ? new Date(rawDate).toISOString().split('T')[0] : '2026-03-01',
+      excerpt: post.frontmatter?.excerpt || '',
+      image: post.frontmatter?.image || '/images/ja-logo-magenta-blue-fekvo-for-dark-bg.svg',
+      category: 'Hir',
+      draft: post.frontmatter?.draft === true,
+    }
+  })
+  .filter((post) => !post.draft)
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 const isIndexPage = currentPath === '/'
 const showToc = isIndexPage
 const sidebarNewsCount = frontmatter?.sidebarNewsCount ?? (isIndexPage ? 0 : 3)

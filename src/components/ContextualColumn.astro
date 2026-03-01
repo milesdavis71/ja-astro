@@ -1,47 +1,50 @@
 ---
-import TocNav from "../components/TocNav.astro";
-import NewsCards from "../components/NewsCards.astro";
-import global from "../data/global.yml";
-import newsData from "../data/news.yml";
+import TocNav from '../components/TocNav.astro'
+import NewsCards from '../components/NewsCards.astro'
+import global from '../data/global.yml'
 
-const { footer } = global;
-const { news } = newsData;
-const { showToc, showNewsSidebar, sidebarNews } = Astro.props;
+const { footer } = global
+const { showToc, showNewsSidebar, sidebarNews } = Astro.props
 ---
 
-<!-- Jobb oldali tartalom -->
-{showToc ? (
-  <aside class="hidden lg:block w-64 border-l border-gray-100 bg-white shadow-sm flex-shrink-0">
-    <div class="sticky top-0 h-screen overflow-y-auto py-6">
-      <TocNav />
-    </div>
-  </aside>
-) : showNewsSidebar ? (
-  <aside class="hidden lg:block w-72 border-l border-gray-100 bg-white shadow-sm flex-shrink-0">
-    <div class="sticky top-0 h-screen overflow-y-auto py-6 px-5">
-      <div class="mb-4">
-        <h2 class="text-lg font-semibold text-gray-900">Friss hírek</h2>
+<!-- Jobb oldali tartalom -->{
+  showToc ? (
+    <aside class="hidden w-64 flex-shrink-0 border-l border-gray-100 bg-white shadow-sm lg:block">
+      <div class="sticky top-0 h-screen overflow-y-auto py-6">
+        <TocNav />
+      </div>
+    </aside>
+  ) : showNewsSidebar ? (
+    <aside class="hidden w-72 flex-shrink-0 border-l border-gray-100 bg-white shadow-sm lg:block">
+      <div class="sticky top-0 h-screen overflow-y-auto px-5 py-6">
+        <div class="mb-4">
+          <h2 class="text-lg font-semibold text-gray-900">Friss hírek</h2>
+          <p class="text-sm text-gray-500">Legfontosabb bejelentések</p>
+        </div>
+        <NewsCards items={sidebarNews} variant="stack" />
+      </div>
+    </aside>
+  ) : null
+}
+
+{
+  showNewsSidebar && (
+    <section class="px-4 pb-4 sm:px-6 lg:hidden">
+      <div class="mb-4 rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+        <h2 class="mb-1 text-lg font-semibold text-gray-900">Friss hírek</h2>
         <p class="text-sm text-gray-500">Legfontosabb bejelentések</p>
       </div>
-      <NewsCards items={sidebarNews} variant="stack" />
-    </div>
-  </aside>
-) : null}
-
-{showNewsSidebar && (
-  <section class="lg:hidden px-4 sm:px-6 pb-4">
-    <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-5 mb-4">
-      <h2 class="text-lg font-semibold text-gray-900 mb-1">Friss hírek</h2>
-      <p class="text-sm text-gray-500">Legfontosabb bejelentések</p>
-    </div>
-    <NewsCards items={sidebarNews} variant="grid" columns="grid-cols-1 sm:grid-cols-2" />
-  </section>
-)}
+      <NewsCards items={sidebarNews} variant="grid" columns="grid-cols-1 sm:grid-cols-2" />
+    </section>
+  )
+}
 
 <!-- Lábléc -->
-<footer class="w-full bg-gray-100 text-sm p-4 lg:hidden border-t border-gray-200">
+<footer class="w-full border-t border-gray-200 bg-gray-100 p-4 text-sm lg:hidden">
   <p>{footer.address}</p>
   <p>
-    Email: <a href={`mailto:${footer.email}`} class="text-blue-600 hover:underline">{footer.email}</a>
+    Email: <a href={`mailto:${footer.email}`} class="text-blue-600 hover:underline"
+      >{footer.email}</a
+    >
   </p>
 </footer>

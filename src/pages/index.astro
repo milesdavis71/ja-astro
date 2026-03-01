@@ -15,12 +15,15 @@ export const frontmatter = {
 }
 
 // Beolvassuk a components/news mappában lévő md fájlokat
-const newsPosts = await Astro.glob('../components/news/*.md')
+const postModules = import.meta.glob('../content/news/*.mdx', { eager: true })
+const newsPosts = Object.entries(postModules)
+  .map(([file, mod]) => ({ file, ...(mod as any) }))
+  .filter((post) => post.frontmatter?.draft !== true)
 
 // Átalakítjuk a frontmatter adatokat a NewsCards komponens által várt formátumba
 const featuredNews = newsPosts
   .map((post, index) => {
-    const slug = post.file?.split('/').pop()?.replace('.md', '') || `news-${index}`
+    const slug = post.file?.split('/').pop()?.replace(/\.mdx?$/, '') || `news-${index}`
     return {
       id: index + 1, // numerikus ID a NewsCards komponens számára
       title: post.frontmatter?.title || 'Cím nélkül',

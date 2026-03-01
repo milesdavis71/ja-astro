@@ -2,15 +2,21 @@
 import MarkdownLayout from '../../layouts/MarkdownLayout.astro'
 
 export async function getStaticPaths() {
-  const posts = await Astro.glob('./*.md')
+  const postModules = import.meta.glob('../../content/news/*.mdx', { eager: true })
+  const posts = Object.entries(postModules)
+    .map(([file, mod]) => ({ file, ...(mod as any) }))
+    .filter((post) => post.frontmatter?.draft !== true)
 
   return posts.map((post) => {
     // A fájl elérési útjából (pl. "./elso-minta-hir.md") nyerjük ki a slug-ot.
-    const slug = post.file.split('/').pop().replace('.md', '')
+    const slug = post.file.split('/').pop().replace(/\.mdx?$/, '')
 
     return {
       params: { slug: slug },
-      props: post,
+      props: {
+        frontmatter: post.frontmatter,
+        Content: post.default,
+      },
     }
   })
 }

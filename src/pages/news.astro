@@ -1,15 +1,35 @@
 ---
-import TwoColumnLayout from '../layouts/TwoColumnLayout.astro';
-import newsData from '../data/news.yml';
-import NewsCards from '../components/NewsCards.astro';
+import TwoColumnLayout from '../layouts/TwoColumnLayout.astro'
+import NewsCards from '../components/NewsCards.astro'
 
-const { news } = newsData;
+const postModules = import.meta.glob('../content/news/*.mdx', { eager: true })
+const posts = Object.entries(postModules).map(([file, mod]) => ({ file, ...(mod as any) }))
+
+const news = posts
+  .filter((post) => post.frontmatter?.draft !== true)
+  .map((post, index) => {
+    const slug = post.file?.split('/').pop()?.replace(/\.mdx?$/, '') || `news-${index + 1}`
+    const rawDate = post.frontmatter?.date
+
+    return {
+      id: post.frontmatter?.id ?? index + 1,
+      title: post.frontmatter?.title || 'Cím nélkül',
+      slug,
+      date: rawDate ? new Date(rawDate).toISOString().split('T')[0] : '2026-03-01',
+      excerpt: post.frontmatter?.excerpt || '',
+      image: post.frontmatter?.image || '/images/ja-logo-magenta-blue-fekvo-for-dark-bg.svg',
+      category: 'Hír',
+    }
+  })
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 ---
 
-<TwoColumnLayout frontmatter={{ title: 'Hírek', description: 'Böngésszen az összes hírünk között.' }}>
+<TwoColumnLayout
+  frontmatter={{ title: 'Hírek', description: 'Böngésszen az összes hírünk között.' }}
+>
   <section id="all-news" class="py-8">
     <div class="px-4 sm:px-6 lg:px-8">
-      <h1 class="text-3xl font-bold mb-6 text-center">Összes hír</h1>
+      <h1 class="mb-6 text-center text-3xl font-bold">Összes hír</h1>
       <NewsCards items={news} variant="grid" columns="grid-cols-1 md:grid-cols-2 xl:grid-cols-3" />
     </div>
   </section>

@@ -3,38 +3,33 @@
   "frontMatter.framework.id": "astro",
   "frontMatter.preview.host": "http://localhost:4321",
   "frontMatter.content.publicFolder": "public",
+  "frontMatter.content.defaultFileType": "mdx",
+  "frontMatter.content.supportedFileTypes": ["md", "mdx"],
+  "frontMatter.content.draftField": "draft",
+  "frontMatter.dashboard.content.card.fields.state": true,
   "frontMatter.content.pageFolders": [
     {
-      "title": "blog",
-      "path": "[[workspace]]/src/components/news"
+      "title": "news",
+      "path": "[[workspace]]/src/content/news",
+      "filePrefix": null
     }
   ],
   "frontMatter.taxonomy.contentTypes": [
     {
-      "name": "default",
+      "name": "news",
+      "filePrefix": null,
       "pageBundle": false,
-      "previewPath": null,
+      "fileType": "mdx",
+      "template": "[[workspace]]/.frontmatter/templates/news.mdx",
       "fields": [
         {
           "title": "Title",
           "name": "title",
-          "type": "string",
-          "maxLength": 1000
-        },
-        {
-          "title": "Full title",
-          "name": "fulltitle",
-          "type": "string",
-          "maxLength": 1000
-        },
-        {
-          "title": "Description",
-          "name": "description",
           "type": "string"
         },
         {
-          "title": "Excerpt",
-          "name": "excerpt",
+          "title": "FullTitle",
+          "name": "fulltitle",
           "type": "string"
         },
         {
@@ -45,27 +40,32 @@
           "isPublishDate": true
         },
         {
-          "title": "Thumbnail",
-          "name": "thumbnail",
-          "type": "image"
-        },
-        {
-          "title": "Is in draft",
+          "title": "Draft",
           "name": "draft",
-          "type": "draft"
+          "type": "boolean",
+          "default": false
         },
         {
-          "title": "Tags",
-          "name": "tags",
-          "type": "tags"
+          "title": "id",
+          "name": "id",
+          "type": "number"
         },
         {
-          "title": "Categories",
-          "name": "categories",
-          "type": "categories"
+          "title": "excerpt",
+          "name": "excerpt",
+          "type": "string"
+        },
+        {
+          "title": "lead",
+          "name": "lead",
+          "type": "string"
+        },
+        {
+          "title": "image",
+          "name": "image",
+          "type": "image"
         }
       ]
     }
-  ],
-  "frontMatter.git.enabled": true
+  ]
 }
