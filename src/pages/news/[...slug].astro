@@ -1,29 +1,51 @@
 ---
-import MarkdownLayout from '../../layouts/MarkdownLayout.astro'
+import { getCollection, render, type CollectionEntry } from 'astro:content'
+import DefaultLayout from '../../layouts/DefaultLayout.astro'
 
 export async function getStaticPaths() {
-  const postModules = import.meta.glob('../../content/news/*.mdx', { eager: true })
-  const posts = Object.entries(postModules)
-    .map(([file, mod]) => ({ file, ...(mod as any) }))
-    .filter((post) => post.frontmatter?.draft !== true)
-
-  return posts.map((post) => {
-    // A fájl elérési útjából (pl. "./elso-minta-hir.md") nyerjük ki a slug-ot.
-    const slug = post.file.split('/').pop().replace(/\.mdx?$/, '')
-
-    return {
-      params: { slug: slug },
-      props: {
-        frontmatter: post.frontmatter,
-        Content: post.default,
-      },
-    }
-  })
+  const news = (await getCollection('news')).filter((entry) => entry.slug !== 'hir-sablon')
+  return news.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }))
 }
 
-const { Content, frontmatter } = Astro.props
+const { entry } = Astro.props as { entry: CollectionEntry<'news'> }
+const { Content } = await render(entry)
+
+const frontmatter = {
+  // title: entry.data.title,
+  description: entry.data.excerpt,
+  sidebarNewsCount: 3,
+}
 ---
 
-<MarkdownLayout {frontmatter}>
-  <Content />
-</MarkdownLayout>
+<DefaultLayout {frontmatter}>
+  <article class="mx-auto max-w-3xl">
+    <header class="mb-6">
+      <p class="mb-1 text-xs text-gray-500">
+        {
+          new Date(entry.data.date).toLocaleDateString('hu-HU', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })
+        }
+      </p>
+      <h1 class="mb-4 text-2xl font-bold text-gray-900">{entry.data.fulltitle}</h1>
+      <!-- {
+        entry.data.category && (
+          <p class="text-sm font-medium text-pink-600">{entry.data.category}</p>
+        )
+      } -->
+    </header>
+
+    <p class="mb-6 leading-relaxed font-semibold text-gray-600">{entry.data.lead}</p>
+
+    <img src={entry.data.image} alt={entry.data.fulltitle} class="mb-8 w-full rounded-lg shadow" />
+
+    <div class="prose prose-img:rounded-lg max-w-none">
+      <Content />
+    </div>
+  </article>
+</DefaultLayout>

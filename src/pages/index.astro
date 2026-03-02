@@ -1,5 +1,5 @@
 ---
-import DefaultLayout from '../layouts/DefaultLayout.astro'
+import TwoColumnLayout from '../layouts/TwoColumnLayout.astro'
 import NewsCards from '../components/NewsCards.astro'
 import emeltSzintuErettsegi from '../assets/images/emelt-szintu-erettsegi-felkeszito-tanfolyam.jpg'
 import Tanfolyamokrol from '../components/tanfolyamokrol.mdx'
@@ -23,7 +23,11 @@ const newsPosts = Object.entries(postModules)
 // Átalakítjuk a frontmatter adatokat a NewsCards komponens által várt formátumba
 const featuredNews = newsPosts
   .map((post, index) => {
-    const slug = post.file?.split('/').pop()?.replace(/\.mdx?$/, '') || `news-${index}`
+    const slug =
+      post.file
+        ?.split('/')
+        .pop()
+        ?.replace(/\.mdx?$/, '') || `news-${index}`
     return {
       id: index + 1, // numerikus ID a NewsCards komponens számára
       title: post.frontmatter?.title || 'Cím nélkül',
@@ -87,7 +91,7 @@ const sections = [
 ---
 
 <!-- hello commit: egyszerű teszt módosítás az index oldalon -->
-<DefaultLayout {frontmatter}>
+<TwoColumnLayout {frontmatter}>
   <!-- Hírek szekció -->
   <section id="news" class="bg-gray-50 py-4">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -152,4 +156,4 @@ const sections = [
       </section>
     ))
   }
-</DefaultLayout>
+</TwoColumnLayout>
