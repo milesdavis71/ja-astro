@@ -1,0 +1,185 @@
+---
+type GalleryImage = {
+  src: string
+  thumb?: string
+  alt?: string
+}
+
+interface Props {
+  images?: GalleryImage[]
+  galleryUrl?: string
+}
+
+const { images = [], galleryUrl = '#' } = Astro.props
+const previewImages = images.slice(0, 9)
+const imageCount = images.length
+const galleryId = `news-mini-gallery-${Astro.url.pathname.replace(/[^a-zA-Z0-9]/g, '-')}`
+---
+
+{
+  previewImages.length > 0 && (
+    <section class="not-prose mt-10 border-t border-gray-200 pt-8" aria-label="Mini galéria">
+      <div class="grid grid-cols-3 gap-2 sm:gap-3">
+        {previewImages.map((image, index) => (
+          <button
+            type="button"
+            class="group relative aspect-square overflow-hidden rounded-md border border-gray-200 bg-gray-100 text-left"
+            data-gallery-thumb
+            data-gallery-index={index}
+            data-gallery-id={galleryId}
+            aria-label={`${index + 1}. kép megnyitása`}
+          >
+            <img
+              src={image.thumb ?? image.src}
+              alt={image.alt ?? `Galéria kép ${index + 1}`}
+              class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
+              loading="lazy"
+            />
+          </button>
+        ))}
+      </div>
+
+      <a
+        href={galleryUrl}
+        class="mt-5 inline-flex items-center rounded-md px-4 py-2 text-sm font-semibold text-white transition hover:brightness-110"
+        style="background-color: var(--secondary-color);"
+      >
+        Teljes galéria megnyitása ({imageCount} kép)
+      </a>
+
+      <div
+        class="fixed inset-0 z-[120] hidden items-center justify-center bg-black/85 p-3 sm:p-6"
+        data-gallery-modal
+        data-gallery-id={galleryId}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Képnézegető"
+      >
+        <button
+          type="button"
+          class="absolute right-3 top-3 rounded-full bg-white/15 p-2 text-white transition hover:bg-white/25"
+          aria-label="Bezárás"
+          data-gallery-close
+          data-gallery-id={galleryId}
+        >
+          ✕
+        </button>
+
+        <button
+          type="button"
+          class="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-white/15 px-3 py-2 text-xl text-white transition hover:bg-white/25 sm:left-5"
+          aria-label="Előző kép"
+          data-gallery-prev
+          data-gallery-id={galleryId}
+        >
+          ‹
+        </button>
+
+        <img
+          src=""
+          alt=""
+          class="max-h-[88vh] w-auto max-w-full rounded-md object-contain"
+          data-gallery-image
+          data-gallery-id={galleryId}
+        />
+
+        <button
+          type="button"
+          class="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-white/15 px-3 py-2 text-xl text-white transition hover:bg-white/25 sm:right-5"
+          aria-label="Következő kép"
+          data-gallery-next
+          data-gallery-id={galleryId}
+        >
+          ›
+        </button>
+      </div>
+
+      <script
+        is:inline
+        define:vars={{
+          galleryId,
+          images: previewImages,
+        }}
+      >
+        (() => {
+          const rootSelector = `[data-gallery-id="${galleryId}"]`
+          const thumbs = Array.from(document.querySelectorAll(`[data-gallery-thumb]${rootSelector}`))
+          const modal = document.querySelector(`[data-gallery-modal]${rootSelector}`)
+          const modalImage = document.querySelector(`[data-gallery-image]${rootSelector}`)
+          const closeButton = document.querySelector(`[data-gallery-close]${rootSelector}`)
+          const nextButton = document.querySelector(`[data-gallery-next]${rootSelector}`)
+          const prevButton = document.querySelector(`[data-gallery-prev]${rootSelector}`)
+
+          if (!modal || !modalImage || thumbs.length === 0) return
+
+          let currentIndex = 0
+          let touchStartX = 0
+          let touchEndX = 0
+
+          const setImage = (index) => {
+            const maxIndex = images.length - 1
+            currentIndex = index < 0 ? maxIndex : index > maxIndex ? 0 : index
+            const current = images[currentIndex]
+            modalImage.src = current.src
+            modalImage.alt = current.alt || `Galéria kép ${currentIndex + 1}`
+          }
+
+          const openModal = (index) => {
+            setImage(index)
+            modal.classList.remove('hidden')
+            modal.classList.add('flex')
+            document.body.classList.add('overflow-hidden')
+          }
+
+          const closeModal = () => {
+            modal.classList.add('hidden')
+            modal.classList.remove('flex')
+            document.body.classList.remove('overflow-hidden')
+          }
+
+          const showNext = () => setImage(currentIndex + 1)
+          const showPrev = () => setImage(currentIndex - 1)
+
+          thumbs.forEach((thumb, index) => {
+            thumb.addEventListener('click', () => openModal(index))
+          })
+
+          closeButton?.addEventListener('click', closeModal)
+          nextButton?.addEventListener('click', showNext)
+          prevButton?.addEventListener('click', showPrev)
+
+          modal.addEventListener('click', (event) => {
+            if (event.target === modal) closeModal()
+          })
+
+          document.addEventListener('keydown', (event) => {
+            if (modal.classList.contains('hidden')) return
+            if (event.key === 'Escape') closeModal()
+            if (event.key === 'ArrowRight') showNext()
+            if (event.key === 'ArrowLeft') showPrev()
+          })
+
+          modal.addEventListener(
+            'touchstart',
+            (event) => {
+              touchStartX = event.changedTouches[0].screenX
+            },
+            { passive: true }
+          )
+
+          modal.addEventListener(
+            'touchend',
+            (event) => {
+              touchEndX = event.changedTouches[0].screenX
+              const delta = touchEndX - touchStartX
+              if (Math.abs(delta) < 40) return
+              if (delta > 0) showPrev()
+              if (delta < 0) showNext()
+            },
+            { passive: true }
+          )
+        })()
+      </script>
+    </section>
+  )
+}

@@ -11,6 +11,16 @@ const news = defineCollection({
     lead: z.string(),
     image: z.string(),
     draft: z.boolean().optional(),
+    galleryUrl: z.string().optional(),
+    galleryImages: z
+      .array(
+        z.object({
+          src: z.string(),
+          thumb: z.string().optional(),
+          alt: z.string().optional(),
+        })
+      )
+      .optional(),
     // category: z.string().optional(),
   }),
 })
