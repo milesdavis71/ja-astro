@@ -1,6 +1,7 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content'
 import DefaultLayout from '../../layouts/DefaultLayout.astro'
+import NewsMiniGallery from '../../components/NewsMiniGallery.astro'
 
 export async function getStaticPaths() {
   const news = (await getCollection('news')).filter((entry) => entry.slug !== 'hir-sablon')
@@ -47,5 +48,11 @@ const frontmatter = {
     <div class="prose prose-img:rounded-lg max-w-none">
       <Content />
     </div>
+
+    <NewsMiniGallery
+      images={entry.data.galleryImages ?? []}
+      galleryFolder={entry.data.galleryFolder}
+      galleryUrl={entry.data.galleryUrl ?? '#'}
+    />
   </article>
 </DefaultLayout>

@@ -7,19 +7,20 @@ type GalleryImage = {
 
 interface Props {
   images?: GalleryImage[]
+  galleryFolder?: string
   galleryUrl?: string
 }
 
-const { images = [], galleryUrl = '#' } = Astro.props
+const { images = [], galleryFolder = '', galleryUrl = '#' } = Astro.props
 const previewImages = images.slice(0, 9)
 const imageCount = images.length
 const galleryId = `news-mini-gallery-${Astro.url.pathname.replace(/[^a-zA-Z0-9]/g, '-')}`
 ---
 
 {
-  previewImages.length > 0 && (
+  (previewImages.length > 0 || galleryFolder) && (
     <section class="not-prose mt-10 border-t border-gray-200 pt-8" aria-label="Mini galéria">
-      <div class="grid grid-cols-3 gap-2 sm:gap-3">
+      <div class="grid grid-cols-3 gap-2 sm:gap-3" data-gallery-grid data-gallery-id={galleryId}>
         {previewImages.map((image, index) => (
           <button
             type="button"
@@ -42,9 +43,11 @@ const galleryId = `news-mini-gallery-${Astro.url.pathname.replace(/[^a-zA-Z0-9]/
       <a
         href={galleryUrl}
         class="mt-5 inline-flex items-center rounded-md px-4 py-2 text-sm font-semibold text-white transition hover:brightness-110"
+        data-gallery-cta
+        data-gallery-id={galleryId}
         style="background-color: var(--secondary-color);"
       >
-        Teljes galéria megnyitása ({imageCount} kép)
+        Teljes galéria megnyitása (<span data-gallery-count data-gallery-id={galleryId}>{imageCount}</span> kép)
       </a>
 
       <div
@@ -98,25 +101,61 @@ const galleryId = `news-mini-gallery-${Astro.url.pathname.replace(/[^a-zA-Z0-9]/
         is:inline
         define:vars={{
           galleryId,
-          images: previewImages,
+          initialImages: previewImages,
+          galleryFolder,
+          initialCount: imageCount,
         }}
       >
         (() => {
           const rootSelector = `[data-gallery-id="${galleryId}"]`
-          const thumbs = Array.from(document.querySelectorAll(`[data-gallery-thumb]${rootSelector}`))
+          const grid = document.querySelector(`[data-gallery-grid]${rootSelector}`)
           const modal = document.querySelector(`[data-gallery-modal]${rootSelector}`)
           const modalImage = document.querySelector(`[data-gallery-image]${rootSelector}`)
           const closeButton = document.querySelector(`[data-gallery-close]${rootSelector}`)
           const nextButton = document.querySelector(`[data-gallery-next]${rootSelector}`)
           const prevButton = document.querySelector(`[data-gallery-prev]${rootSelector}`)
+          const countElement = document.querySelector(`[data-gallery-count]${rootSelector}`)
 
-          if (!modal || !modalImage || thumbs.length === 0) return
+          if (!modal || !modalImage || !grid) return
 
+          let images = Array.isArray(initialImages) ? [...initialImages] : []
           let currentIndex = 0
           let touchStartX = 0
           let touchEndX = 0
 
+          const setCount = (value) => {
+            if (countElement) {
+              countElement.textContent = String(value)
+            }
+          }
+
+          const renderThumbs = () => {
+            grid.innerHTML = ''
+
+            images.forEach((image, index) => {
+              const button = document.createElement('button')
+              button.type = 'button'
+              button.className =
+                'group relative aspect-square overflow-hidden rounded-md border border-gray-200 bg-gray-100 text-left'
+              button.setAttribute('data-gallery-thumb', '')
+              button.setAttribute('data-gallery-index', String(index))
+              button.setAttribute('data-gallery-id', galleryId)
+              button.setAttribute('aria-label', `${index + 1}. kép megnyitása`)
+
+              const img = document.createElement('img')
+              img.src = image.thumb || image.src
+              img.alt = image.alt || `Galéria kép ${index + 1}`
+              img.className = 'h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]'
+              img.loading = 'lazy'
+
+              button.appendChild(img)
+              button.addEventListener('click', () => openModal(index))
+              grid.appendChild(button)
+            })
+          }
+
           const setImage = (index) => {
+            if (images.length === 0) return
             const maxIndex = images.length - 1
             currentIndex = index < 0 ? maxIndex : index > maxIndex ? 0 : index
             const current = images[currentIndex]
@@ -140,9 +179,8 @@ const galleryId = `news-mini-gallery-${Astro.url.pathname.replace(/[^a-zA-Z0-9]/
           const showNext = () => setImage(currentIndex + 1)
           const showPrev = () => setImage(currentIndex - 1)
 
-          thumbs.forEach((thumb, index) => {
-            thumb.addEventListener('click', () => openModal(index))
-          })
+          renderThumbs()
+          setCount(initialCount || images.length)
 
           closeButton?.addEventListener('click', closeModal)
           nextButton?.addEventListener('click', showNext)
@@ -178,6 +216,19 @@ const galleryId = `news-mini-gallery-${Astro.url.pathname.replace(/[^a-zA-Z0-9]/
             },
             { passive: true }
           )
+
+          if (images.length === 0 && galleryFolder) {
+            fetch(`/api/gallery_preview.php?folder=${encodeURIComponent(galleryFolder)}`)
+              .then((response) => (response.ok ? response.json() : Promise.reject(new Error('API hiba'))))
+              .then((data) => {
+                if (!Array.isArray(data?.images) || data.images.length === 0) return
+
+                images = data.images.slice(0, 9)
+                renderThumbs()
+                setCount(typeof data.total === 'number' ? data.total : images.length)
+              })
+              .catch(() => {})
+          }
         })()
       </script>
     </section>
