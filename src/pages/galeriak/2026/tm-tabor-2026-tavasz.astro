@@ -1,0 +1,29 @@
+---
+import DefaultLayout from '../../../layouts/DefaultLayout.astro'
+import GalleryPageGrid from '../../../components/GalleryPageGrid.astro'
+
+const frontmatter = {
+  title: 'Tanitsunk Magyarorszagert tabor 2026 tavasz',
+  description: 'Fotoalbum a TM2 felkeszito taborrol.',
+  sidebarNewsCount: 0,
+  eventTitle: 'Tanitsunk Magyarorszagert! TM2 felkeszito tabor 2026 tavasz',
+  photographer: 'SZTE Junior Akademia',
+  galleryFolder: '/images/galeriak/2026/tm-tabor-2026-tavasz',
+  backToEventUrl: '/news/tobb-mint-150-mentor-kezdte-meg-felkeszuleset',
+  backToEventLabel: 'Vissza az esemenyhez',
+  backToGalleriesUrl: '/news',
+  backToGalleriesLabel: 'Vissza a galeriakhoz',
+}
+---
+
+<DefaultLayout {frontmatter}>
+  <GalleryPageGrid
+    title={frontmatter.eventTitle}
+    photographer={frontmatter.photographer}
+    galleryFolder={frontmatter.galleryFolder}
+    backToEventUrl={frontmatter.backToEventUrl}
+    backToEventLabel={frontmatter.backToEventLabel}
+    backToGalleriesUrl={frontmatter.backToGalleriesUrl}
+    backToGalleriesLabel={frontmatter.backToGalleriesLabel}
+  />
+</DefaultLayout>

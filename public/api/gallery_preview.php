@@ -13,6 +13,13 @@ if ($folder === '') {
   json_error('Missing folder parameter.');
 }
 
+$offset = isset($_GET['offset']) ? (int) $_GET['offset'] : 0;
+if ($offset < 0) {
+  $offset = 0;
+}
+
+$limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 9;
+
 if (strpos($folder, '/images/galeriak/') !== 0) {
   json_error('Invalid folder path.');
 }
@@ -58,17 +65,23 @@ foreach ($files as $file) {
 
 natcasesort($filtered);
 $sorted = array_values($filtered);
-$preview = array_slice($sorted, 0, 9);
+$total = count($sorted);
+
+if ($limit <= 0) {
+  $selected = array_slice($sorted, $offset);
+} else {
+  $selected = array_slice($sorted, $offset, $limit);
+}
 
 $images = [];
-foreach ($preview as $index => $file) {
+foreach ($selected as $index => $file) {
   $src = $folder . '/full/' . $file;
   $thumb = $folder . '/thumb/' . $file;
   $thumbFilePath = $thumbPath . DIRECTORY_SEPARATOR . $file;
 
   $item = [
     'src' => $src,
-    'alt' => 'Galéria kép ' . ($index + 1),
+    'alt' => 'Galéria kép ' . ($offset + $index + 1),
   ];
 
   if (is_file($thumbFilePath)) {
@@ -81,7 +94,9 @@ foreach ($preview as $index => $file) {
 echo json_encode(
   [
     'folder' => $folder,
-    'total' => count($sorted),
+    'offset' => $offset,
+    'limit' => $limit,
+    'total' => $total,
     'images' => $images,
   ],
   JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES

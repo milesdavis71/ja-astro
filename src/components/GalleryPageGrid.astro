@@ -1,0 +1,769 @@
+---
+interface GalleryImage {
+  src: string
+  thumb?: string
+  alt?: string
+}
+
+interface Props {
+  title: string
+  photographer?: string
+  galleryFolder: string
+  backToEventUrl?: string
+  backToEventLabel?: string
+  backToGalleriesUrl?: string
+  backToGalleriesLabel?: string
+}
+
+const {
+  title,
+  photographer = '',
+  galleryFolder,
+  backToEventUrl = '/news',
+  backToEventLabel = 'Vissza az esemenyhez',
+  backToGalleriesUrl = '/fotoalbumok',
+  backToGalleriesLabel = 'Vissza a galeriakhoz',
+} = Astro.props
+
+const galleryId = `gallery-page-${Astro.url.pathname.replace(/[^a-zA-Z0-9]/g, '-')}`
+---
+
+<section class="gallery-page" data-gallery-page data-gallery-id={galleryId}>
+  <header class="gallery-page__sticky-header">
+    <div class="gallery-page__sticky-inner">
+      <a href={backToEventUrl} class="gallery-page__link gallery-page__event-link">{backToEventLabel}</a>
+      <a href={backToGalleriesUrl} class="gallery-page__link">{backToGalleriesLabel}</a>
+    </div>
+  </header>
+
+  <div class="gallery-page__container">
+    <header class="gallery-page__head">
+      <h1 class="gallery-page__title">{title}</h1>
+      <p class="gallery-page__meta">
+        {photographer && <span>Foto: {photographer} | </span>}
+        <span data-gallery-total data-gallery-id={galleryId}>0</span> foto
+      </p>
+    </header>
+
+    <div class="gallery-grid-wrap">
+      <div class="gallery-grid" data-gallery-grid data-gallery-id={galleryId}></div>
+      <div class="gallery-grid__sentinel" data-gallery-sentinel data-gallery-id={galleryId}></div>
+    </div>
+
+    <div class="gallery-page__actions">
+      <button type="button" class="gallery-page__load-more" data-gallery-load-more data-gallery-id={galleryId}>
+        Tovabbiak betoltese
+      </button>
+    </div>
+  </div>
+
+  <button type="button" class="gallery-page__to-top" data-gallery-to-top data-gallery-id={galleryId}>
+    Ugras a tetejere
+  </button>
+
+  <div class="gallery-lightbox hidden" data-gallery-lightbox data-gallery-id={galleryId} role="dialog" aria-modal="true">
+    <div class="gallery-lightbox__top">
+      <div class="gallery-lightbox__counter" data-gallery-counter data-gallery-id={galleryId}>1 / 1</div>
+      <div class="gallery-lightbox__buttons">
+        <button type="button" class="gallery-lightbox__button" data-gallery-share data-gallery-id={galleryId}>Megosztas</button>
+        <button type="button" class="gallery-lightbox__button" data-gallery-copy-link data-gallery-id={galleryId}>Masolas link</button>
+        <button type="button" class="gallery-lightbox__button" data-gallery-open-new data-gallery-id={galleryId}>Megnyitas uj lapon</button>
+        <button type="button" class="gallery-lightbox__button" data-gallery-fullscreen data-gallery-id={galleryId}>Fullscreen</button>
+        <button type="button" class="gallery-lightbox__button" data-gallery-close data-gallery-id={galleryId}>Bezaras</button>
+      </div>
+    </div>
+
+    <button type="button" class="gallery-lightbox__zone gallery-lightbox__zone--left" aria-label="Elozo kep" data-gallery-prev-zone data-gallery-id={galleryId}></button>
+    <button type="button" class="gallery-lightbox__zone gallery-lightbox__zone--right" aria-label="Kovetkezo kep" data-gallery-next-zone data-gallery-id={galleryId}></button>
+
+    <div class="gallery-lightbox__stage" data-gallery-stage data-gallery-id={galleryId}>
+      <img src="" alt="" class="gallery-lightbox__image" data-gallery-image data-gallery-id={galleryId} />
+    </div>
+  </div>
+
+  <script
+    is:inline
+    define:vars={{
+      galleryId,
+      galleryFolder,
+    }}
+  >
+    (() => {
+      const rootSelector = `[data-gallery-id="${galleryId}"]`
+      const grid = document.querySelector(`[data-gallery-grid]${rootSelector}`)
+      const sentinel = document.querySelector(`[data-gallery-sentinel]${rootSelector}`)
+      const totalElement = document.querySelector(`[data-gallery-total]${rootSelector}`)
+      const loadMoreButton = document.querySelector(`[data-gallery-load-more]${rootSelector}`)
+      const toTopButton = document.querySelector(`[data-gallery-to-top]${rootSelector}`)
+
+      const lightbox = document.querySelector(`[data-gallery-lightbox]${rootSelector}`)
+      const lightboxImage = document.querySelector(`[data-gallery-image]${rootSelector}`)
+      const lightboxStage = document.querySelector(`[data-gallery-stage]${rootSelector}`)
+      const lightboxCounter = document.querySelector(`[data-gallery-counter]${rootSelector}`)
+      const closeButton = document.querySelector(`[data-gallery-close]${rootSelector}`)
+      const prevZone = document.querySelector(`[data-gallery-prev-zone]${rootSelector}`)
+      const nextZone = document.querySelector(`[data-gallery-next-zone]${rootSelector}`)
+      const shareButton = document.querySelector(`[data-gallery-share]${rootSelector}`)
+      const copyLinkButton = document.querySelector(`[data-gallery-copy-link]${rootSelector}`)
+      const openNewButton = document.querySelector(`[data-gallery-open-new]${rootSelector}`)
+      const fullscreenButton = document.querySelector(`[data-gallery-fullscreen]${rootSelector}`)
+
+      if (!grid || !lightbox || !lightboxImage || !lightboxStage) return
+
+      /** @type {Array<{src: string, thumb?: string, alt?: string}>} */
+      let images = []
+      let renderedCount = 0
+      let currentIndex = 0
+      let isOpen = false
+      let lockScrollY = 0
+      let lastFocusedThumb = null
+      let observer = null
+
+      let scale = 1
+      let translateX = 0
+      let translateY = 0
+      let lastTapTime = 0
+      let pinchStartDistance = 0
+      let pinchStartScale = 1
+      let panStartX = 0
+      let panStartY = 0
+      let panOriginX = 0
+      let panOriginY = 0
+      let touchStartX = 0
+      let touchStartY = 0
+
+      const MOBILE_QUERY = '(max-width: 768px)'
+      const MOBILE_INITIAL = 24
+      const MOBILE_BATCH = 24
+      const DESKTOP_INITIAL = 36
+      const DESKTOP_BATCH = 36
+
+      const isMobile = () => window.matchMedia(MOBILE_QUERY).matches
+
+      const getBaseUrl = () => `${window.location.origin}${window.location.pathname}`
+      const getImageUrl = (index) => `${getBaseUrl()}#img-${index + 1}`
+
+      const updateTransform = () => {
+        lightboxImage.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`
+      }
+
+      const resetZoom = () => {
+        scale = 1
+        translateX = 0
+        translateY = 0
+        updateTransform()
+      }
+
+      const preloadAround = (index) => {
+        if (!images.length) return
+        const prevIndex = (index - 1 + images.length) % images.length
+        const nextIndex = (index + 1) % images.length
+
+        const prevImage = new Image()
+        prevImage.src = images[prevIndex].src
+
+        const nextImage = new Image()
+        nextImage.src = images[nextIndex].src
+      }
+
+      const updateCounter = () => {
+        if (!lightboxCounter) return
+        lightboxCounter.textContent = `${currentIndex + 1} / ${images.length}`
+      }
+
+      const setImage = (index) => {
+        if (!images.length) return
+        const max = images.length - 1
+        currentIndex = index < 0 ? max : index > max ? 0 : index
+        const image = images[currentIndex]
+        lightboxImage.src = image.src
+        lightboxImage.alt = image.alt || `Galeria kep ${currentIndex + 1}`
+        updateCounter()
+        preloadAround(currentIndex)
+        resetZoom()
+        window.history.replaceState({}, '', getImageUrl(currentIndex))
+      }
+
+      const lockBodyScroll = () => {
+        lockScrollY = window.scrollY
+        document.body.style.position = 'fixed'
+        document.body.style.top = `-${lockScrollY}px`
+        document.body.style.left = '0'
+        document.body.style.right = '0'
+        document.body.style.width = '100%'
+      }
+
+      const unlockBodyScroll = () => {
+        document.body.style.position = ''
+        document.body.style.top = ''
+        document.body.style.left = ''
+        document.body.style.right = ''
+        document.body.style.width = ''
+        window.scrollTo(0, lockScrollY)
+      }
+
+      const openLightbox = (index, thumb) => {
+        isOpen = true
+        lastFocusedThumb = thumb || null
+        setImage(index)
+        lightbox.classList.remove('hidden')
+        lockBodyScroll()
+      }
+
+      const closeLightbox = () => {
+        if (!isOpen) return
+        isOpen = false
+        lightbox.classList.add('hidden')
+        unlockBodyScroll()
+        window.history.replaceState({}, '', getBaseUrl())
+        if (lastFocusedThumb instanceof HTMLElement) {
+          lastFocusedThumb.focus({ preventScroll: true })
+        }
+      }
+
+      const nextImage = () => setImage(currentIndex + 1)
+      const prevImage = () => setImage(currentIndex - 1)
+
+      const createThumb = (image, index) => {
+        const button = document.createElement('button')
+        button.type = 'button'
+        button.className = 'gallery-thumb'
+        button.setAttribute('data-gallery-thumb', '')
+        button.setAttribute('data-gallery-index', String(index))
+        button.setAttribute('aria-label', `${index + 1}. kep megnyitasa`)
+
+        const img = document.createElement('img')
+        img.src = image.thumb || image.src
+        img.alt = image.alt || `Galeria kep ${index + 1}`
+        img.loading = 'lazy'
+        img.decoding = 'async'
+        img.className = 'gallery-thumb__image is-loading'
+        img.addEventListener('load', () => {
+          img.classList.remove('is-loading')
+        })
+
+        const overlay = document.createElement('span')
+        overlay.className = 'gallery-thumb__overlay'
+        overlay.textContent = `${index + 1}`
+
+        button.appendChild(img)
+        button.appendChild(overlay)
+        button.addEventListener('click', () => openLightbox(index, button))
+        grid.appendChild(button)
+      }
+
+      const updateLoadControls = () => {
+        if (!loadMoreButton) return
+        const hasMore = renderedCount < images.length
+        if (isMobile()) {
+          loadMoreButton.classList.add('hidden')
+        } else {
+          loadMoreButton.classList.toggle('hidden', !hasMore)
+        }
+      }
+
+      const appendBatch = (amount) => {
+        if (!images.length) return
+        const nextCount = Math.min(renderedCount + amount, images.length)
+        for (let i = renderedCount; i < nextCount; i += 1) {
+          createThumb(images[i], i)
+        }
+        renderedCount = nextCount
+        updateLoadControls()
+      }
+
+      const setupInfiniteScroll = () => {
+        if (observer) {
+          observer.disconnect()
+          observer = null
+        }
+
+        if (!isMobile() || !sentinel) return
+
+        observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue
+              if (renderedCount >= images.length) return
+              appendBatch(MOBILE_BATCH)
+            }
+          },
+          { rootMargin: '200px 0px' }
+        )
+        observer.observe(sentinel)
+      }
+
+      const initGrid = () => {
+        grid.innerHTML = ''
+        renderedCount = 0
+        appendBatch(isMobile() ? MOBILE_INITIAL : DESKTOP_INITIAL)
+        setupInfiniteScroll()
+      }
+
+      const copyCurrentLink = async () => {
+        const url = getImageUrl(currentIndex)
+        try {
+          await navigator.clipboard.writeText(url)
+        } catch (_error) {}
+      }
+
+      const shareCurrent = async () => {
+        const url = getImageUrl(currentIndex)
+        if (navigator.share) {
+          try {
+            await navigator.share({ title: document.title, url })
+          } catch (_error) {}
+          return
+        }
+        await copyCurrentLink()
+      }
+
+      const openCurrentInNewTab = () => {
+        const image = images[currentIndex]
+        if (!image) return
+        window.open(image.src, '_blank', 'noopener')
+      }
+
+      const toggleFullscreen = async () => {
+        if (!document.fullscreenElement) {
+          try {
+            await lightbox.requestFullscreen()
+          } catch (_error) {}
+          return
+        }
+        try {
+          await document.exitFullscreen()
+        } catch (_error) {}
+      }
+
+      const parseHashAndOpen = () => {
+        const match = window.location.hash.match(/^#img-(\d+)$/)
+        if (!match) return
+        const parsed = Number(match[1])
+        if (!Number.isFinite(parsed)) return
+        const index = parsed - 1
+        if (index < 0 || index >= images.length) return
+        openLightbox(index, null)
+      }
+
+      const handleWheelZoom = (event) => {
+        if (!isOpen) return
+        event.preventDefault()
+        const delta = event.deltaY < 0 ? 0.2 : -0.2
+        const nextScale = Math.max(1, Math.min(4, scale + delta))
+        scale = nextScale
+        if (scale === 1) {
+          translateX = 0
+          translateY = 0
+        }
+        updateTransform()
+      }
+
+      const getDistance = (touches) => {
+        const dx = touches[0].clientX - touches[1].clientX
+        const dy = touches[0].clientY - touches[1].clientY
+        return Math.sqrt(dx * dx + dy * dy)
+      }
+
+      const handleTouchStart = (event) => {
+        if (!isOpen) return
+        if (event.touches.length === 2) {
+          pinchStartDistance = getDistance(event.touches)
+          pinchStartScale = scale
+          return
+        }
+
+        const touch = event.touches[0]
+        touchStartX = touch.clientX
+        touchStartY = touch.clientY
+        panStartX = touch.clientX
+        panStartY = touch.clientY
+        panOriginX = translateX
+        panOriginY = translateY
+
+        const now = Date.now()
+        if (now - lastTapTime < 280) {
+          if (scale > 1) {
+            resetZoom()
+          } else {
+            scale = 2
+            updateTransform()
+          }
+        }
+        lastTapTime = now
+      }
+
+      const handleTouchMove = (event) => {
+        if (!isOpen) return
+        if (event.touches.length === 2) {
+          event.preventDefault()
+          const currentDistance = getDistance(event.touches)
+          const distanceDelta = currentDistance / (pinchStartDistance || currentDistance)
+          scale = Math.max(1, Math.min(4, pinchStartScale * distanceDelta))
+          if (scale === 1) {
+            translateX = 0
+            translateY = 0
+          }
+          updateTransform()
+          return
+        }
+
+        if (scale > 1 && event.touches.length === 1) {
+          event.preventDefault()
+          const touch = event.touches[0]
+          translateX = panOriginX + (touch.clientX - panStartX)
+          translateY = panOriginY + (touch.clientY - panStartY)
+          updateTransform()
+        }
+      }
+
+      const handleTouchEnd = (event) => {
+        if (!isOpen || scale > 1) return
+        const touch = event.changedTouches[0]
+        const deltaX = touch.clientX - touchStartX
+        const deltaY = touch.clientY - touchStartY
+
+        if (Math.abs(deltaY) > 90 && Math.abs(deltaX) < 60 && deltaY > 0) {
+          closeLightbox()
+          return
+        }
+
+        if (Math.abs(deltaX) < 50 || Math.abs(deltaY) > 70) return
+        if (deltaX < 0) nextImage()
+        if (deltaX > 0) prevImage()
+      }
+
+      const handleKeydown = (event) => {
+        if (!isOpen) return
+        if (event.key === 'Escape') closeLightbox()
+        if (event.key === 'ArrowRight') nextImage()
+        if (event.key === 'ArrowLeft') prevImage()
+        if (event.key.toLowerCase() === 'f') toggleFullscreen()
+      }
+
+      const initEvents = () => {
+        loadMoreButton?.addEventListener('click', () => appendBatch(DESKTOP_BATCH))
+        toTopButton?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }))
+        closeButton?.addEventListener('click', closeLightbox)
+        prevZone?.addEventListener('click', prevImage)
+        nextZone?.addEventListener('click', nextImage)
+        shareButton?.addEventListener('click', shareCurrent)
+        copyLinkButton?.addEventListener('click', copyCurrentLink)
+        openNewButton?.addEventListener('click', openCurrentInNewTab)
+        fullscreenButton?.addEventListener('click', toggleFullscreen)
+
+        lightbox.addEventListener('click', (event) => {
+          if (event.target === lightbox) closeLightbox()
+        })
+        lightboxImage.addEventListener('dblclick', () => {
+          if (scale > 1) {
+            resetZoom()
+          } else {
+            scale = 2
+            updateTransform()
+          }
+        })
+        lightboxStage.addEventListener('wheel', handleWheelZoom, { passive: false })
+        lightboxStage.addEventListener('touchstart', handleTouchStart, { passive: false })
+        lightboxStage.addEventListener('touchmove', handleTouchMove, { passive: false })
+        lightboxStage.addEventListener('touchend', handleTouchEnd, { passive: true })
+        window.addEventListener('keydown', handleKeydown)
+        window.addEventListener('resize', () => {
+          if (!images.length) return
+          const existing = renderedCount
+          if (isMobile() && existing < MOBILE_INITIAL) {
+            appendBatch(MOBILE_INITIAL - existing)
+          }
+          updateLoadControls()
+          setupInfiniteScroll()
+        })
+      }
+
+      fetch(`/api/gallery_preview.php?folder=${encodeURIComponent(galleryFolder)}&limit=0`)
+        .then((response) => (response.ok ? response.json() : Promise.reject(new Error('API hiba'))))
+        .then((data) => {
+          if (!Array.isArray(data?.images) || data.images.length === 0) return
+          images = data.images
+          if (totalElement) {
+            totalElement.textContent = String(data.total || images.length)
+          }
+          initGrid()
+          parseHashAndOpen()
+        })
+        .catch(() => {})
+
+      initEvents()
+    })()
+  </script>
+</section>
+
+<style>
+  .gallery-page {
+    margin: 1rem auto 0;
+  }
+
+  .gallery-page__container {
+    margin: 0 auto;
+    max-width: 1320px;
+    padding: 0.75rem 0.5rem 5rem;
+  }
+
+  .gallery-page__sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .gallery-page__sticky-inner {
+    margin: 0 auto;
+    max-width: 1320px;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .gallery-page__link {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #d1d5db;
+    border-radius: 999px;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #111827;
+    background: #ffffff;
+    text-decoration: none;
+  }
+
+  .gallery-page__head {
+    margin: 0.8rem 0 1rem;
+  }
+
+  .gallery-page__title {
+    margin: 0;
+    font-size: 1.45rem;
+    line-height: 1.2;
+    color: #111827;
+  }
+
+  .gallery-page__meta {
+    margin: 0.45rem 0 0;
+    color: #4b5563;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .gallery-thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #f3f4f6;
+    cursor: zoom-in;
+  }
+
+  .gallery-thumb__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 180ms ease, filter 180ms ease, opacity 180ms ease;
+  }
+
+  .gallery-thumb:hover .gallery-thumb__image {
+    transform: scale(1.02);
+  }
+
+  .gallery-thumb__image.is-loading {
+    filter: blur(8px);
+    opacity: 0.85;
+  }
+
+  .gallery-thumb__overlay {
+    position: absolute;
+    right: 0.45rem;
+    bottom: 0.45rem;
+    font-size: 0.75rem;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.45);
+    border-radius: 999px;
+    padding: 0.15rem 0.45rem;
+    pointer-events: none;
+  }
+
+  .gallery-grid__sentinel {
+    height: 1px;
+  }
+
+  .gallery-page__actions {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .gallery-page__load-more {
+    border: 1px solid #d1d5db;
+    background: #fff;
+    color: #111827;
+    border-radius: 10px;
+    padding: 0.6rem 1rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .gallery-page__to-top {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 30;
+    border-radius: 999px;
+    border: 1px solid #d1d5db;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 0.55rem 0.9rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #111827;
+    cursor: pointer;
+  }
+
+  .gallery-lightbox.hidden {
+    display: none;
+  }
+
+  .gallery-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 120;
+    background: rgba(10, 10, 10, 0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: none;
+  }
+
+  .gallery-lightbox__top {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem;
+    z-index: 4;
+  }
+
+  .gallery-lightbox__counter {
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  .gallery-lightbox__buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .gallery-lightbox__button {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 0.4rem 0.55rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .gallery-lightbox__stage {
+    width: min(95vw, 1500px);
+    max-height: 92vh;
+    aspect-ratio: 3 / 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .gallery-lightbox__image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transform-origin: center center;
+    transition: transform 120ms ease;
+    user-select: none;
+  }
+
+  .gallery-lightbox__zone {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 26%;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    z-index: 3;
+  }
+
+  .gallery-lightbox__zone--left {
+    left: 0;
+  }
+
+  .gallery-lightbox__zone--right {
+    right: 0;
+  }
+
+  @media (min-width: 421px) {
+    .gallery-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .gallery-page__container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    .gallery-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .gallery-page__title {
+      font-size: 1.8rem;
+    }
+  }
+
+  @media (min-width: 1025px) {
+    .gallery-grid {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 13px;
+    }
+  }
+
+  @media (min-width: 1441px) {
+    .gallery-grid {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 14px;
+    }
+  }
+</style>
