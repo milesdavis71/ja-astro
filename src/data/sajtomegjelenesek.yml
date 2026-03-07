@@ -1,13 +1,192 @@
-- id: 2024-06-21-radio88-legtehetsegesebbek
+- id: minta
   date: 2024-06-21
-  title: 'A Szegedi Tudományegyetem legtehetségesebb fiataljait díjazták'
+  title: 'Példa'
   url: 'https://radio88.hu/...'
-  outlet: 'radio88.hu'
-  screenshot: '/sajto/2024/2024-06-21-radio88.jpg'
+  screenshot: '/images/sajtomegjelenesek/2024/24_ennyi-osztondij-jar-szegedi-tudomanyegyetem-szte-felveteli-anyagi-jutattasok.jpg'
 
-- id: 2024-06-20-szegedtv-tehetsegesebbek
-  date: 2024-06-20
-  title: 'Az egyetem legtehetségesebb fiataljait díjazták'
-  url: 'https://tv.szeged.hu/...'
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
   outlet: 'tv.szeged.hu'
-  screenshot: '/sajto/2024/2024-06-20-szegedtv.jpg'
+  screenshot: '/images/sajtomegjelenesek/2024/bibo-halas_huhu.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/delmagyar_kariko-katalin-adta-at-dijaikat-a-fiataloknak.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/delmagyar_prezentacios-karaoke-is-vart-a-dontosokre.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/eco_u-szeged_megrendezesre-kerult-a-prezilimpia-orszag.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/gdszeged_szte-juniorok-viadala-2024-koezepiskolai-csapatvetelkedo.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/med_u-szegedev-tehetsege.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/moravarosi_szte-juniorok-viadala-donto.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/radio88_a-szegedi-tudomanyegyetem-legtehetsegesebb-fiataljait-dijaztak.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/radio88_elindult-a-tanitsunk-magyarorszagert-szegedi-tabora.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/radio88_ma-tartjak-a-juniorok-viadala-regionalis-kozepiskolai-csapatvetelkedo-dontojet.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/szeged_hatodik-taborat-kezdte-meg-tanitsunk-magyarorszagert-program-szegeden.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/szeged_kezrol-kezre-adtak-kariko-katalint.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/szeged_kihirdettek-a-zirzen-janka-osztondijakat-a-szegedi-tudomanyegyetemen.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/szeged_kiosztottak-a-tik-ben-az-idei-talent-dijakat.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/szeged_nyilt-nappal-egybekotott-szuloi-ertekezlet-szte.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/szeged_prezilimpia-hatodszor-az-szte-n.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/szeged365_havi-szazezer-forintot-kapnak-a-pedagogus-hallgatok.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/szeged365_toth-jonathan-elnyerte-az-szte-talent-kivalosagi-lista-ev-muvesze-osztondijat.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/szegedinap_alkotoi-palyazatokkal-folytatodik-a-nobel-hetek.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/szegekif_szte-juniorok-viadala-dontoben-a-kisteleki-arpad-fejedelem-gimnazium.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/szig-kalocsa_juniorok-viadala.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/szilady_szte-juniorok-viadala.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/szte-szedeak_hatranyos-helyzetu-gyermekeket-latunk-vendegul-az-oroszlany-elleni-meccsen.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/tv_szeged_az-egyetem-legtehetsegesebb-fiataljait-dijaztak.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/u-szeged_10-millio-forinttal-jutalmaztak-a-tehetseget-szte-talent-dijatado.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/u-szeged_kulonleges-elonyre-tehet-szert.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/u-szeged_mit-kell-tudni-felveteli.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/u-szeged_radnotisok-nyertek-a-2024-juniorok-viadalat.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/u-szeged_szte-nobel-dij-alkotoi.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/vasvari_szte-juniorok-viadala.jpg'
+
+- id: minta
+  date: 2024-06-21
+  title: 'Példa'
+  url: 'https://radio88.hu/...'
+  screenshot: '/images/sajtomegjelenesek/2024/youtube_szte-nyílt-nap-2023.jpg'
