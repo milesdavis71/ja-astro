@@ -1,0 +1,311 @@
+---
+import { Icon } from 'astro-icon/components'
+
+interface PressMentionItem {
+  id: string
+  date: string
+  title: string
+  url: string
+  source: string
+  screenshot: string
+  timestamp: number
+  formattedDate: string
+  domain: string
+}
+
+interface YearGroup {
+  year: string
+  items: PressMentionItem[]
+}
+
+interface Props {
+  years: YearGroup[]
+  pageSize?: number
+}
+
+const { years, pageSize = 15 }: Props = Astro.props
+const defaultYear = years[0]?.year ?? '2024'
+---
+
+<section
+  class="space-y-8"
+  data-press-archive
+  data-default-year={defaultYear}
+  data-page-size={String(pageSize)}
+>
+  <div class="space-y-4">
+    <div class="hidden flex-wrap gap-3 sm:flex" role="tablist" aria-label="Sajtómegjelenések évei">
+      {
+        years.map(({ year }, index) => (
+          <button
+            type="button"
+            class="rounded-full border border-gray-300 px-5 py-2 text-sm font-semibold text-gray-700 transition hover:border-[var(--link-hover-color)] hover:text-[var(--link-hover-color)]"
+            data-year-tab={year}
+            role="tab"
+            aria-selected={index === 0 ? 'true' : 'false'}
+          >
+            {year}
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="sm:hidden">
+      <label class="mb-2 block text-sm font-semibold text-gray-700" for="press-year-select">Év</label>
+      <select
+        id="press-year-select"
+        class="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-base font-medium text-gray-800 shadow-sm"
+        data-year-select
+        aria-label="Év kiválasztása"
+      >
+        {
+          years.map(({ year }) => (
+            <option value={year}>Év: {year}</option>
+          ))
+        }
+      </select>
+    </div>
+  </div>
+
+  {
+    years.map(({ year, items }, yearIndex) => (
+      <section data-year-panel={year} hidden={yearIndex !== 0} class="space-y-8">
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3" data-cards-grid>
+          {
+            items.map((item) => (
+              <a
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group block h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--link-hover-color)] focus-visible:ring-offset-2"
+                data-card
+              >
+                <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition duration-200 group-hover:-translate-y-1 group-hover:border-[var(--link-hover-color)] group-hover:shadow-lg">
+                  <div class="aspect-[16/10] overflow-hidden bg-gray-100">
+                    <img
+                      src={item.screenshot}
+                      alt={item.title}
+                      class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  <div class="flex flex-1 flex-col gap-4 p-5">
+                    <h2 class="text-xl font-bold leading-snug text-gray-900 transition-colors duration-200 group-hover:text-[var(--link-hover-color)]">
+                      {item.title}
+                    </h2>
+
+                    <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-gray-600">
+                      <time datetime={new Date(item.timestamp).toISOString()}>{item.formattedDate}</time>
+                      <span aria-hidden="true" class="text-gray-300">•</span>
+                      <span class="inline-flex items-center gap-1 font-medium text-gray-700">
+                        {item.domain}
+                        <Icon name="lucide:external-link" class="h-4 w-4" aria-hidden="true" />
+                      </span>
+                    </div>
+
+                    <span class="btn btn-primary mt-auto w-fit px-4 py-2 text-sm">Tovább a cikkre</span>
+                  </div>
+                </article>
+              </a>
+            ))
+          }
+        </div>
+
+        <p class="hidden rounded-xl border border-dashed border-gray-300 bg-gray-50 px-4 py-6 text-center text-sm text-gray-600" data-empty-state>
+          Ebben az évben még nincs megjeleníthető sajtómegjelenés.
+        </p>
+      </section>
+    ))
+  }
+
+  <nav class="flex flex-col gap-4 border-t border-gray-200 pt-6 sm:flex-row sm:items-center sm:justify-between" aria-label="Lapozás">
+    <p class="text-sm text-gray-600" data-pagination-summary></p>
+
+    <div class="flex flex-wrap items-center gap-2">
+      <button
+        type="button"
+        class="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-[var(--link-hover-color)] hover:text-[var(--link-hover-color)] disabled:cursor-not-allowed disabled:opacity-50"
+        data-pagination-prev
+      >
+        Előző
+      </button>
+
+      <div class="flex flex-wrap items-center gap-2" data-pagination-pages></div>
+
+      <button
+        type="button"
+        class="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-[var(--link-hover-color)] hover:text-[var(--link-hover-color)] disabled:cursor-not-allowed disabled:opacity-50"
+        data-pagination-next
+      >
+        Következő
+      </button>
+    </div>
+  </nav>
+</section>
+
+<script is:inline>
+  (() => {
+    const root = document.querySelector('[data-press-archive]')
+    if (!root) return
+
+    const defaultYear = root.getAttribute('data-default-year') || '2024'
+    const pageSize = Number(root.getAttribute('data-page-size') || '15')
+    const panels = Array.from(root.querySelectorAll('[data-year-panel]'))
+    const tabs = Array.from(root.querySelectorAll('[data-year-tab]'))
+    const select = root.querySelector('[data-year-select]')
+    const prevButton = root.querySelector('[data-pagination-prev]')
+    const nextButton = root.querySelector('[data-pagination-next]')
+    const pagesContainer = root.querySelector('[data-pagination-pages]')
+    const summary = root.querySelector('[data-pagination-summary]')
+
+    const getAvailableYears = () => panels.map((panel) => panel.getAttribute('data-year-panel')).filter(Boolean)
+
+    const getStateFromUrl = () => {
+      const params = new URLSearchParams(window.location.search)
+      const availableYears = getAvailableYears()
+      const requestedYear = params.get('year')
+      const year = availableYears.includes(requestedYear) ? requestedYear : defaultYear
+      const rawPage = Number(params.get('page') || '1')
+      const page = Number.isFinite(rawPage) && rawPage > 0 ? Math.floor(rawPage) : 1
+
+      return { year, page }
+    }
+
+    const updateUrl = (year, page, replace = false) => {
+      const params = new URLSearchParams(window.location.search)
+      params.set('year', year)
+      if (page > 1) {
+        params.set('page', String(page))
+      } else {
+        params.delete('page')
+      }
+
+      const nextUrl = `${window.location.pathname}?${params.toString()}`
+      if (replace) {
+        window.history.replaceState({}, '', nextUrl)
+      } else {
+        window.history.pushState({}, '', nextUrl)
+      }
+    }
+
+    const getDesiredSearch = (year, page) => {
+      const params = new URLSearchParams(window.location.search)
+      params.set('year', year)
+      if (page > 1) {
+        params.set('page', String(page))
+      } else {
+        params.delete('page')
+      }
+
+      return `?${params.toString()}`
+    }
+
+    const renderPagination = (year, currentPage, totalPages) => {
+      if (!pagesContainer) return
+      pagesContainer.innerHTML = ''
+
+      for (let page = 1; page <= totalPages; page += 1) {
+        const button = document.createElement('button')
+        button.type = 'button'
+        button.textContent = String(page)
+        button.className =
+          page === currentPage
+            ? 'rounded-lg border border-[var(--button-color)] bg-[var(--button-color)] px-4 py-2 text-sm font-semibold text-white'
+            : 'rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-[var(--link-hover-color)] hover:text-[var(--link-hover-color)]'
+        button.setAttribute('aria-label', `${page}. oldal`)
+        button.setAttribute('aria-current', page === currentPage ? 'page' : 'false')
+        button.addEventListener('click', () => syncView(year, page))
+        pagesContainer.appendChild(button)
+      }
+    }
+
+    const syncView = (yearOverride, pageOverride, fromHistory = false) => {
+      const { year: stateYear, page: statePage } = getStateFromUrl()
+      const year = yearOverride || stateYear
+      const panel = panels.find((item) => item.getAttribute('data-year-panel') === year)
+      if (!panel) return
+
+      const cards = Array.from(panel.querySelectorAll('[data-card]'))
+      const totalItems = cards.length
+      const totalPages = Math.max(1, Math.ceil(totalItems / pageSize))
+      const currentPage = Math.min(pageOverride || statePage, totalPages)
+      const startIndex = (currentPage - 1) * pageSize
+      const endIndex = startIndex + pageSize
+
+      panels.forEach((item) => {
+        item.hidden = item !== panel
+      })
+
+      tabs.forEach((tab) => {
+        const isActive = tab.getAttribute('data-year-tab') === year
+        tab.setAttribute('aria-selected', isActive ? 'true' : 'false')
+        tab.className = isActive
+          ? 'rounded-full border border-[var(--button-color)] bg-[var(--button-color)] px-5 py-2 text-sm font-semibold text-white transition'
+          : 'rounded-full border border-gray-300 px-5 py-2 text-sm font-semibold text-gray-700 transition hover:border-[var(--link-hover-color)] hover:text-[var(--link-hover-color)]'
+      })
+
+      if (select instanceof HTMLSelectElement) {
+        select.value = year
+      }
+
+      cards.forEach((card, index) => {
+        card.hidden = index < startIndex || index >= endIndex
+      })
+
+      panels.forEach((item) => {
+        const emptyState = item.querySelector('[data-empty-state]')
+        const visibleCards = Array.from(item.querySelectorAll('[data-card]')).filter((card) => !card.hidden)
+        if (emptyState) {
+          emptyState.hidden = visibleCards.length !== 0 || item !== panel
+        }
+      })
+
+      if (summary) {
+        const visibleCount = Math.max(0, Math.min(endIndex, totalItems) - startIndex)
+        const from = totalItems === 0 ? 0 : startIndex + 1
+        const to = totalItems === 0 ? 0 : startIndex + visibleCount
+        summary.textContent = `${year}: ${from}–${to} / ${totalItems} cikk`
+      }
+
+      if (prevButton instanceof HTMLButtonElement) {
+        prevButton.disabled = currentPage <= 1
+        prevButton.onclick = () => syncView(year, currentPage - 1)
+      }
+
+      if (nextButton instanceof HTMLButtonElement) {
+        nextButton.disabled = currentPage >= totalPages
+        nextButton.onclick = () => syncView(year, currentPage + 1)
+      }
+
+      renderPagination(year, currentPage, totalPages)
+
+      if (!fromHistory) {
+        const desiredSearch = getDesiredSearch(year, currentPage)
+        if (desiredSearch !== window.location.search) {
+          updateUrl(year, currentPage, !window.location.search)
+        }
+      }
+    }
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const year = tab.getAttribute('data-year-tab')
+        if (year) syncView(year, 1)
+      })
+    })
+
+    if (select instanceof HTMLSelectElement) {
+      select.addEventListener('change', (event) => {
+        const target = event.currentTarget
+        if (target instanceof HTMLSelectElement) {
+          syncView(target.value, 1)
+        }
+      })
+    }
+
+    window.addEventListener('popstate', () => syncView(undefined, undefined, true))
+
+    syncView()
+  })()
+</script>
