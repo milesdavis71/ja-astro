@@ -1,0 +1,68 @@
+---
+export const frontmatter = {
+  title: 'Sajtómegjelenések',
+  description: 'A Junior Akadémiához kapcsolódó sajtómegjelenések gyűjteménye.',
+  sidebarNewsCount: 2,
+}
+
+import { getCollection } from 'astro:content'
+import DefaultLayout from '../../layouts/DefaultLayout.astro'
+import PressMentionsArchive from '../../components/PressMentionsArchive.astro'
+
+const supportedYears = Array.from({ length: 7 }, (_, index) => String(2025 - index))
+
+const parseHungarianDate = (value: string) => {
+  const normalized = value.replace(/\./g, '').trim()
+  const [year, month, day] = normalized.split(/\s+/).map(Number)
+
+  return new Date(year, month - 1, day)
+}
+
+const formatHungarianDate = (value: string) =>
+  new Intl.DateTimeFormat('hu-HU', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(parseHungarianDate(value))
+
+const getDomain = (url: string, fallback: string) => {
+  try {
+    return new URL(url).hostname.replace(/^www\./, '')
+  } catch {
+    return fallback.replace(/^www\./, '')
+  }
+}
+
+const allYears = await getCollection('pressMentions')
+const yearsMap = new Map(allYears.map((entry) => [entry.id, entry.data]))
+
+const years = supportedYears.map((year) => ({
+  year,
+  items: [...(yearsMap.get(year) ?? [])]
+      .sort((a, b) => parseHungarianDate(b.date).getTime() - parseHungarianDate(a.date).getTime())
+      .map((item) => {
+        const parsedDate = parseHungarianDate(item.date)
+
+        return {
+          ...item,
+          timestamp: parsedDate.getTime(),
+          formattedDate: formatHungarianDate(item.date),
+          domain: getDomain(item.url, item.source),
+        }
+      }),
+}))
+---
+
+<DefaultLayout {frontmatter}>
+  <section class="py-12">
+    <div class="mb-8 max-w-3xl">
+      <h1>Sajtómegjelenések</h1>
+      <p>
+        Válogatás a Junior Akadémiáról megjelent cikkekből és médiamegjelenésekből, év szerint
+        rendezve.
+      </p>
+    </div>
+
+    <PressMentionsArchive years={years} pageSize={15} />
+  </section>
+</DefaultLayout>

@@ -1,191 +1,533 @@
-- id: minta
-  date: 2024-06-21
-  title: 'Példa'
-  url: 'https://radio88.hu/...'
-  screenshot: '/images/sajtomegjelenesek/2024/24_ennyi-osztondij-jar-szegedi-tudomanyegyetem-szte-felveteli-anyagi-jutattasok.jpg'
+2023:
+    - id: 2023-01-25_u-szeged_pedagogus-eletpalyara
+      date: '2023. 01. 25.'
+      title: 'u-szeged.hu'
+      url: 'https://u-szeged.hu/sztehirek/2023-januar/pedagogus-eletpalyara'
+      source: 'u-szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/u-szeged_hu_pedagogus-eletpalyara.jpeg'
 
-- id: minta
-  date: 2024-06-21
-  title: 'Példa'
-  url: 'https://radio88.hu/...'
-  outlet: 'tv.szeged.hu'
-  screenshot: '/images/sajtomegjelenesek/2024/bibo-halas_huhu.jpg'
+    - id: 2023-01-25_u-szeged_start-osztondij-junior-akademia
+      date: '2023. 01. 25.'
+      title: 'u-szeged.hu'
+      url: 'https://u-szeged.hu/szte-osztondijak-start-osztondij-junior-akademia'
+      source: 'u-szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/u-szeged_hu_szte-osztondijak-start-osztondij-junior-akademia.jpeg'
 
-- id: minta
-  date: 2024-06-21
-  title: 'Példa'
-  url: 'https://radio88.hu/...'
-  screenshot: '/images/sajtomegjelenesek/2024/delmagyar_kariko-katalin-adta-at-dijaikat-a-fiataloknak.jpg'
+    - id: 2023-01-26_hodpress_szte-agrar-szakos-hallgatoi
+      date: '2023. 01. 26.'
+      title: 'hodpress.hu'
+      url: 'https://www.hodpress.hu/2023/01/25/akar-150-ezer-forintos-osztondijat-is-kaphatnak-az-szte-agrar-szakos-hallgatoi/'
+      source: 'hodpress.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/hodpress_hu_akar-150-ezer-forintos-osztondijat-is-kaphatnak-az-szte-agrar-szakos-hallgatoi.jpeg'
 
-- id: minta
-  date: 2024. 05. 08.
-  title: 'Prezentációs karaoke is várt a döntősökre'
-  url: 'https://www.delmagyar.hu/helyi-kozelet/2024/05/prezentacios-karaoke-is-vart-a-dontosokre-galeria%20'
-  screenshot: '/images/sajtomegjelenesek/2024/delmagyar_prezentacios-karaoke-is-vart-a-dontosokre.jpg'
+    - id: 2023-01-30_u-szeged_osztondijak-szte
+      date: '2023. 01. 30.'
+      title: 'u-szeged.hu'
+      url: 'https://u-szeged.hu/sztehirek/2023-januar/osztondijak-szte'
+      source: 'u-szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/u-szeged_hu_osztondijak-szte.jpeg'
 
-- id: minta
-  date: 2024. 05. 13.
-  title: 'Megrendezésre került a Prezilimpia 2024 országos döntője '
-  url: 'https://eco.u-szeged.hu/hirek-esemenyek/gtk-2024-majus/megrendezesre-kerult?objectParentFolderId=26017%20'
-  screenshot: '/images/sajtomegjelenesek/2024/eco_u-szeged_megrendezesre-kerult-a-prezilimpia-orszag.jpg'
+    - id: 2023-02-10_24_felveteli-osztondijak-osszege
+      date: '2023. 02. 10.'
+      title: '24.hu'
+      url: 'https://24.hu/kozelet/2023/01/30/szegedi-tudomanyegyetem-felveteli-osztondijak-osszege-tudnivalok-alapitvanyi-vallalat-start/'
+      source: '24.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/24_hu_szegedi-tudomanyegyetem-felveteli-osztondijak-osszege.jpeg'
 
-- id: minta
-  date: 2024-06-21
-  title: 'Példa'
-  url: 'https://radio88.hu/...'
-  screenshot: '/images/sajtomegjelenesek/2024/gdszeged_szte-juniorok-viadala-2024-koezepiskolai-csapatvetelkedo.jpg'
+    - id: 2023-02-17_u-szeged_atadtak-egyetem
+      date: '2023. 02. 17.'
+      title: '24.hu'
+      url: 'https://u-szeged.hu/sztehirek/2023-februar/atadtak-egyetem?objectParentFolderId=19355'
+      source: 'u-szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/u-szeged_hu_atadtak-az-egyetem-prospektustartoit.jpeg'
 
-- id: minta
-  date: '2024. 06. 21.'
-  title: 'Az Év Tehetsége az orvostudományban Páli Emese Kincső V. éves medikus hallgatónk '
-  url: 'https://www.med.u-szeged.hu/hirek/2024-junius/ev-tehetsege%20'
-  screenshot: '/images/sajtomegjelenesek/2024/med_u-szegedev-tehetsege.jpg'
+    - id: 2023-02-17_tv-szeged_szegedi-hirado
+      date: '2023. 02. 17.'
+      title: 'tv.szeged.hu'
+      url: 'https://tv.szeged.hu/cikk/szegedi-hirado-2023-februar-17-en'
+      source: 'tv.szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/tv_szeged_hu_az-egyenlo-eselyekert-tanitanak.jpeg'
 
-- id: minta
-  date: 2024. 04. 24.
-  title: 'SZTE Juniorok Viadala döntő'
-  url: 'https://www.moravarosi.hu/hirek/szte-juniorok-viadala-doento%20'
-  screenshot: '/images/sajtomegjelenesek/2024/moravarosi_szte-juniorok-viadala-donto.jpg'
+    - id: 2023-03-03_delmagyar_felkeszito-tabor-fotok
+      date: '2023. 03. 03.'
+      title: 'delmagyar.hu'
+      url: 'https://www.delmagyar.hu/helyi-kozelet/2023/02/kinyitjak-a-vilagot-a-falusi-kisdiakoknak-elkezdodott-a-felkeszito-tabor-fotok'
+      source: 'delmagyar.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/delmagyar_hu_kinyitjak-a-vilagot-a-falusi-kisdiakoknak.jpeg'
 
-- id: minta
-  date: 2024. 06. 21.
-  title: 'A Szegedi Tudományegyetem legtehetségesebb fiataljait díjazták'
-  screenshot: '/images/sajtomegjelenesek/2024/radio88_a-szegedi-tudomanyegyetem-legtehetsegesebb-fiataljait-dijaztak.jpg'
+    - id: 2023-04-04_vasvari_szte-juniorok-viadala
+      date: '2023. 04. 04.'
+      title: 'vasvari.hu'
+      url: 'https://www.vasvari.hu/hirek/szte-juniorok-viadala'
+      source: 'vasvari.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/vasvari_hu_szte-juniorok-viadala.jpg|beol_hu_oroshazi-tonhalak-gyorsak-voltak-remekeltek-a-juniorok-viadalan.jpg|bolyai-kkt_edu_hu_juniorakademia-siker.jpg|gyakg.u-szeged_hu_szte-juniorok-viadala-2023.jpg|moravarosi_hu_szte-juniorok-viadala-doento.jpg|oroscafe_hu_juniorok-viadala-elodonto.jpg|radnoti-szeged_edu_hu_juniorok-viadala-muveltseg-diadala.jpg|u-szeged_hu_haromszazezezret-nyertek.jpg'
 
-- id: minta
-  date: 2024-06-21
-  title: 'Példa'
-  url: 'https://radio88.hu/...'
-  screenshot: '/images/sajtomegjelenesek/2024/radio88_elindult-a-tanitsunk-magyarorszagert-szegedi-tabora.jpg'
+    - id: 2023-04-05_oroscafe_juniorok-viadala-elodonto
+      date: '2023. 04. 05.'
+      title: 'oroscafe.hu'
+      url: 'https://oroscafe.hu/2023/04/04/oroshazi-hirek-tancsics-mihaly-gimnazium-juniorok-viadala-elodonto-es-kosarlabda-bajnoksag-orszagos-donto/'
+      source: 'oroscafe.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/oroscafe_hu_juniorok-viadala-elodonto.jpg'
 
-- id: minta
-  date: 2024. 04. 26.
-  title: 'Ma tartják a Juniorok Viadala regionális középiskolai csapatvetélkedő döntőjét'
-  url: 'https://www.radio88.hu/ma-tartjak-a-juniorok-viadala-regionalis-kozepiskolai-csapatvetelkedo-dontojet/'
-  screenshot: '/images/sajtomegjelenesek/2024/radio88_ma-tartjak-a-juniorok-viadala-regionalis-kozepiskolai-csapatvetelkedo-dontojet.jpg'
+    - id: 2023-04-23_beol_juniorok-viadalan
+      date: '2023. 04. 23.'
+      title: 'beol.hu'
+      url: 'https://www.beol.hu/helyi-kozelet/2023/04/az-oroshazi-tonhalak-gyorsak-voltak-remekeltek-a-juniorok-viadalan'
+      source: 'beol.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/beol_hu_oroshazi-tonhalak-gyorsak-voltak-remekeltek-a-juniorok-viadalan.jpg'
 
-- id: minta
-  date: 2024-06-21
-  title: 'Példa'
-  url: 'https://radio88.hu/...'
-  screenshot: '/images/sajtomegjelenesek/2024/szeged_hatodik-taborat-kezdte-meg-tanitsunk-magyarorszagert-program-szegeden.jpg'
+    - id: 2023-04-23_u-szeged_haromszazezezret-nyertek
+      date: '2023. 04. 23.'
+      title: 'u-szeged.hu'
+      url: 'https://u-szeged.hu/sztehirek/2023-aprilis/haromszazezezret-nyertek'
+      source: 'u-szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/u-szeged_hu_haromszazezezret-nyertek.jpg'
 
-- id: minta
-  date: 2024-06-21
-  title: 'Példa'
-  url: 'https://radio88.hu/...'
-  screenshot: '/images/sajtomegjelenesek/2024/szeged_kezrol-kezre-adtak-kariko-katalint.jpg'
+    - id: 2023-04-25_moravarosi_szte-juniorok-viadala-doento
+      date: '2023. 04. 25.'
+      title: 'moravarosi.hu'
+      url: 'https://www.moravarosi.hu/hirek/szte-juniorok-viadala-doento'
+      source: 'moravarosi.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/moravarosi_hu_szte-juniorok-viadala-doento.jpg'
 
-- id: minta
-  date: 2024-06-21
-  title: 'Példa'
-  url: 'https://radio88.hu/...'
-  screenshot: '/images/sajtomegjelenesek/2024/szeged_kihirdettek-a-zirzen-janka-osztondijakat-a-szegedi-tudomanyegyetemen.jpg'
+    - id: 2023-04-26_radnoti-szeged_juniorok-viadala-muveltseg-diadala
+      date: '2023. 04. 26.'
+      title: 'radnoti-szeged.edu.hu'
+      url: 'https://radnoti-szeged.edu.hu/2023/04/25/juniorok-viadala-muveltseg-diadala/'
+      source: 'radnoti-szeged.edu.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/radnoti-szeged_edu_hu_juniorok-viadala-muveltseg-diadala.jpg'
 
-- id: minta
-  date: 2024. 06. 18.
-  title: 'Százötvenöt díjazott hat területen: kiosztották a TIK-ben az idei Talent-díjakat'
-  url: 'https://szeged.hu/cikk/szazotvenot-dijazott-hat-teruleten-kiosztottak-a-tik-ben-az-idei-talent-dijakat-pal-emese-kincso-az-orvostudomany-nagy-kinga-a-termeszettudomany-teruleten-lett-az-ev-tehetsege%20'
-  screenshot: '/images/sajtomegjelenesek/2024/szeged_kiosztottak-a-tik-ben-az-idei-talent-dijakat.jpg'
+    - id: 2023-04-27_gyakg-u-szeged_szte-juniorok-viadala-2023
+      date: '2023. 04. 27.'
+      title: 'Bajnok az SZTE Gyakorló Gimnázium és Általános Iskola'
+      url: 'http://www.gyakg.u-szeged.hu/sagvari/2023/04/26/szte-juniorok-viadala-2023/'
+      source: 'gyakg.u-szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/gyakg.u-szeged_hu_szte-juniorok-viadala-2023.jpg'
 
-- id: minta
-  date: 2024-06-21
-  title: 'Példa'
-  url: 'https://radio88.hu/...'
-  screenshot: '/images/sajtomegjelenesek/2024/szeged_nyilt-nappal-egybekotott-szuloi-ertekezlet-szte.jpg'
+    - id: 2023-04-20_bolyai-kkt_index-start-20
+      date: '2023. 04. 20.'
+      title: 'bolyai-kkt.edu.hu'
+      url: 'http://www.bolyai-kkt.edu.hu/index.php?start=20'
+      source: 'bolyai-kkt.edu.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/bolyai-kkt_edu_hu_juniorakademia-siker.jpg'
 
-- id: minta
-  date: 2024. 05. 09.
-  title: 'Prezilimpia hatodszor az SZTE-n '
-  url: 'https://szeged.hu/cikk/prezilimpia-hatodszor-az-szte-n%20'
-  screenshot: '/images/sajtomegjelenesek/2024/szeged_prezilimpia-hatodszor-az-szte-n.jpg'
+    - id: 2023-06-13_oroscafe_unnepi-diszkozgyulese
+      date: '2023. 06. 13.'
+      title: 'Évtizedek emlékeit idézték fel a Táncsics gimnázium ünnepi díszközgyűlésén'
+      url: 'https://oroscafe.hu/2023/04/20/oroshazi-hirek-90-ev-emlekeit-tancsics-mihaly-gimnazium-unnepi-diszkozgyulese/'
+      source: 'oroscafe.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/oroscafe_hu-90-ev-emlekeit-tancsics-mihaly-gimnazium-unnepi-diszkozgyulese.jpg'
 
-- id: minta
-  date: 2024-06-21
-  title: 'Példa'
-  url: 'https://radio88.hu/...'
-  screenshot: '/images/sajtomegjelenesek/2024/szeged365_havi-szazezer-forintot-kapnak-a-pedagogus-hallgatok.jpg'
+    - id: 2023-06-13_u-szeged_szte-unkp-osztondij
+      date: '2023. 06. 13.'
+      title: 'Több mint 300 SZTE-s hallgató nyert ösztöndíjat az Új Nemzeti Kiválóság Programban'
+      url: 'https://u-szeged.hu/sztehirek/2023-junius/szte-unkp-osztondij-'
+      source: 'u-szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/u-szeged_hu-szte-unkp-osztondij.jpg'
 
-- id: minta
-  date: 2024. 06. 18.
-  title: 'Nívós elismerésben részesült a szegedi énekes, Tóth Jonathan'
-  url: 'https://szeged365.hu/2024/06/18/nivos-elismeresben-reszesult-a-szegedi-enekes-toth-jonathan-elnyerte-az-szte-talent-kivalosagi-lista-ev-muvesze-osztondijat/'
-  screenshot: '/images/sajtomegjelenesek/2024/szeged365_toth-jonathan-elnyerte-az-szte-talent-kivalosagi-lista-ev-muvesze-osztondijat.jpg'
+    - id: 2023-05-10_promenad24_uj-nemzeti-kivalosag-programban
+      date: '2023. 05. 10.'
+      title: 'A szegedi egyetem több mint 300 hallgatója nyert ösztöndíjat az Új Nemzeti Kiválóság Programban'
+      url: 'https://promenad24.hu/2023/06/13/a-szegedi-egyetem-tobb-mint-300-hallgatoja-nyert-osztondijat-az-uj-nemzeti-kivalosag-programban/'
+      source: 'promenad24.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/promenad24_hu-az-szte-tobb-mint-300-hallgatoja-nyert-osztondijat-az-uj-nemzeti-kivalosag-programban.jpg'
 
-- id: minta
-  date: 2024-06-21
-  title: 'Példa'
-  url: 'https://radio88.hu/...'
-  screenshot: '/images/sajtomegjelenesek/2024/szegedinap_alkotoi-palyazatokkal-folytatodik-a-nobel-hetek.jpg'
+    - id: 2023-05-12_szeged_prezilimpia-avagy-az-eladas-muveszete
+      date: '2023. 05. 12.'
+      title: 'Prezilimpia, avagy az eladás művészete'
+      url: 'https://szeged.hu/cikk/prezilimpia-avagy-az-eladas-muveszete'
+      source: 'szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/szeged_hu-prezilimpia-avagy-az-eladas-muveszete.jpg'
 
-- id: minta
-  date: 2024. 05. 14.
-  title: 'SZTE Juniorok Viadala – döntőben a kisteleki Árpád Fejedelem Katolikus Gimnázium és Technikum '
-  url: 'https://szegekif.hu/2024/05/14/szte-juniorok-viadala-dontoben-a-kisteleki-arpad-fejedelem-katolikus-gimnazium-es-technikum/'
-  screenshot: '/images/sajtomegjelenesek/2024/szegekif_szte-juniorok-viadala-dontoben-a-kisteleki-arpad-fejedelem-gimnazium.jpg'
+    - id: 2023-05-16_u-szeged_szte-prezilimpia-2023
+      date: '2023. 05. 16.'
+      title: 'SZTE Prezilimpia 2023 országos döntő'
+      url: 'https://u-szeged.hu/sztehirek/2023-majus/szte-prezilimpia-2023'
+      source: 'u-szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/u-szeged_hu-szte-prezilimpia-2023.jpg'
 
-- id: minta
-  date: 2024-06-21
-  title: 'Példa'
-  url: 'https://radio88.hu/...'
-  screenshot: '/images/sajtomegjelenesek/2024/szig-kalocsa_juniorok-viadala.jpg'
+    - id: 2023-06-08_eco-u-szeged_szte-prezilimpia-2023
+      date: '2023. 06. 08.'
+      title: 'SZTE Prezilimpia 2023 országos döntő'
+      url: 'https://eco.u-szeged.hu/hirek-esemenyek/gtk-2023-majus/szte-prezilimpia-2023?objectParentFolderId=26018'
+      source: 'eco.u-szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/eco_u-szeged_hu-szte-prezilimpia-2023.jpg'
 
-- id: minta
-  date: 2024-06-21
-  title: 'Példa'
-  url: 'https://radio88.hu/...'
-  screenshot: '/images/sajtomegjelenesek/2024/szilady_szte-juniorok-viadala.jpg'
+    - id: 2023-06-08_delmagyar_legkivalobb-hallgatokat-galeria
+      date: '2023. 06. 08.'
+      title: 'Díjazták a legkiválóbb hallgatókat – Galéria'
+      url: 'https://www.delmagyar.hu/helyi-kozelet/2023/06/dijaztak-a-legkivalobb-hallgatokat-galeria'
+      source: 'delmagyar.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/delmagyar_hu-dijaztak-a-legkivalobb-hallgatokat-galeria.jpg'
 
-- id: minta
-  date: 2024. 04. 23.
-  title: 'Hátrányos helyzetű gyerekeket látunk vendégül az Oroszlány elleni meccsen'
-  url: 'http://www.szte-szedeak.hu/hatranyos-helyzetu-gyermekeket-latunk-vendegul-az-oroszlany-elleni-meccsen/'
-  screenshot: '/images/sajtomegjelenesek/2024/szte-szedeak_hatranyos-helyzetu-gyermekeket-latunk-vendegul-az-oroszlany-elleni-meccsen.jpg'
+    - id: 2023-06-12_szeged_talent-osztondijjal
+      date: '2023. 06. 12.'
+      title: 'Talent ösztöndíjjal ismerte el legtehetségesebb hallgatóit a Szegedi Tudományegyetem'
+      url: 'https://szeged.hu/cikk/talent-osztondijjal-ismerte-el-legtehetsegesebb-hallgatoit-a-szegedi-egyetem'
+      source: 'szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/szeged_hu-talent-osztondijjal-ismerte-el-legtehetsegesebb-hallgatoit-a-szegedi-egyetem.jpg'
 
-- id: minta
-  date: 2024. 06. 20.
-  title: 'Az egyetem legtehetségesebb fiataljait díjazták'
-  url: 'https://tv.szeged.hu/cikk/az-egyetem-legtehetsegesebb-fiataljait-dijaztak%20'
-  screenshot: '/images/sajtomegjelenesek/2024/tv_szeged_az-egyetem-legtehetsegesebb-fiataljait-dijaztak.jpg'
+    - id: 2023-06-22_u-szeged_talent-osztondijjal
+      date: '2023. 06. 22.'
+      title: 'Talent ösztöndíjjal jutalmazták a tehetséges hallgatókat'
+      url: 'https://u-szeged.hu/sztehirek/2023-junius/talent-osztondijjal'
+      source: 'u-szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/u-szeged_hu-talent-osztondijjal-jutalmaztak-a-tehetseges-hallgatokat.jpg'
 
-- id: minta
-  date: 2024. 06. 20.
-  title: '10 millió forinttal jutalmazták a tehetséget és a szorgalmat az idei SZTE Talent díjátadón'
-  url: 'https://u-szeged.hu/sztehirek/2024-junius/10-millio-forinttal-jutalmaztak-a-tehetseget-szte-talent-dijatado%20'
-  screenshot: '/images/sajtomegjelenesek/2024/u-szeged_10-millio-forinttal-jutalmaztak-a-tehetseget-szte-talent-dijatado.jpg'
+    - id: 2023-06-24_beol_mentorprogramban-jeleskedo-pedagogusokat
+      date: '2023. 06. 24.'
+      title: 'A mentorprogramban jeleskedő pedagógusokat jutalmaztak'
+      url: 'https://www.beol.hu/helyi-kozelet/2023/06/a-mentorprogramban-jeleskedo-pedagogusokat-jutalmaztak'
+      source: 'beol.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/beol_hu-a-mentorprogramban-jeleskedo-pedagogusokat-jutalmaztak.jpg'
 
-- id: minta
-  date: 2024-06-21
-  title: 'Példa'
-  url: 'https://radio88.hu/...'
-  screenshot: '/images/sajtomegjelenesek/2024/u-szeged_kulonleges-elonyre-tehet-szert.jpg'
+    - id: 2023-07-11_oroscafe_egyetemistak-es-a-kisdiakok
+      date: '2023. 07. 11.'
+      title: 'Egyetemisták segítik a tanárok munkáját a Czinában'
+      url: 'https://oroscafe.hu/2023/06/24/tanitsuk-magyarorszagot-mentorprogram-oroshaza-szegedi-tudomanyegyetem-egyutt-a-czinaban-az-egyetemistak-es-a-kisdiakok-var-meg/'
+      source: 'oroscafe.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/oroscafe_hu-egyetemistak-segitik-a-a-tanarok-munkajat-a-czinaban.jpg'
 
-- id: minta
-  date: 2024-06-21
-  title: 'Példa'
-  url: 'https://radio88.hu/...'
-  screenshot: '/images/sajtomegjelenesek/2024/u-szeged_mit-kell-tudni-felveteli.jpg'
+    - id: 2023-07-28_u-szeged_zirzen-janka
+      date: '2023. 07. 28.'
+      title: 'Zirzen Janka Ösztöndíjprogram'
+      url: 'https://u-szeged.hu/sztehirek/2023-julius/zirzen-janka?objectParentFolderId=28447'
+      source: 'u-szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/u-szeged_hu-zirzen-janka.jpg'
 
-- id: minta
-  date: 2024. 05. 08.
-  title: 'Radnótisok nyerték az idei Juniorok Viadalát'
-  url: 'https://u-szeged.hu/sztehirek/2024-majus/radnotisok-nyertek-idei%20'
-  screenshot: '/images/sajtomegjelenesek/2024/u-szeged_radnotisok-nyertek-a-2024-juniorok-viadalat.jpg'
+    - id: 2023-08-01_u-szeged_szte-pont-ott-party-2023
+      date: '2023. 08. 01.'
+      title: 'Több száz résztvevő a Szegedi Tudományegyetem 2023-as Pont Ott Party-ján'
+      url: 'https://u-szeged.hu/sztehirek/2023-julius/szte-pont-ott-party-2023-?objectParentFolderId=28447'
+      source: 'u-szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/u-szeged_hu-szte-pont-ott-party.jpg'
 
-- id: minta
-  date: 2024. 04. 22.
-  title: 'Az SZTE és a Nobel-díj – Alkotói pályadíjakat adott át Karikó Katalin '
-  url: 'https://u-szeged.hu/sztehirek/2024-aprilis/szte-nobel-dij-alkotoi%20'
-  screenshot: '/images/sajtomegjelenesek/2024/u-szeged_szte-nobel-dij-alkotoi.jpg'
+    - id: 2023-09-06_u-szeged_allami-helyeket-is
+      date: '2023. 09. 06.'
+      title: 'Állami helyeket is hirdet az SZTE a pótfelvételiben'
+      url: 'https://u-szeged.hu/sztehirek/2023-augusztus/allami-helyeket-is'
+      source: 'u-szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/u-szeged_hu-allami-helyeket-is-hirdet-az-szte-a-potfelveteliben.jpg'
 
-- id: minta
-  date: 2024-06-21
-  title: 'Példa'
-  url: 'https://radio88.hu/...'
-  screenshot: '/images/sajtomegjelenesek/2024/vasvari_szte-juniorok-viadala.jpg'
+    - id: 2023-10-04_delmagyar_tanitsunk-magyarorszagert-program
+      date: '2023. 10. 04.'
+      title: 'Kisbuszokkal gyarapodott a Tanítsunk Magyarországért program'
+      url: 'https://www.delmagyar.hu/orszag-vilag/2023/09/kisbuszokkal-gyarapodott-a-tanitsunk-magyarorszagert-program'
+      source: 'delmagyar.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/delmagyar_hu-kisbuszokkal-gyarapodott-a-tanitsunk-magyarorszagert-program.jpg'
 
-- id: minta
-  date: 2024-06-21
-  title: 'Példa'
-  url: 'https://radio88.hu/...'
-  screenshot: '/images/sajtomegjelenesek/2024/youtube_szte-nyílt-nap-2023.jpg'
+    - id: 2023-10-04_promenad24_otodik-szegedi-taborat
+      date: '2023. 10. 04.'
+      title: 'A Tanítsunk Magyarországért! országos program ötödik szegedi táborát szombaton tartják'
+      url: 'https://promenad24.hu/2023/09/13/a-tanitsunk-magyarorszagert-orszagos-program-otodik-szegedi-taborat-szombaton-tartjak/'
+      source: 'promenad24.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/promenad24_hu-a-tanitsunk-magyarorszagert-orszagos-program-otodik-szegedi-taborat-szombaton-tartjak.jpg'
+
+    - id: 2023-10-05_u-szeged_tapasztalataikkal
+      date: '2023. 10. 05.'
+      title: 'Tapasztalataikkal támogatták egymást a mentorok az ötödik Tanítsunk Magyarországért táborban'
+      url: 'https://u-szeged.hu/sztehirek/2023-oktober/tapasztalataikkal'
+      source: 'u-szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/u-szeged_hu-sztehirek-2023-oktober-tapasztalataikkal.jpeg'
+
+    - id: 2023-11-07_szegedma_segitik-a-videki-diakokat
+      date: '2023. 11. 07.'
+      title: 'A Tanítsunk Magyarországért! program keretein belül idén is segítik a vidéki diákokat a szegedi egyetemisták'
+      url: 'https://szegedma.hu/kozelet/2023/10/a-tanitsunk-magyarorszagert-program-keretein-belul-iden-is-segitik-a-videki-diakokat-a-szegedi-egyetemistak'
+      source: 'szegedma.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/szegedma_hu-a-tanitsunk-magyarorszagert-program-keretein-belul-iden-is-segitik-a-videki-diakokat-a-szegedi-egyetemistak.jpeg'
+
+    - id: 2023-11-09_delmagyar_szte-uj-hallgatoit-galeria
+      date: '2023. 11. 09.'
+      title: 'Komoly összegekkel támogatta az SZTE új hallgatóit'
+      url: 'https://www.delmagyar.hu/helyi-kultura/2023/11/komoly-osszegekkel-tamogatta-az-szte-uj-hallgatoit-galeria'
+      source: 'delmagyar.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/delmagyar_hu-komoly-osszegekkel-tamogatta-az-szte-uj-hallgatoit-galeria.jpeg'
+
+    - id: 2023-11-14_u-szeged_atadtak-start-start
+      date: '2023. 11. 14.'
+      title: 'Átadták a Start, Start Plusz és Zirzen Janka ösztöndíjakat'
+      url: 'https://u-szeged.hu/sztehirek/2023-november/atadtak-start-start'
+      source: 'u-szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/u-szeged_hu-atadtak-start-start.jpeg'
+
+    - id: 2023-11-14_delmagyar_het-kisbuszt-kapott
+      date: '2023. 11. 14.'
+      title: 'Hét kisbuszt kapott a Szegedi Tudományegyetem'
+      url: 'https://www.delmagyar.hu/helyi-kozelet/2023/11/het-kisbuszt-kapott-a-szegedi-tudomanyegyetem-foto'
+      source: 'delmagyar.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/delmagyar0hu-het-kisbuszt-kapott-a-szegedi-tudomanyegyetem.jpeg'
+
+    - id: 2023-11-14_radio7_het-elektromos-kisbusszal
+      date: '2023. 11. 14.'
+      title: 'Hét elektromos kisbusszal gazdagodott a Szegedi Tudományegyetem'
+      url: 'https://radio7.hu/het-elektromos-kisbusszal-gazdagodott-a-szegedi-tudomanyegyetem'
+      source: 'radio7.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/radio7_hu-het-elektromos-kisbusszal-gazdagodott-a-szegedi-tudomanyegyetem.jpeg'
+
+    - id: 2023-11-14_szegeder_het-kisbuszt-adomanyoztak
+      date: '2023. 11. 14.'
+      title: 'Hét kisbuszt adományoztak a Szegedi Tudományegyetemnek'
+      url: 'https://szegeder.hu/helyi/2023-11-14/het-kisbuszt-adomanyoztak-a-szegedi-tudomanyegyetemnek/6553664247d3c005f10b8847'
+      source: 'szegeder.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/szegeder_hu-het-kisbuszt-adomanyoztak-a-szegedi-tudomanyegyetemnek.jpeg'
+
+    - id: 2023-11-14_szegedma_kisbuszok-egy-nagy-cel-erdekeben
+      date: '2023. 11. 14.'
+      title: 'Kisbuszok egy nagy cél érdekében'
+      url: 'https://szegedma.hu/szeged/2023/11/kisbuszok-egy-nagy-cel-erdekeben%20'
+      source: 'szegedma.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/szegedma_hu-kisbuszok-egy-nagy-cel-erdekeben.jpeg'
+
+    - id: 2023-11-14_szegedinap_het-elektromos-kisbuszt-kapott
+      date: '2023. 11. 14.'
+      title: 'Hét elektromos kisbuszt kapott a Szegedi Tudományegyetem'
+      url: 'https://szegedinap.hu/helyi/2023/11/14/het-elektromos-kisbuszt-kapott-a-szegedi-tudomanyegyetem/%20'
+      source: 'szegedinap.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/szegedinap_hu-het-elektromos-kisbuszt-kapott-a-szegedi-tudomanyegyetem.jpeg'
+
+    - id: 2023-11-18_u-szeged_kisbuszok-egy-nagy
+      date: '2023. 11. 18.'
+      title: 'Kisbuszok egy nagy ügyért'
+      url: 'https://u-szeged.hu/sztehirek/2023-november/kisbuszok-egy-nagy%20'
+      source: 'u-szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/u-szeged_hu-kisbuszok-egy-nagy.jpeg'
+
+    - id: 2023-11-19_szegedinap_elso-alkalommal-rendeztek-junior-sakkviadalt
+      date: '2023. 11. 19.'
+      title: 'Első alkalommal rendeztek Junior Sakkviadalt a Szegedi Tudományegyetemen'
+      url: 'https://szegedinap.hu/egyetem/2023/11/18/elso-alkalommal-rendeztek-junior-sakkviadalt-a-szegedi-tudomanyegyetemen/'
+      source: 'szegedinap.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/szegedinap_hu-elso-alkalommal-rendeztek-junior-sakkviadalt-a-szegedi-tudomanyegyetemen.jpeg'
+
+    - id: 2023-11-22_webradio_elso-szte-junior-sakkviadalt
+      date: '2023. 11. 22.'
+      title: 'Lékó Péter nyitotta meg az első SZTE Junior Sakkviadalt'
+      url: 'https://webradio.hu/hirek/belfold/leko-peter-nyitotta-meg-az-elso-szte-junior-sakkviadalt'
+      source: 'webradio.hu'
+      screenshot: '/images/sajtomegjelenesek/2023/webradio_hu-leko-peter-nyitotta-meg-az-elso-szte-junior-sakkviadalt.jpeg'
+
+    - id: 2024-01-27_szeged_nyilt-nappal-egybekotott-szuloi-ertekezlettel
+      date: '2024. 01. 27.'
+      title: 'Nyílt nappal egybekötött szülői értekezlettel várta a családokat a Szegedi Tudományegyetem'
+      url: 'https://szeged.hu/cikk/nyilt-nappal-egybekotott-szuloi-ertekezlettel-varta-a-csaladokat-a-szegedi-tudomanyegyetem'
+      source: 'szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2024/szeged_nyilt-nappal-egybekotott-szuloi-ertekezlet-szte.jpg'
+
+2024:
+    - id: 2024-01-17_youtube_watch-mrLsx32PfZY
+      date: '2024. 01. 17.'
+      title: 'SZTE Nyílt Nap 2023 - Ösztöndíjlehetőségek és tehetséggondozás - Bemutatkozik a Junior Akadémia'
+      url: 'https://www.youtube.com/watch?v=mrLsx32PfZY'
+      source: 'youtube.com'
+      screenshot: '/images/sajtomegjelenesek/2024/youtube_szte-nyilt-nap-2023.jpg'
+
+    - id: 2024-01-30_u-szeged_mit-kell-tudni-felveteli
+      date: '2024. 01. 30.'
+      title: 'Mit kell tudni a felvételi stratégiáról, a pontkalkulátorról, a jelentkezési lapról? Nyílt napot tartott az SZTE'
+      url: 'https://u-szeged.hu/sztehirek/2024-januar/mit-kell-tudni-felveteli'
+      source: 'u-szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2024/u-szeged_mit-kell-tudni-felveteli.jpg'
+
+    - id: 2024-02-02_24_ennyi-osztondij-jar-szegedi-tudomanyegyetem
+      date: '2024. 02. 02.'
+      title: 'Ennyi ösztöndíj jár neked, ha a Szegedi Tudományegyetemet választod!'
+      url: 'https://24.hu/belfold/2024/02/02/ennyi-osztondij-jar-szegedi-tudomanyegyetem-szte-felveteli-anyagi-jutattasok/'
+      source: '24.hu'
+      screenshot: '/images/sajtomegjelenesek/2024/24_ennyi-osztondij-jar-szegedi-tudomanyegyetem-szte-felveteli-anyagi-jutattasok.jpg'
+
+    - id: 2024-02-02_u-szeged_kulonleges-elonyre-tehet-240202
+      date: '2024. 02. 02.'
+      title: 'Különleges előnyre tehet szert, aki megpályázza az SZTE START ösztöndíjat'
+      url: 'https://u-szeged.hu/felveteli/2024/kulonleges-elonyre-tehet-240202'
+      source: 'u-szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2024/u-szeged_kulonleges-elonyre-tehet-szert.jpg'
+
+    - id: 2024-02-23_szeged_hatodik-taborat-kezdte-meg-tanitsunk-magyarorszagert
+      date: '2024. 02. 23.'
+      title: 'Hatodik táborát kezdte meg Tanítsunk Magyarországért! program Szegeden'
+      url: 'https://szeged.hu/cikk/hatodik-taborat-kezdte-meg-tanitsunk-magyarorszagert-program-szegeden'
+      source: 'szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2024/szeged_hatodik-taborat-kezdte-meg-tanitsunk-magyarorszagert-program-szegeden.jpg'
+
+    - id: 2024-02-23_radio88_elindult-a-tanitsunk-magyarorszagert-szegedi
+      date: '2024. 02. 23.'
+      title: 'Elindult a Tanítsunk Magyarországért szegedi tábora'
+      url: 'https://www.radio88.hu/elindult-a-tanitsunk-magyarorszagert-szegedi-tabora/'
+      source: 'radio88.hu'
+      screenshot: '/images/sajtomegjelenesek/2024/radio88_elindult-a-tanitsunk-magyarorszagert-szegedi-tabora.jpg'
+
+    - id: 2024-03-02_gdszeged_szte-juniorok-viadala-2024-koezepiskolai
+      date: '2024. 03. 02.'
+      title: 'SZTE Juniorok Viadala - 2024 középiskolai csapatvetélkedő'
+      url: 'https://www.gdszeged.hu/hirek/szte-juniorok-viadala-2024-koezepiskolai-csapatvetelkedo'
+      source: 'gdszeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2024/gdszeged_szte-juniorok-viadala-2024-koezepiskolai-csapatvetelkedo.jpg'
+
+    - id: 2024-03-03_vasvari_szte-juniorok-viadala
+      date: '2024. 03. 03.'
+      title: 'SZTE Juniorok Viadala'
+      url: 'https://www.vasvari.hu/hirek/szte-juniorok-viadala'
+      source: 'vasvari.hu'
+      screenshot: '/images/sajtomegjelenesek/2024/vasvari_szte-juniorok-viadala.jpg'
+
+    - id: 2024-03-12_szegedinap_alkotoi-palyazatokkal-folytatodik-a-nobel-hetek
+      date: '2024. 03. 12.'
+      title: 'Alkotói pályázatokkal folytatódik a „Nobel-hetek a Szegedi Tudományegyetemen” ismeretterjesztő kampány'
+      url: 'https://szegedinap.hu/egyetem/2024/03/12/alkotoi-palyazatokkal-folytatodik-a-nobel-hetek-a-szegedi-tudomanyegyetemen-ismeretterjeszto-kampany/'
+      source: 'szegedinap.hu'
+      screenshot: '/images/sajtomegjelenesek/2024/szegedinap_alkotoi-palyazatokkal-folytatodik-a-nobel-hetek.jpg'
+
+    - id: 2024-03-13_bibo-halas_b18055663897fd5848d9d5857fa446a3
+      date: '2024. 03. 13.'
+      title: 'SZTE Juniorok Viadala'
+      url: 'https://bibo-halas.edu.hu/hirek/b18055663897fd5848d9d5857fa446a3'
+      source: 'bibo-halas.edu.hu'
+      screenshot: '/images/sajtomegjelenesek/2024/bibo-halas_huhu.jpg'
+
+    - id: 2024-03-26_szeged_kihirdettek-a-zirzen-janka-osztondijakat
+      date: '2024. 03. 26.'
+      title: 'Kihirdették a Zirzen Janka ösztöndíjakat a Szegedi Tudományegyetemen'
+      url: 'https://szeged.hu/cikk/kihirdettek-a-zirzen-janka-osztondijakat-a-szegedi-tudomanyegyetemen'
+      source: 'szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2024/szeged_kihirdettek-a-zirzen-janka-osztondijakat-a-szegedi-tudomanyegyetemen.jpg'
+
+    - id: 2024-03-26_szilady_szte-juniorok-viadala-2024
+      date: '2024. 03. 26.'
+      title: 'SZTE Juniorok Viadala - 2024'
+      url: 'https://szilady.net/hireink/1183-szte-juniorok-viadala-2024'
+      source: 'szilady.net'
+      screenshot: '/images/sajtomegjelenesek/2024/szilady_szte-juniorok-viadala.jpg'
+
+    - id: 2024-03-28_szeged365_havi-szazezer-forintot-kapnak-azok
+      date: '2024. 03. 28.'
+      title: 'Havi százezer forintot kapnak azok a hallgatók az SZTE-n, akik elhivatottak a pedagógusi pálya iránt'
+      url: 'https://szeged365.hu/2024/03/28/havi-szazezer-forintot-kapnak-azok-a-hallgatok-az-szte-n-akik-elhivatottak-a-pedagogusi-palya-irant/'
+      source: 'szeged365.hu'
+      screenshot: '/images/sajtomegjelenesek/2024/szeged365_havi-szazezer-forintot-kapnak-a-pedagogus-hallgatok.jpg'
+
+    - id: 2024-04-15_szig-kalocsa_juniorok-viadala-03-26
+      date: '2024. 04. 15.'
+      title: 'Juniorok Viadala (03.  26.)'
+      url: 'https://szig-kalocsa.edu.hu/juniorok-viadala-03-26/'
+      source: 'szig-kalocsa.edu.hu'
+      screenshot: '/images/sajtomegjelenesek/2024/szig-kalocsa_juniorok-viadala.jpg'
+
+    - id: 2024-04-16_delmagyar_kariko-katalin-adta-at-dijaikat
+      date: '2024. 04. 16.'
+      title: 'Karikó Katalin adta át díjaikat a fiataloknak'
+      url: 'https://www.delmagyar.hu/helyi-kultura/2024/04/kariko-katalin-adta-at-dijaikat-a-fiataloknak-galeria'
+      source: 'delmagyar.hu'
+      screenshot: '/images/sajtomegjelenesek/2024/delmagyar_kariko-katalin-adta-at-dijaikat-a-fiataloknak.jpg'
+
+    - id: 2024-04-17_szeged_kezrol-kezre-adtak-kariko-katalint
+      date: '2024. 04. 17.'
+      title: 'Kézről-kézre adták Karikó Katalint, diákokkal is találkozott a TIK-ben'
+      url: 'https://szeged.hu/cikk/kezrol-kezre-adtak-kariko-katalint-diakokkal-is-talalkozott-a-tik-ben'
+      source: 'szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2024/szeged_kezrol-kezre-adtak-kariko-katalint.jpg'
+
+    - id: 2024-04-22_u-szeged_szte-nobel-dij-alkotoi
+      date: '2024. 04. 22.'
+      title: 'Az SZTE és a Nobel-díj – Alkotói pályadíjakat adott át Karikó Katalin'
+      url: 'https://u-szeged.hu/sztehirek/2024-aprilis/szte-nobel-dij-alkotoi'
+      source: 'u-szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2024/u-szeged_szte-nobel-dij-alkotoi.jpg'
+
+    - id: 2024-04-23_szte-szedeak_hatranyos-helyzetu-gyermekeket-latunk-vendegul
+      date: '2024. 04. 23.'
+      title: 'Hátrányos helyzetű gyerekeket látunk vendégül az Oroszlány elleni meccsen'
+      url: 'http://www.szte-szedeak.hu/hatranyos-helyzetu-gyermekeket-latunk-vendegul-az-oroszlany-elleni-meccsen/'
+      source: 'szte-szedeak.hu'
+      screenshot: '/images/sajtomegjelenesek/2024/szte-szedeak_hatranyos-helyzetu-gyermekeket-latunk-vendegul-az-oroszlany-elleni-meccsen.jpg'
+
+    - id: 2024-04-24_moravarosi_szte-juniorok-viadala-doento
+      date: '2024. 04. 24.'
+      title: 'SZTE Juniorok Viadala döntő'
+      url: 'https://www.moravarosi.hu/hirek/szte-juniorok-viadala-doento'
+      source: 'moravarosi.hu'
+      screenshot: '/images/sajtomegjelenesek/2024/moravarosi_szte-juniorok-viadala-donto.jpg'
+
+    - id: 2024-04-26_radio88_ma-tartjak-a-juniorok-viadala
+      date: '2024. 04. 26.'
+      title: 'Ma tartják a Juniorok Viadala regionális középiskolai csapatvetélkedő döntőjét'
+      url: 'https://www.radio88.hu/ma-tartjak-a-juniorok-viadala-regionalis-kozepiskolai-csapatvetelkedo-dontojet/'
+      source: 'radio88.hu'
+      screenshot: '/images/sajtomegjelenesek/2024/radio88_ma-tartjak-a-juniorok-viadala-regionalis-kozepiskolai-csapatvetelkedo-dontojet.jpg'
+
+    - id: 2024-05-08_delmagyar_prezentacios-karaoke-is-vart-a
+      date: '2024. 05. 08.'
+      title: 'Prezentációs karaoke is várt a döntősökre'
+      url: 'https://www.delmagyar.hu/helyi-kozelet/2024/05/prezentacios-karaoke-is-vart-a-dontosokre-galeria'
+      source: 'delmagyar.hu'
+      screenshot: '/images/sajtomegjelenesek/2024/delmagyar_prezentacios-karaoke-is-vart-a-dontosokre.jpg'
+
+    - id: 2024-05-08_u-szeged_radnotisok-nyertek-idei
+      date: '2024. 05. 08.'
+      title: 'Radnótisok nyerték az idei Juniorok Viadalát'
+      url: 'https://u-szeged.hu/sztehirek/2024-majus/radnotisok-nyertek-idei'
+      source: 'u-szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2024/u-szeged_radnotisok-nyertek-a-2024-juniorok-viadalat.jpg'
+
+    - id: 2024-05-09_szeged_prezilimpia-hatodszor-az-szte-n
+      date: '2024. 05. 09.'
+      title: 'Prezilimpia hatodszor az SZTE-n'
+      url: 'https://szeged.hu/cikk/prezilimpia-hatodszor-az-szte-n'
+      source: 'szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2024/szeged_prezilimpia-hatodszor-az-szte-n.jpg'
+
+    - id: 2024-05-13_eco-u-szeged_megrendezesre-kerult
+      date: '2024. 05. 13.'
+      title: 'Megrendezésre került a Prezilimpia 2024 országos döntője'
+      url: 'https://eco.u-szeged.hu/hirek-esemenyek/gtk-2024-majus/megrendezesre-kerult?objectParentFolderId=26017'
+      source: 'eco.u-szeged.hu'
+      screenshot: ''
+
+    - id: 2024-05-14_szegekif_szte-juniorok-viadala-dontoben-a
+      date: '2024. 05. 14.'
+      title: 'SZTE Juniorok Viadala – döntőben a kisteleki Árpád Fejedelem Katolikus Gimnázium és Technikum'
+      url: 'https://szegekif.hu/2024/05/14/szte-juniorok-viadala-dontoben-a-kisteleki-arpad-fejedelem-katolikus-gimnazium-es-technikum/'
+      source: 'szegekif.hu'
+      screenshot: '/images/sajtomegjelenesek/2024/szegekif_szte-juniorok-viadala-dontoben-a-kisteleki-arpad-fejedelem-gimnazium.jpg'
+
+    - id: 2024-06-18_szeged_szazotvenot-dijazott-hat-teruleten
+      date: '2024. 06. 18.'
+      title: 'Százötvenöt díjazott hat területen: kiosztották a TIK-ben az idei Talent-díjakat'
+      url: 'https://szeged.hu/cikk/szazotvenot-dijazott-hat-teruleten-kiosztottak-a-tik-ben-az-idei-talent-dijakat-pal-emese-kincso-az-orvostudomany-nagy-kinga-a-termeszettudomany-teruleten-lett-az-ev-tehetsege'
+      source: 'szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2024/szeged_kiosztottak-a-tik-ben-az-idei-talent-dijakat.jpg'
+
+    - id: 2024-06-18_szeged365_nivos-elismeresben-reszesult-a-szegedi
+      date: '2024. 06. 18.'
+      title: 'Nívós elismerésben részesült a szegedi énekes, Tóth Jonathan'
+      url: 'https://szeged365.hu/2024/06/18/nivos-elismeresben-reszesult-a-szegedi-enekes-toth-jonathan-elnyerte-az-szte-talent-kivalosagi-lista-ev-muvesze-osztondijat/'
+      source: 'szeged365.hu'
+      screenshot: '/images/sajtomegjelenesek/2024/szeged365_toth-jonathan-elnyerte-az-szte-talent-kivalosagi-lista-ev-muvesze-osztondijat.jpg'
+
+    - id: 2024-06-20_u-szeged_10-millio-forinttal-jutalmaztak-a
+      date: '2024. 06. 20.'
+      title: '10 millió forinttal jutalmazták a tehetséget és a szorgalmat az idei SZTE Talent díjátadón'
+      url: 'https://u-szeged.hu/sztehirek/2024-junius/10-millio-forinttal-jutalmaztak-a-tehetseget-szte-talent-dijatado'
+      source: 'u-szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2024/u-szeged_10-millio-forinttal-jutalmaztak-a-tehetseget-szte-talent-dijatado.jpg'
+
+    - id: 2024-06-20_tv-szeged_az-egyetem-legtehetsegesebb-fiataljait-dijaztak
+      date: '2024. 06. 20.'
+      title: 'Az egyetem legtehetségesebb fiataljait díjazták'
+      url: 'https://tv.szeged.hu/cikk/az-egyetem-legtehetsegesebb-fiataljait-dijaztak'
+      source: 'tv.szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2024/tv_szeged_az-egyetem-legtehetsegesebb-fiataljait-dijaztak.jpg'
+
+    - id: 2024-06-21_radio88_a-szegedi-tudomanyegyetem-legtehetsegesebb
+      date: '2024. 06. 21.'
+      title: 'A Szegedi Tudományegyetem legtehetségesebb fiataljait díjazták'
+      url: 'https://www.radio88.hu/a-szegedi-tudomanyegyetem-legtehetsegesebb-fiataljait-dijaztak/'
+      source: 'radio88.hu'
+      screenshot: '/images/sajtomegjelenesek/2024/radio88_a-szegedi-tudomanyegyetem-legtehetsegesebb-fiataljait-dijaztak.jpg'
+
+    - id: 2024-06-21_med-u-szeged_ev-tehetsege
+      date: '2024. 06. 21.'
+      title: 'Az Év Tehetsége az orvostudományban Páli Emese Kncső V. éves medikus hallgatónk'
+      url: 'https://www.med.u-szeged.hu/hirek/2024-junius/ev-tehetsege'
+      source: 'med.u-szeged.hu'
+      screenshot: '/images/sajtomegjelenesek/2024/med_u-szegedev-tehetsege.jpg'
