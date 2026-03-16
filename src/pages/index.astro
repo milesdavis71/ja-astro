@@ -9,6 +9,7 @@ import ArakFizetes from '../components/arak_fizetes.mdx'
 import Button from '../components/Button.astro'
 import Tantargyak from '../components/tantargyak.mdx'
 import TeachersGrid from '../components/TeachersGrid.astro'
+import HighlightedActivities from '../components/HighlightedActivities.astro'
 
 export const frontmatter = {
   title: 'Főoldal',
@@ -28,10 +29,11 @@ const featuredNews = newsPosts
         ?.split('/')
         .pop()
         ?.replace(/\.mdx?$/, '') || `news-${index}`
+
     return {
-      id: index + 1, // numerikus ID a NewsCards komponens számára
+      id: index + 1,
       title: post.frontmatter?.title || 'Cím nélkül',
-      slug: slug,
+      slug,
       date: post.frontmatter?.date
         ? new Date(post.frontmatter.date).toISOString().split('T')[0]
         : '2026-02-23',
@@ -40,10 +42,9 @@ const featuredNews = newsPosts
       category: 'Hír',
     }
   })
-  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()) // dátum szerint csökkenő sorrend
-  .slice(0, 3) // Csak az első 3 hírt jelenítjük meg
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  .slice(0, 3)
 
-// Sections konfigurációja
 const sections = [
   {
     id: 'intro',
@@ -90,15 +91,12 @@ const sections = [
 ]
 ---
 
-<!-- hello commit: egyszerű teszt módosítás az index oldalon -->
 <TwoColumnLayout {frontmatter}>
-  <!-- Hírek szekció -->
+  <HighlightedActivities />
+
   <section id="news" class="bg-gray-50 py-4">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      b
-      <h1>Új JA weboldal</h1>
       <h2 id="hirek" class="text-center">Hírek</h2>
-
       <NewsCards items={featuredNews} />
     </div>
   </section>

@@ -1,0 +1,38 @@
+- id: mentorprogram
+  title: Mentorprogram
+  description: Egyetemi hallgatók támogatják a középiskolásokat pályaorientációban és tanulásban.
+  items:
+    - Rendszeres mentor-találkozók
+    - Tanulásmódszertani támogatás
+    - Pályaválasztási segítség
+    - Közösségi programok és élménynapok
+  image: mentorprogram.jpg
+  imageAlt: Mentorprogram résztvevői közös foglalkozáson
+  link: /kapcsolat
+  ctaLabel: Tovább
+
+- id: versenyek
+  title: Tanulmányi versenyek
+  description: A Juniorakadémia több területen szervez megmérettetéseket a tehetséges diákok számára.
+  items:
+    - Tantárgyi és készségalapú versenyek
+    - Egyéni és csapatkategóriák
+    - Döntők egyetemi környezetben
+    - Értékes szakmai visszajelzések
+  image: versenyek.jpg
+  imageAlt: Diákok tanulmányi verseny döntőjén
+  link: /news
+  ctaLabel: Tovább
+
+- id: nyari-programok
+  title: Nyári programok és táborok
+  description: Élményalapú foglalkozásokkal és egyetemi betekintéssel segítjük a továbbtanulásra készülő fiatalokat.
+  items:
+    - Tematikus nyári táborok
+    - Interaktív workshopok
+    - Egyetemi labor- és campuslátogatások
+    - Közösségépítő programok
+  image: nyari-taborok.jpg
+  imageAlt: Résztvevők nyári juniorakadémiai programon
+  link: /kapcsolat
+  ctaLabel: Tovább

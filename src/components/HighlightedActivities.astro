@@ -1,0 +1,185 @@
+---
+import Button from './Button.astro'
+import highlightedActivitiesData from '../data/kiemelt-tevekenysegek.yml'
+
+type HighlightedActivity = {
+  id?: string
+  title?: string
+  description?: string
+  lead?: string
+  items?: string[]
+  activities?: string[]
+  image?: string
+  imageAlt?: string
+  link?: string
+  href?: string
+  ctaLabel?: string
+}
+
+const dataSource = Array.isArray(highlightedActivitiesData)
+  ? highlightedActivitiesData
+  : highlightedActivitiesData?.items
+
+const highlightedActivities = (dataSource ?? []).map((item: HighlightedActivity, index: number) => {
+  const imagePath = item.image ? `/images/kiemelt-tevekenysegek/${item.image}` : null
+  const description = item.description ?? item.lead ?? ''
+  const paragraphs = description
+    .split(/\n{2,}/)
+    .map((entry) => entry.trim())
+    .filter(Boolean)
+
+  return {
+    id: item.id ?? `kiemelt-tevekenyseg-${index + 1}`,
+    title: item.title ?? 'Juniorakadémia tevékenység',
+    description,
+    paragraphs,
+    items: item.items ?? item.activities ?? [],
+    image: imagePath,
+    imageAlt: item.imageAlt ?? item.title ?? 'Juniorakadémia tevékenység',
+    link: item.link ?? item.href ?? '#',
+    ctaLabel: item.ctaLabel ?? 'Tovább',
+  }
+})
+---
+
+{
+  highlightedActivities.length > 0 && (
+    <section id="kiemelt-tevekenysegek" class="bg-white py-8 sm:py-10">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="rounded-md border border-slate-300 bg-white p-2 sm:p-3">
+          <div class="mb-5 text-center">
+            <h2 class="mb-0 text-2xl font-bold text-black">
+              Aktuális pályázataink, ösztöndíjaink, programjaink
+            </h2>
+          </div>
+
+          <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+            {highlightedActivities.map((activity) => (
+              <article class="activity-card overflow-hidden rounded-md border border-slate-200 bg-white">
+                <div class="activity-card__top">
+                  <h3 class="activity-card__title">{activity.title}</h3>
+                </div>
+
+                <div class="activity-card__body grid grid-cols-1 gap-6 p-4 md:grid-cols-3">
+                  <div class="md:col-span-2">
+                    {activity.paragraphs.length > 0 ? (
+                      activity.paragraphs.map((paragraph) => (
+                        <p class="activity-card__paragraph">{paragraph}</p>
+                      ))
+                    ) : activity.description ? (
+                      <p class="activity-card__paragraph">{activity.description}</p>
+                    ) : null}
+
+                    {activity.items.length > 0 && (
+                      <ul class="activity-card__list">
+                        {activity.items.map((entry) => (
+                          <li>{entry}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+
+                  <div class="md:col-span-1">
+                    {activity.image ? (
+                      <div class="activity-card__image-frame">
+                        <img
+                          src={activity.image}
+                          alt={activity.imageAlt}
+                          class="activity-card__image"
+                          loading="lazy"
+                        />
+                      </div>
+                    ) : (
+                      <div class="activity-card__image-frame activity-card__image-placeholder">
+                        Kép: <code>{'/public/images/kiemelt-tevekenysegek/'}</code>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div class="px-4 pb-8 text-center">
+                  <Button link={activity.link} text={activity.ctaLabel} />
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .activity-card__top {
+    background: var(--primary-color-soft);
+    padding: 0.7rem 0.85rem;
+    border-bottom: 1px solid rgb(from var(--primary-color) r g b / 12%);
+  }
+
+  .activity-card__title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.35;
+    color: rgb(15 23 42);
+    background: transparent;
+  }
+
+  .activity-card__body {
+    min-height: 220px;
+    align-items: start;
+  }
+
+  .activity-card__paragraph {
+    margin: 0 0 1rem;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgb(0 0 0);
+  }
+
+  .activity-card__list {
+    margin: 0;
+    padding-left: 1.4rem;
+    list-style: disc;
+  }
+
+  .activity-card__list li {
+    margin-bottom: 0.45rem;
+    color: rgb(0 0 0);
+    line-height: 1.7;
+  }
+
+  .activity-card__image-frame {
+    border: 1px solid rgb(203 213 225);
+    border-radius: 0.5rem;
+    padding: 0.2rem;
+    background: white;
+  }
+
+  .activity-card__image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 0.35rem;
+  }
+
+  .activity-card__image-placeholder {
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: rgb(100 116 139);
+    background: rgb(248 250 252);
+  }
+
+  @media (max-width: 767px) {
+    .activity-card__body {
+      min-height: auto;
+    }
+  }
+</style>
