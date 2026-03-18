@@ -1,11 +1,7 @@
-- id: mentorprogram
-  title: Mentorprogram
-  description: Egyetemi hallgatók támogatják a középiskolásokat pályaorientációban és tanulásban.
+- id: bemutatkozas
+  title: Kedves Felvételiző, kedves Hallgató!
+  description: Az SZTE Junior Akadémia azon dolgozik, hogy megkönnyítsük a Szegedi Tudományegyetemre (SZTE) vezető utad. Azoknak is segítünk különféle programokkal, lehetőségekkel, akik már az SZTE hallgatói - legyen szó ösztöndíjakról, workshopokról, versenyekről.
   items:
-    - Rendszeres mentor-találkozók
-    - Tanulásmódszertani támogatás
-    - Pályaválasztási segítség
-    - Közösségi programok és élménynapok
   image: ja-lepcso.jpg
   imageAlt: Mentorprogram résztvevői közös foglalkozáson
   link: /kapcsolat

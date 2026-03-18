@@ -1,5 +1,4 @@
 ---
-import Button from './Button.astro'
 import highlightedActivitiesData from '../data/kiemelt-tevekenysegek.yml'
 
 type HighlightedActivity = {
@@ -53,54 +52,52 @@ const highlightedActivities = (dataSource ?? []).map((item: HighlightedActivity,
             </h2>
           </div>
 
-          <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+          <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
             {highlightedActivities.map((activity) => (
-              <article class="activity-card overflow-hidden rounded-md border border-slate-200 bg-white">
-                <div class="activity-card__top">
-                  <h3 class="activity-card__title">{activity.title}</h3>
-                </div>
-
-                <div class="activity-card__body grid grid-cols-1 gap-6 p-4 md:grid-cols-3">
-                  <div class="md:col-span-2">
-                    {activity.paragraphs.length > 0 ? (
-                      activity.paragraphs.map((paragraph) => (
-                        <p class="activity-card__paragraph">{paragraph}</p>
-                      ))
-                    ) : activity.description ? (
-                      <p class="activity-card__paragraph">{activity.description}</p>
-                    ) : null}
-
-                    {activity.items.length > 0 && (
-                      <ul class="activity-card__list">
-                        {activity.items.map((entry) => (
-                          <li>{entry}</li>
-                        ))}
-                      </ul>
-                    )}
+              <a href={activity.link} class="activity-card-link group block">
+                <article class="activity-card overflow-hidden rounded-md border border-slate-200 bg-white transition-shadow duration-200 group-hover:shadow-md">
+                  <div class="activity-card__top">
+                    <h3 class="activity-card__title">{activity.title}</h3>
                   </div>
 
-                  <div class="md:col-span-1">
-                    {activity.image ? (
-                      <div class="activity-card__image-frame">
-                        <img
-                          src={activity.image}
-                          alt={activity.imageAlt}
-                          class="activity-card__image"
-                          loading="lazy"
-                        />
-                      </div>
-                    ) : (
-                      <div class="activity-card__image-frame activity-card__image-placeholder">
-                        Kép: <code>{'/public/images/kiemelt-tevekenysegek/'}</code>
-                      </div>
-                    )}
-                  </div>
-                </div>
+                  <div class="activity-card__body grid grid-cols-1 p-3 md:grid-cols-3">
+                    <div class="md:col-span-2 p-1">
+                      {activity.paragraphs.length > 0 ? (
+                        activity.paragraphs.map((paragraph) => (
+                          <p class="activity-card__paragraph">{paragraph}</p>
+                        ))
+                      ) : activity.description ? (
+                        <p class="activity-card__paragraph">{activity.description}</p>
+                      ) : null}
 
-                <div class="px-4 pb-8 text-center">
-                  <Button link={activity.link} text={activity.ctaLabel} />
-                </div>
-              </article>
+                      {activity.items.length > 0 && (
+                        <ul class="activity-card__list">
+                          {activity.items.map((entry) => (
+                            <li>{entry}</li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+
+                    <div class="activity-card__media md:col-span-1">
+                      {activity.image ? (
+                          <img
+                            src={activity.image}
+                            alt={activity.imageAlt}
+                            class="activity-card__image"
+                            loading="lazy"
+                          />
+                      ) : (
+                        <div class="activity-card__image-frame activity-card__image-placeholder">
+                          Kép: <code>{'/public/images/kiemelt-tevekenysegek/'}</code>
+                        </div>
+                      )}
+
+                      <span class="activity-card__cta btn btn-primary">{activity.ctaLabel}</span>
+                    </div>
+                  </div>
+                </article>
+              </a>
             ))}
           </div>
         </div>
@@ -110,9 +107,13 @@ const highlightedActivities = (dataSource ?? []).map((item: HighlightedActivity,
 }
 
 <style>
+  .activity-card-link {
+    text-decoration: none;
+  }
+
   .activity-card__top {
-    background: var(--primary-color-soft);
-    padding: 0.7rem 0.85rem;
+    background: var(--secondary-color-soft);
+    padding: 0.5rem 0.65rem;
     border-bottom: 1px solid rgb(from var(--primary-color) r g b / 12%);
   }
 
@@ -122,7 +123,6 @@ const highlightedActivities = (dataSource ?? []).map((item: HighlightedActivity,
     font-weight: 700;
     line-height: 1.35;
     color: rgb(15 23 42);
-    background: transparent;
   }
 
   .activity-card__body {
@@ -149,7 +149,15 @@ const highlightedActivities = (dataSource ?? []).map((item: HighlightedActivity,
     line-height: 1.7;
   }
 
+  .activity-card__media {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
   .activity-card__image-frame {
+    width: 100%;
     border: 1px solid rgb(203 213 225);
     border-radius: 0.5rem;
     padding: 0.2rem;
@@ -175,6 +183,22 @@ const highlightedActivities = (dataSource ?? []).map((item: HighlightedActivity,
     line-height: 1.5;
     color: rgb(100 116 139);
     background: rgb(248 250 252);
+  }
+
+  .activity-card__cta {
+    width: 100%;
+    justify-content: center;
+    padding: 0.45rem 1rem;
+    font-size: 0.875rem;
+    min-width: 0;
+    transition:
+      background-color 150ms ease,
+      box-shadow 150ms ease;
+  }
+
+  .group:hover .activity-card__cta,
+  .group:focus-visible .activity-card__cta {
+    background-color: var(--button-hover-color);
   }
 
   @media (max-width: 767px) {

@@ -3,8 +3,8 @@
 @layer base {
   :root {
     --primary-color: rgb(27, 63, 123);
-    --primary-color-soft: rgb(from var(--primary-color) r g b / 20%);
     --secondary-color: rgb(204, 7, 123);
+    --secondary-color-soft: rgb(from var(--secondary-color) r g b / 10%);
     --link-color: var(--primary-color);
     --link-hover-color: var(--secondary-color);
     --button-color: var(--primary-color);
