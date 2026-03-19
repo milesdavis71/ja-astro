@@ -1,5 +1,5 @@
 ---
-import TwoColumnLayout from '../layouts/TwoColumnLayout.astro'
+import DefaultLayout from '../layouts/DefaultLayout.astro'
 import NewsCards from '../components/NewsCards.astro'
 import HighlightedActivities from '../components/HighlightedActivities.astro'
 
@@ -39,8 +39,8 @@ const featuredNews = newsPosts
   .slice(0, 3)
 ---
 
-<TwoColumnLayout {frontmatter}>
-  <HighlightedActivities />
+<DefaultLayout {frontmatter}>
+  <HighlightedActivities featured onlyFirst />
 
   <section id="news" class="bg-gray-50 py-4">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -48,4 +48,6 @@ const featuredNews = newsPosts
       <NewsCards items={featuredNews} />
     </div>
   </section>
-</TwoColumnLayout>
+
+  <HighlightedActivities slot="rightSidebar" sidebar skipFirst />
+</DefaultLayout>

@@ -35,6 +35,7 @@ const showToc = isIndexPage
 const sidebarNewsCount = frontmatter?.sidebarNewsCount ?? (isIndexPage ? 0 : 3)
 const sidebarNews = showToc ? [] : news.slice(0, sidebarNewsCount)
 const showNewsSidebar = !showToc && sidebarNews.length > 0
+const hasRightSidebarSlot = Astro.slots.has('rightSidebar')
 ---
 
 <html lang="hu">
@@ -63,7 +64,17 @@ const showNewsSidebar = !showToc && sidebarNews.length > 0
         <slot />
       </MainContent>
 
-      <ContextualColumn {showToc} {showNewsSidebar} {sidebarNews} />
+      {
+        hasRightSidebarSlot ? (
+          <aside class="hidden w-72 flex-shrink-0 border-l border-gray-100 bg-white shadow-sm lg:block">
+            <div class="sticky top-0 h-screen overflow-y-auto px-4 py-4">
+              <slot name="rightSidebar" />
+            </div>
+          </aside>
+        ) : (
+          <ContextualColumn {showToc} {showNewsSidebar} {sidebarNews} />
+        )
+      }
     </div>
 
     <script>
