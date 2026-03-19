@@ -7,28 +7,29 @@
   link: /kapcsolat
   ctaLabel: Tovább
 
-- id: versenyek
-  title: Tanulmányi versenyek
-  description: A Juniorakadémia több területen szervez megmérettetéseket a tehetséges diákok számára.
+- id: osztalykirandulas
+  title: Osztálykirándulások
+  description: Fedezzétek fel együtt az SZTE világát!
   items:
-    - Tantárgyi és készségalapú versenyek
-    - Egyéni és csapatkategóriák
-    - Döntők egyetemi környezetben
-    - Értékes szakmai visszajelzések
-  image: versenyek.jpg
+  image: osztalykirandulas.jpg
   imageAlt: Diákok tanulmányi verseny döntőjén
   link: /news
   ctaLabel: Tovább
 
-- id: nyari-programok
-  title: Nyári programok és táborok
-  description: Élményalapú foglalkozásokkal és egyetemi betekintéssel segítjük a továbbtanulásra készülő fiatalokat.
+- id: start
+  title: Start ösztöndíjak 2026
+  description: Start ösztöndíj alap-, osztatlan és mesterszakosoknak
   items:
-    - Tematikus nyári táborok
-    - Interaktív workshopok
-    - Egyetemi labor- és campuslátogatások
-    - Közösségépítő programok
-  image: nyari-taborok.jpg
+  image: start_hero.jpg
+  imageAlt: Résztvevők nyári juniorakadémiai programon
+  link: /kapcsolat
+  ctaLabel: Tovább
+
+- id: erettsegifelkeszito
+  title: Érettségire és emelt szintű érettségire felkészítő tanfolyam
+  description: Start ösztöndíj alap-, osztatlan és mesterszakosoknak
+  items:
+  image: start_hero.jpg
   imageAlt: Résztvevők nyári juniorakadémiai programon
   link: /kapcsolat
   ctaLabel: Tovább

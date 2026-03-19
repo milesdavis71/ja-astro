@@ -6,8 +6,6 @@ type HighlightedActivity = {
   title?: string
   description?: string
   lead?: string
-  items?: string[]
-  activities?: string[]
   image?: string
   imageAlt?: string
   link?: string
@@ -19,82 +17,57 @@ const dataSource = Array.isArray(highlightedActivitiesData)
   ? highlightedActivitiesData
   : highlightedActivitiesData?.items
 
-const highlightedActivities = (dataSource ?? []).map((item: HighlightedActivity, index: number) => {
-  const imagePath = item.image ? `/images/kiemelt-tevekenysegek/${item.image}` : null
-  const description = item.description ?? item.lead ?? ''
-  const paragraphs = description
-    .split(/\n{2,}/)
-    .map((entry) => entry.trim())
-    .filter(Boolean)
-
-  return {
-    id: item.id ?? `kiemelt-tevekenyseg-${index + 1}`,
-    title: item.title ?? 'Juniorakadémia tevékenység',
-    description,
-    paragraphs,
-    items: item.items ?? item.activities ?? [],
-    image: imagePath,
-    imageAlt: item.imageAlt ?? item.title ?? 'Juniorakadémia tevékenység',
-    link: item.link ?? item.href ?? '#',
-    ctaLabel: item.ctaLabel ?? 'Tovább',
-  }
-})
+const highlightedActivities = (dataSource ?? []).map((item: HighlightedActivity, index: number) => ({
+  id: item.id ?? `kiemelt-tevekenyseg-${index + 1}`,
+  title: item.title ?? 'Juniorakadémia tevékenység',
+  description: item.description ?? item.lead ?? '',
+  image: item.image ? `/images/kiemelt-tevekenysegek/${item.image}` : null,
+  imageAlt: item.imageAlt ?? item.title ?? 'Juniorakadémia tevékenység',
+  link: item.link ?? item.href ?? '#',
+  ctaLabel: item.ctaLabel ?? 'Tovább',
+}))
 ---
 
 {
   highlightedActivities.length > 0 && (
-    <section id="kiemelt-tevekenysegek" class="bg-white py-8 sm:py-10">
+    <section id="kiemelt-tevekenysegek" class="bg-white py-2 sm:py-4">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="rounded-md border border-slate-300 bg-white p-2 sm:p-3">
           <div class="mb-5 text-center">
-            <h2 class="mb-0 text-2xl font-bold text-black">
+            <h2 class="mb-0 text-xl">
               Aktuális pályázataink, ösztöndíjaink, programjaink
             </h2>
           </div>
 
-          <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
             {highlightedActivities.map((activity) => (
               <a href={activity.link} class="activity-card-link group block">
-                <article class="activity-card overflow-hidden rounded-md border border-slate-200 bg-white transition-shadow duration-200 group-hover:shadow-md">
-                  <div class="activity-card__top">
+                <article class="activity-card overflow-hidden rounded-md border border-slate-200 bg-white transition-shadow duration-200">
+                  <div class="activity-card__top bg-blue-100">
                     <h3 class="activity-card__title">{activity.title}</h3>
                   </div>
 
-                  <div class="activity-card__body grid grid-cols-1 p-3 md:grid-cols-3">
-                    <div class="md:col-span-2 p-1">
-                      {activity.paragraphs.length > 0 ? (
-                        activity.paragraphs.map((paragraph) => (
-                          <p class="activity-card__paragraph">{paragraph}</p>
-                        ))
-                      ) : activity.description ? (
-                        <p class="activity-card__paragraph">{activity.description}</p>
-                      ) : null}
+                  <div class="activity-card__body">
+                    {activity.image ? (
+                      <div class="activity-card__image-frame">
+                        <img
+                          src={activity.image}
+                          alt={activity.imageAlt}
+                          class="activity-card__image"
+                          loading="lazy"
+                        />
+                      </div>
+                    ) : (
+                      <div class="activity-card__image-frame activity-card__image-placeholder">
+                        Kép: <code>{'/public/images/kiemelt-tevekenysegek/'}</code>
+                      </div>
+                    )}
 
-                      {activity.items.length > 0 && (
-                        <ul class="activity-card__list">
-                          {activity.items.map((entry) => (
-                            <li>{entry}</li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
+                    {activity.description && (
+                      <p class="activity-card__description">{activity.description}</p>
+                    )}
 
-                    <div class="activity-card__media md:col-span-1">
-                      {activity.image ? (
-                          <img
-                            src={activity.image}
-                            alt={activity.imageAlt}
-                            class="activity-card__image"
-                            loading="lazy"
-                          />
-                      ) : (
-                        <div class="activity-card__image-frame activity-card__image-placeholder">
-                          Kép: <code>{'/public/images/kiemelt-tevekenysegek/'}</code>
-                        </div>
-                      )}
-
-                      <span class="activity-card__cta btn btn-primary">{activity.ctaLabel}</span>
-                    </div>
+                    <span class="activity-card__cta btn btn-primary">{activity.ctaLabel}</span>
                   </div>
                 </article>
               </a>
@@ -108,52 +81,42 @@ const highlightedActivities = (dataSource ?? []).map((item: HighlightedActivity,
 
 <style>
   .activity-card-link {
+    height: 100%;
     text-decoration: none;
   }
 
+  .activity-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .group:hover .activity-card,
+  .group:focus-visible .activity-card {
+    box-shadow: 0 4px 8px rgb(from var(--secondary-color) r g b / 22%);
+  }
+
   .activity-card__top {
-    background: var(--secondary-color-soft);
-    padding: 0.5rem 0.65rem;
+    padding: 0.55rem 0.75rem;
     border-bottom: 1px solid rgb(from var(--primary-color) r g b / 12%);
   }
 
   .activity-card__title {
     margin: 0;
-    font-size: 1rem;
-    font-weight: 700;
+    font-size: 0.9rem;
+    font-weight: 600;
     line-height: 1.35;
-    color: rgb(15 23 42);
+    text-align: center;
+    color: var(--primary-color);
   }
 
   .activity-card__body {
-    min-height: 220px;
-    align-items: start;
-  }
-
-  .activity-card__paragraph {
-    margin: 0 0 1rem;
-    font-size: 1rem;
-    line-height: 1.7;
-    color: rgb(0 0 0);
-  }
-
-  .activity-card__list {
-    margin: 0;
-    padding-left: 1.4rem;
-    list-style: disc;
-  }
-
-  .activity-card__list li {
-    margin-bottom: 0.45rem;
-    color: rgb(0 0 0);
-    line-height: 1.7;
-  }
-
-  .activity-card__media {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 1rem;
+    flex: 1;
+    padding: 0.85rem;
+    align-items: center;
   }
 
   .activity-card__image-frame {
@@ -167,13 +130,13 @@ const highlightedActivities = (dataSource ?? []).map((item: HighlightedActivity,
   .activity-card__image {
     display: block;
     width: 100%;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 16 / 10;
     object-fit: cover;
     border-radius: 0.35rem;
   }
 
   .activity-card__image-placeholder {
-    min-height: 150px;
+    min-height: 180px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -185,8 +148,16 @@ const highlightedActivities = (dataSource ?? []).map((item: HighlightedActivity,
     background: rgb(248 250 252);
   }
 
+  .activity-card__description {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    text-align: center;
+    color: rgb(51 65 85);
+  }
+
   .activity-card__cta {
-    width: 100%;
+    margin-top: auto;
     justify-content: center;
     padding: 0.45rem 1rem;
     font-size: 0.875rem;
@@ -199,11 +170,5 @@ const highlightedActivities = (dataSource ?? []).map((item: HighlightedActivity,
   .group:hover .activity-card__cta,
   .group:focus-visible .activity-card__cta {
     background-color: var(--button-hover-color);
-  }
-
-  @media (max-width: 767px) {
-    .activity-card__body {
-      min-height: auto;
-    }
   }
 </style>

@@ -16,7 +16,7 @@ const showToc = false
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{frontmatter?.title ? `${frontmatter.title} – ${site.title}` : site.title}</title>
+    <title>{(frontmatter?.metaTitle || frontmatter?.title) ? `${frontmatter?.metaTitle || frontmatter?.title} – ${site.title}` : site.title}</title>
     <meta name="description" content={frontmatter?.description || site.description} />
   </head>
 
