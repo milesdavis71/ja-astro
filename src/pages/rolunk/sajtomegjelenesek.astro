@@ -25,11 +25,11 @@ const formatHungarianDate = (value: string) =>
     day: 'numeric',
   }).format(parseHungarianDate(value))
 
-const getDomain = (url: string, fallback: string) => {
+const getDomain = (url: string) => {
   try {
     return new URL(url).hostname.replace(/^www\./, '')
   } catch {
-    return fallback.replace(/^www\./, '')
+    return ''
   }
 }
 
@@ -39,7 +39,6 @@ const yearsMap = new Map(allYears.map((entry) => [entry.id, entry.data]))
 const years = supportedYears.map((year) => ({
   year,
   items: [...(yearsMap.get(year) ?? [])]
-      .sort((a, b) => parseHungarianDate(b.date).getTime() - parseHungarianDate(a.date).getTime())
       .map((item) => {
         const parsedDate = parseHungarianDate(item.date)
 
@@ -47,7 +46,7 @@ const years = supportedYears.map((year) => ({
           ...item,
           timestamp: parsedDate.getTime(),
           formattedDate: formatHungarianDate(item.date),
-          domain: getDomain(item.url, item.source),
+          domain: getDomain(item.url),
         }
       }),
 }))

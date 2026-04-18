@@ -78,11 +78,9 @@ const pressMentions = defineCollection({
   loader: file('src/data/sajtomegjelenesek.yml'),
   schema: z.array(
     z.object({
-      id: z.string(),
       date: z.string(),
       title: z.string(),
       url: z.string().url(),
-      source: z.string(),
       screenshot: z.string(),
     })
   ),
