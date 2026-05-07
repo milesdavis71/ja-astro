@@ -661,11 +661,6 @@
     screenshot: '/images/sajtomegjelenesek/2022/xxx.jpg'
 
 2021:
-  - title: 'SZTE START Ösztöndíj'
-    date: '2021. 12. 25.'
-    url: 'https://www.felvi.hu/felveteli/jelentkezes/aktualis/szte_start_pr_x'
-    screenshot: '/images/sajtomegjelenesek/2021/xxx.jpg'
-
   - title: 'Hatszáz hallgató kapott idén Start ösztöndíjat'
     date: '2021. 11. 25.'
     url: 'http://www.music.u-szeged.hu/kari-elet/szte-bbmk-2021-november/hatszaz-hallgato-kapott'
@@ -796,11 +791,6 @@
     url: 'https://u-szeged.hu/sztehirek/2021-aprilis/minden-teruleten-kinal?objectParentFolderId=19355'
     screenshot: '/images/sajtomegjelenesek/2021/xxx.jpg'
 
-  - title: 'Általános iskolától az egyetemig – SZTE Junior Akadémia'
-    date: '2021. 04. 09.'
-    url: 'https://issuu.com/oroscafe/docs/oroshazielet_20210409'
-    screenshot: '/images/sajtomegjelenesek/2021/xxx.jpg'
-
   - title: 'Gyűjts pénzt a tanulásból! - Ösztöndíjak a Szegedi Tudományegyetemen'
     date: '2021. 02. 11.'
     url: 'https://u-szeged.hu/felveteli/2021/gyujts-penzt-tanulasbol?objectParentFolderId=28447'
@@ -809,11 +799,6 @@
   - title: 'Online nyílt napot tart a Szegedi Tudományegyetem'
     date: '2021. 02. 05.'
     url: 'https://www.promenad.hu/2021/02/05/online-szuloi-ertekezletet-tart-az-szte-szombaton/'
-    screenshot: '/images/sajtomegjelenesek/2021/xxx.jpg'
-
-  - title: 'Újabb eygetemek csatlakoztak a Tanítsunk Magyarországért programhoz'
-    date: '2021. 02. 05.'
-    url: 'https://unilife.hu/egyetem/20210205-ujabb-egyetemek-csatlakoztak-a-tanitsunk-magyarorszagert-programhoz.html'
     screenshot: '/images/sajtomegjelenesek/2021/xxx.jpg'
 
   - title: 'Kihirdették a Tanítsunk Magyarországért novellapályázat nyerteseit'
