@@ -68,7 +68,7 @@ const defaultYear = years[0]?.year ?? '2024'
   {
     years.map(({ year, items }, yearIndex) => (
       <section data-year-panel={year} hidden={yearIndex !== 0} class="space-y-8">
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3" data-cards-grid>
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3" data-cards-grid>
           {
             items.map((item) => (
               <a
@@ -79,13 +79,17 @@ const defaultYear = years[0]?.year ?? '2024'
                 data-card
               >
                 <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition duration-200 group-hover:-translate-y-1 group-hover:border-[var(--link-hover-color)] group-hover:shadow-lg">
-                  <div class="aspect-[16/10] overflow-hidden bg-gray-100">
+                  <div class="relative aspect-[4/3] overflow-hidden bg-gray-100">
                     <img
                       src={item.screenshot}
                       alt={item.title}
                       class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]"
                       loading="lazy"
                     />
+                    <div
+                      class="pointer-events-none absolute inset-0 bg-[#fff7bf]/70 transition-colors duration-300 group-hover:bg-[#dcefff]/55"
+                      aria-hidden="true"
+                    ></div>
                   </div>
 
                   <div class="flex flex-1 flex-col gap-4 p-5">
