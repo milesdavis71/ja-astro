@@ -1,13 +1,13 @@
 ﻿2024:
-  - title: 'A Szegedi Tudományegyetem legtehetségesebb fiataljait díjazták'
-    date: '2024. 06. 21.'
-    url: 'https://www.radio88.hu/a-szegedi-tudomanyegyetem-legtehetsegesebb-fiataljait-dijaztak/'
-    screenshot: '/images/sajtomegjelenesek/2024/radio88_a-szegedi-tudomanyegyetem-legtehetsegesebb-fiataljait-dijaztak.jpg'
-
   - title: 'Az Év Tehetsége az orvostudományban Páli Emese Kncső V. éves medikus hallgatónk'
     date: '2024. 06. 21.'
     url: 'https://www.med.u-szeged.hu/hirek/2024-junius/ev-tehetsege'
     screenshot: '/images/sajtomegjelenesek/2024/med_u-szegedev-tehetsege.jpg'
+
+  - title: 'A Szegedi Tudományegyetem legtehetségesebb fiataljait díjazták'
+    date: '2024. 06. 21.'
+    url: 'https://www.radio88.hu/a-szegedi-tudomanyegyetem-legtehetsegesebb-fiataljait-dijaztak/'
+    screenshot: '/images/sajtomegjelenesek/2024/radio88_a-szegedi-tudomanyegyetem-legtehetsegesebb-fiataljait-dijaztak.jpg'
 
   - title: '10 millió forinttal jutalmazták a tehetséget és a szorgalmat az idei SZTE Talent díjátadón'
     date: '2024. 06. 20.'
@@ -37,7 +37,7 @@
   - title: 'Megrendezésre került a Prezilimpia 2024 országos döntője'
     date: '2024. 05. 13.'
     url: 'https://eco.u-szeged.hu/hirek-esemenyek/gtk-2024-majus/megrendezesre-kerult?objectParentFolderId=26017'
-    screenshot: ''
+    screenshot: '/images/sajtomegjelenesek/2024/eco_u-szeged_megrendezesre-kerult-a-prezilimpia-orszag.jpg'
 
   - title: 'Prezilimpia hatodszor az SZTE-n'
     date: '2024. 05. 09.'
@@ -149,10 +149,10 @@
     url: 'https://u-szeged.hu/sztehirek/2024-januar/mit-kell-tudni-felveteli'
     screenshot: '/images/sajtomegjelenesek/2024/u-szeged_mit-kell-tudni-felveteli.jpg'
 
-  - title: 'SZTE Nyílt Nap 2023 - Ösztöndíjlehetőségek és tehetséggondozás - Bemutatkozik a Junior Akadémia'
-    date: '2024. 01. 17.'
-    url: 'https://www.youtube.com/watch?v=mrLsx32PfZY'
-    screenshot: '/images/sajtomegjelenesek/2024/youtube_szte-nyilt-nap-2023.jpg'
+  # - title: 'SZTE Nyílt Nap 2023 - Ösztöndíjlehetőségek és tehetséggondozás - Bemutatkozik a Junior Akadémia'
+  #   date: '2024. 01. 17.'
+  #   url: 'https://www.youtube.com/watch?v=mrLsx32PfZY'
+  #   screenshot: '/images/sajtomegjelenesek/2024/youtube_szte-nyilt-nap-2023.jpg'
 
   - title: 'Nyílt nappal egybekötött szülői értekezlettel várta a családokat a Szegedi Tudományegyetem'
     date: '2024. 01. 27.'
@@ -260,6 +260,11 @@
     url: 'https://www.beol.hu/helyi-kozelet/2023/06/a-mentorprogramban-jeleskedo-pedagogusokat-jutalmaztak'
     screenshot: '/images/sajtomegjelenesek/2023/beol_hu-a-mentorprogramban-jeleskedo-pedagogusokat-jutalmaztak.jpg'
 
+  - title: 'A szegedi egyetem több mint 300 hallgatója nyert ösztöndíjat az Új Nemzeti Kiválóság Programban'
+    date: '2023. 05. 13.'
+    url: 'https://promenad24.hu/2023/06/13/a-szegedi-egyetem-tobb-mint-300-hallgatoja-nyert-osztondijat-az-uj-nemzeti-kivalosag-programban/'
+    screenshot: '/images/sajtomegjelenesek/2023/promenad24_hu-az-szte-tobb-mint-300-hallgatoja-nyert-osztondijat-az-uj-nemzeti-kivalosag-programban.jpg'
+
   - title: 'Talent ösztöndíjjal jutalmazták a tehetséges hallgatókat'
     date: '2023. 06. 22.'
     url: 'https://u-szeged.hu/sztehirek/2023-junius/talent-osztondijjal'
@@ -300,87 +305,62 @@
     url: 'https://szeged.hu/cikk/prezilimpia-avagy-az-eladas-muveszete'
     screenshot: '/images/sajtomegjelenesek/2023/szeged_hu-prezilimpia-avagy-az-eladas-muveszete.jpg'
 
-  - title: 'A szegedi egyetem több mint 300 hallgatója nyert ösztöndíjat az Új Nemzeti Kiválóság Programban'
-    date: '2023. 05. 10.'
-    url: 'https://promenad24.hu/2023/06/13/a-szegedi-egyetem-tobb-mint-300-hallgatoja-nyert-osztondijat-az-uj-nemzeti-kivalosag-programban/'
-    screenshot: '/images/sajtomegjelenesek/2023/promenad24_hu-az-szte-tobb-mint-300-hallgatoja-nyert-osztondijat-az-uj-nemzeti-kivalosag-programban.jpg'
-
   - title: 'Bajnok az SZTE Gyakorló Gimnázium és Általános Iskola'
     date: '2023. 04. 27.'
     url: 'http://www.gyakg.u-szeged.hu/sagvari/2023/04/26/szte-juniorok-viadala-2023/'
     screenshot: '/images/sajtomegjelenesek/2023/gyakg.u-szeged_hu_szte-juniorok-viadala-2023.jpg'
 
-  - title: 'radnoti-szeged.edu.hu'
+  - title: 'Juniorok viadala – műveltség diadala'
     date: '2023. 04. 26.'
     url: 'https://radnoti-szeged.edu.hu/2023/04/25/juniorok-viadala-muveltseg-diadala/'
     screenshot: '/images/sajtomegjelenesek/2023/radnoti-szeged_edu_hu_juniorok-viadala-muveltseg-diadala.jpg'
 
-  - title: 'moravarosi.hu'
+  - title: 'SZTE Juniorok Viadala döntő'
     date: '2023. 04. 25.'
     url: 'https://www.moravarosi.hu/hirek/szte-juniorok-viadala-doento'
     screenshot: '/images/sajtomegjelenesek/2023/moravarosi_hu_szte-juniorok-viadala-doento.jpg'
 
-  - title: 'beol.hu'
+  - title: 'Az orosházi Tonhalak gyorsak voltak, remekeltek a juniorok viadalán'
     date: '2023. 04. 23.'
     url: 'https://www.beol.hu/helyi-kozelet/2023/04/az-oroshazi-tonhalak-gyorsak-voltak-remekeltek-a-juniorok-viadalan'
     screenshot: '/images/sajtomegjelenesek/2023/beol_hu_oroshazi-tonhalak-gyorsak-voltak-remekeltek-a-juniorok-viadalan.jpg'
 
-  - title: 'u-szeged.hu'
+  - title: 'Háromszázezezret nyertek a Tiszafajankók az SZTE Juniorok Viadalán'
     date: '2023. 04. 23.'
     url: 'https://u-szeged.hu/sztehirek/2023-aprilis/haromszazezezret-nyertek'
     screenshot: '/images/sajtomegjelenesek/2023/u-szeged_hu_haromszazezezret-nyertek.jpg'
 
-  - title: 'bolyai-kkt.edu.hu'
-    date: '2023. 04. 20.'
-    url: 'http://www.bolyai-kkt.edu.hu/index.php?start=20'
-    screenshot: '/images/sajtomegjelenesek/2023/bolyai-kkt_edu_hu_juniorakademia-siker.jpg'
-
-  - title: 'oroscafe.hu'
-    date: '2023. 04. 05.'
-    url: 'https://oroscafe.hu/2023/04/04/oroshazi-hirek-tancsics-mihaly-gimnazium-juniorok-viadala-elodonto-es-kosarlabda-bajnoksag-orszagos-donto/'
-    screenshot: '/images/sajtomegjelenesek/2023/oroscafe_hu_juniorok-viadala-elodonto.jpg'
-
-  - title: 'vasvari.hu'
+  - title: 'Felhívás a Juniorok Viadala csapatvetélkedőre'
     date: '2023. 04. 04.'
     url: 'https://www.vasvari.hu/hirek/szte-juniorok-viadala'
     screenshot: '/images/sajtomegjelenesek/2023/vasvari_hu_szte-juniorok-viadala.jpg|beol_hu_oroshazi-tonhalak-gyorsak-voltak-remekeltek-a-juniorok-viadalan.jpg|bolyai-kkt_edu_hu_juniorakademia-siker.jpg|gyakg.u-szeged_hu_szte-juniorok-viadala-2023.jpg|moravarosi_hu_szte-juniorok-viadala-doento.jpg|oroscafe_hu_juniorok-viadala-elodonto.jpg|radnoti-szeged_edu_hu_juniorok-viadala-muveltseg-diadala.jpg|u-szeged_hu_haromszazezezret-nyertek.jpg'
 
-  - title: 'delmagyar.hu'
+  - title: 'Kinyitják a világot a falusi kisdiákoknak , elkezdődött a felkészítő tábor'
     date: '2023. 03. 03.'
     url: 'https://www.delmagyar.hu/helyi-kozelet/2023/02/kinyitjak-a-vilagot-a-falusi-kisdiakoknak-elkezdodott-a-felkeszito-tabor-fotok'
     screenshot: '/images/sajtomegjelenesek/2023/delmagyar_hu_kinyitjak-a-vilagot-a-falusi-kisdiakoknak.jpeg'
 
-  - title: '24.hu'
+  - title: 'Átadták az egyetem prospektustartóit 31 partnerintézménynek'
     date: '2023. 02. 17.'
     url: 'https://u-szeged.hu/sztehirek/2023-februar/atadtak-egyetem?objectParentFolderId=19355'
     screenshot: '/images/sajtomegjelenesek/2023/u-szeged_hu_atadtak-az-egyetem-prospektustartoit.jpeg'
 
-  - title: 'tv.szeged.hu'
-    date: '2023. 02. 17.'
-    url: 'https://tv.szeged.hu/cikk/szegedi-hirado-2023-februar-17-en'
-    screenshot: '/images/sajtomegjelenesek/2023/tv_szeged_hu_az-egyenlo-eselyekert-tanitanak.jpeg'
-
-  - title: '24.hu'
+  - title: 'Ezek az ösztöndíjak mind téged várnak, ha a Szegedi Tudományegyetemet választod'
     date: '2023. 02. 10.'
     url: 'https://24.hu/kozelet/2023/01/30/szegedi-tudomanyegyetem-felveteli-osztondijak-osszege-tudnivalok-alapitvanyi-vallalat-start/'
     screenshot: '/images/sajtomegjelenesek/2023/24_hu_szegedi-tudomanyegyetem-felveteli-osztondijak-osszege.jpeg'
 
-  - title: 'u-szeged.hu'
+  - title: 'Ösztöndíjak az SZTE-n'
     date: '2023. 01. 30.'
     url: 'https://u-szeged.hu/sztehirek/2023-januar/osztondijak-szte'
     screenshot: '/images/sajtomegjelenesek/2023/u-szeged_hu_osztondijak-szte.jpeg'
 
-  - title: 'hodpress.hu'
-    date: '2023. 01. 26.'
-    url: 'https://www.hodpress.hu/2023/01/25/akar-150-ezer-forintos-osztondijat-is-kaphatnak-az-szte-agrar-szakos-hallgatoi/'
-    screenshot: '/images/sajtomegjelenesek/2023/hodpress_hu_akar-150-ezer-forintos-osztondijat-is-kaphatnak-az-szte-agrar-szakos-hallgatoi.jpeg'
-
-  - title: 'u-szeged.hu'
+  - title: 'Pedagógus életpályára felkészítő ösztöndíjprogramot indít a Szegedi Tudományegyetem és a Gál Ferenc Egyetem'
     date: '2023. 01. 25.'
     url: 'https://u-szeged.hu/sztehirek/2023-januar/pedagogus-eletpalyara'
     screenshot: '/images/sajtomegjelenesek/2023/u-szeged_hu_pedagogus-eletpalyara.jpeg'
 
-  - title: 'u-szeged.hu'
+  - title: 'Különös előnyre tehet szert, aki megpályázza az SZTE START ösztöndíjat'
     date: '2023. 01. 25.'
     url: 'https://u-szeged.hu/szte-osztondijak-start-osztondij-junior-akademia'
     screenshot: '/images/sajtomegjelenesek/2023/u-szeged_hu_szte-osztondijak-start-osztondij-junior-akademia.jpeg'
