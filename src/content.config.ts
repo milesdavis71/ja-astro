@@ -27,16 +27,16 @@ const news = defineCollection({
   }),
 })
 
+const menuItemSchema: z.ZodType<any> = z.object({
+  label: z.string(),
+  url: z.string().optional(),
+  items: z.array(z.lazy(() => menuItemSchema)).optional(),
+})
+
 const global = defineCollection({
   type: 'data',
   schema: z.object({
-    menu: z.array(
-      z.object({
-        id: z.string(),
-        label: z.string(),
-        url: z.string(),
-      })
-    ),
+    menu: z.array(menuItemSchema),
     site: z.object({
       title: z.string(),
       description: z.string().optional(),

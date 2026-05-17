@@ -1,0 +1,149 @@
+---
+type MenuItem = {
+  label: string
+  url?: string
+  items?: MenuItem[]
+}
+
+const { item, currentPath, depth = 0 } = Astro.props as {
+  item: MenuItem
+  currentPath: string
+  depth?: number
+}
+
+function normalizePath(path?: string) {
+  if (!path || path === '/') {
+    return '/'
+  }
+
+  const normalized = path.replace(/\/+$/, '')
+  return normalized || '/'
+}
+
+function isLinkActive(itemUrl?: string) {
+  if (!itemUrl) {
+    return false
+  }
+
+  const normalizedItemUrl = normalizePath(itemUrl)
+  const normalizedCurrentPath = normalizePath(currentPath)
+
+  if (normalizedItemUrl === '/') {
+    return normalizedCurrentPath === '/'
+  }
+
+  return (
+    normalizedCurrentPath === normalizedItemUrl ||
+    normalizedCurrentPath.startsWith(normalizedItemUrl + '/')
+  )
+}
+
+function hasActiveTrail(menuItem: MenuItem): boolean {
+  if (isLinkActive(menuItem.url)) {
+    return true
+  }
+
+  return (menuItem.items ?? []).some(hasActiveTrail)
+}
+
+const children = item.items ?? []
+const hasChildren = children.length > 0
+const isActive = isLinkActive(item.url)
+const isInActiveTrail = hasActiveTrail(item)
+
+const levelClasses = [
+  {
+    row: 'px-4 py-2 text-sm',
+    children: 'ml-4 mt-1 border-l border-gray-200 pl-3',
+  },
+  {
+    row: 'px-3 py-2 text-sm',
+    children: 'ml-3 mt-1 border-l border-gray-200 pl-3',
+  },
+  {
+    row: 'px-3 py-1.5 text-[0.95rem]',
+    children: 'ml-3 mt-1 border-l border-gray-200 pl-3',
+  },
+]
+
+const currentLevel = levelClasses[Math.min(depth, levelClasses.length - 1)]
+
+const sharedRowClasses = `rounded-md transition-colors duration-150 ${currentLevel.row}`
+const activeRowClasses = 'bg-blue-100 font-semibold text-[color:var(--link-color)]'
+const trailRowClasses = 'bg-blue-50 text-[color:var(--link-color)]'
+const idleRowClasses = 'text-gray-700 hover:bg-gray-50 hover:text-blue-600'
+---
+
+<li class="list-none">
+  {
+    hasChildren ? (
+      <div x-data={`{ open: ${isInActiveTrail ? 'true' : 'false'} }`} class="space-y-1">
+        <div class="flex items-start gap-2">
+          {
+            item.url ? (
+              <a
+                href={item.url}
+                aria-current={isActive ? 'page' : undefined}
+                class={`min-w-0 flex-1 no-underline ${sharedRowClasses} ${
+                  isActive ? activeRowClasses : isInActiveTrail ? trailRowClasses : idleRowClasses
+                }`}
+              >
+                {item.label}
+              </a>
+            ) : (
+              <span
+                class={`min-w-0 flex-1 ${sharedRowClasses} ${
+                  isInActiveTrail ? trailRowClasses : 'text-gray-800'
+                }`}
+              >
+                {item.label}
+              </span>
+            )
+          }
+
+          <button
+            type="button"
+            class={`mt-0.5 inline-flex h-9 w-9 flex-none items-center justify-center rounded-md border border-gray-200 text-gray-500 transition-colors hover:border-blue-200 hover:text-blue-600 ${
+              isInActiveTrail ? 'border-blue-200 text-[color:var(--link-color)]' : ''
+            }`}
+            @click="open = !open"
+            :aria-expanded="open.toString()"
+            aria-label={`${item.label} submenu`}
+          >
+            <svg
+              class="h-4 w-4 transition-transform duration-200"
+              :class="{ 'rotate-90': open }"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M7.22 4.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 1 1-1.06-1.06L10.94 10 7.22 6.28a.75.75 0 0 1 0-1.06Z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <ul
+          x-show="open"
+          class={`list-none space-y-1 pl-0 ${currentLevel.children}`}
+          style={isInActiveTrail ? undefined : 'display: none;'}
+        >
+          {children.map((child) => <Astro.self item={child} currentPath={currentPath} depth={depth + 1} />)}
+        </ul>
+      </div>
+    ) : item.url ? (
+      <a
+        href={item.url}
+        aria-current={isActive ? 'page' : undefined}
+        class={`block no-underline ${sharedRowClasses} ${isActive ? activeRowClasses : idleRowClasses}`}
+      >
+        {item.label}
+      </a>
+    ) : (
+      <span class={`block ${sharedRowClasses} text-gray-800`}>{item.label}</span>
+    )
+  }
+</li>
