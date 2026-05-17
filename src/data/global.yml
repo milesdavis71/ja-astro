@@ -2,13 +2,6 @@ menu:
   - label: Főoldal
     url: /
 
-  - label: Érettségi felkészítő tanfolyamok
-    items:
-      - label: Tanárok
-        url: /erettsegi-felkeszito-tanfolyamok-tanarai
-      - label: Órarend
-        url: /erettsegi-felkeszito-tanfolyamok-orarendje
-
   - label: Rólunk
     items:
       - label: Sajtómegjelenések
