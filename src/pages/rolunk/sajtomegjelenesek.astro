@@ -6,7 +6,7 @@ export const frontmatter = {
 }
 
 import { getCollection } from 'astro:content'
-import TwoColumnLayout from '../../layouts/TwoColumnLayout.astro'
+import DefaultLayout from '../../layouts/DefaultLayout.astro'
 import PressMentionsArchive from '../../components/PressMentionsArchive.astro'
 
 const supportedYears = Array.from({ length: 7 }, (_, index) => String(2025 - index))
@@ -52,7 +52,7 @@ const years = supportedYears.map((year) => ({
 }))
 ---
 
-<TwoColumnLayout {frontmatter}>
+<DefaultLayout {frontmatter}>
   <section class="py-12">
     <div class="mb-8 max-w-3xl">
       <h1>Sajtómegjelenések</h1>
@@ -64,4 +64,4 @@ const years = supportedYears.map((year) => ({
 
     <PressMentionsArchive years={years} pageSize={15} />
   </section>
-</TwoColumnLayout>
+</DefaultLayout>

@@ -1,14 +1,181 @@
 menu:
-  - label: Főoldal
-    url: /
+  - title: Főoldal
+    page: index
+    url: index
+    icon:  home
 
-  - label: Rólunk
-    items:
-      - label: Sajtómegjelenések
-        url: /rolunk/sajtomegjelenesek
+#Rólunk
+  - title: Rólunk
+    folder: rolunk
+    icon: torsos-all
+    menu: rolunk
+    submenu:
+      - title: Munkatársaink
+        page: 'munkatarsaink' 
+        url: rolunk/munkatarsaink
+      - title: Bemutatkozunk
+        page: 'bemutatkozunk'
+        url: rolunk/bemutatkozunk
+      - title: Szegedi Tehetséggondozó Tanács
+        page: 'szegedi_tehetseggondozo_tanacs'
+        url: rolunk/szegedi_tehetseggondozo_tanacs
+      - title: Idővonal
+        url: rolunk/idovonal
+        page: 'idovonal'
+      - title: Sajtómegjelenések
+        url: rolunk/sajtomegjelenesek
+        page: 'sajtomegjelenesek'
+      - title: Partnerek
+        url: rolunk/partnerek
+        page: 'partnerek'
+  
+ #Híreink
+  - title: Híreink
+    page: hireink
+    url: hireink
+    icon: megaphone
 
-  - label: Kapcsolat
-    url: /kapcsolat
+ #Programok
+  - title: Programok
+    icon: calendar
+    menu: prog
+    submenu:
+      - title: Középiskolai Partneri Program
+        folder: programok
+        url: kozepiskolai_partneri_program
+        page: 'kozepiskolai_partneri_program'
+      - title: SZTE Junior Akademiai Előadások
+        folder: programok
+        url: szte_junior_akademiai_eloadasok
+        page: 'szte_junior_akademiai_eloadasok'
+      - title: Versenyek
+        folder: programok
+        url: versenyek
+        page: 'versenyek'
+      - title: Osztálykirándulások
+        folder: programok
+        url: osztalykirandulasok
+        page: 'osztalykirandulasok'
+      - title: Workshopok
+        folder: programok
+        url: workshopok
+        page: 'workshopok'
+      - title: Pályaorientációs tanácsadás
+        folder: programok
+        url: palyaorientacios_tanacsadas
+        page: 'palyaorientacios_tanacsadas'
+      - title: Pályázatok
+        folder: programok
+        url: palyazatok
+        page: 'palyazatok'
+        
+#Tanfolyamok
+  - title: Tanfolyamok
+    folder: tanfolyamok
+    icon: projection-screen
+    menu: tanf
+    submenu:
+      - title: Emelt szintű érettségi felkészítési tanfolyamok
+        folder: tanfolyamok
+        url: emelt_szintu_erettsegire_felkeszito_tanfolyamok 
+        page: 'emelt_szintu_erettsegire_felkeszito_tanfolyamok'
+      - title: Érettségi felkészítő tanfolyamok tanárai
+        folder: tanfolyamok
+        url: erettsegi_felkeszito_tanfolyamok_tanarai
+        page: 'erettsegi_felkeszito_tanfolyamok_tanarai'
+      - title: Tantermi érettségi felkészítő tanfolyamok órarendje
+        folder: tanfolyamok
+        url: tantermi_erettsegi_felkeszito_tanfolyamok_orarendje
+        page: 'tantermi_erettsegi_felkeszito_tanfolyamok_orarendje'
+      - title: Online érettségi felkészítő tanfolyamok órarendje
+        url: online_erettsegi_felkeszito_tanfolyamok_orarendje
+        page: 'online_erettsegi_felkeszito_tanfolyamok_orarendje'
+        folder: tanfolyamok
+      - title: Tanfolyamdíj visszatérítés
+        url: tanfolyamdij_visszaterites
+        folder: tanfolyamok
+        page: 'tanfolyamdij_visszaterites'
+        
+#Ösztöndíjak
+  - title: Ösztöndíjak
+    page: osztondijak
+    url: osztondijak
+    icon: credit-card
+
+#Felvételizőknek
+  - title: Felvételizőknek
+    folder: felvetelizoknek
+    icon: info
+    menu: felv
+    submenu:
+      - title: SZTE intézményi felvételi pontok
+        folder: felvetelizoknek
+        url: szte_intezmenyi_felveteli_pontok 
+        page: 'szte_intezmenyi_felveteli_pontok'
+
+#Galériák
+  - title: Galériák
+    folder: galeriak
+    icon: camera
+    menu: gal
+    submenu:
+      - title: Fotóalbumok
+        folder: galeriak
+        url: fotoalbumok 
+        page: 'fotoalbumok'
+      - title: Videók
+        folder: galeriak
+        url: videok 
+        page: 'videok'
+
+#Tanítsunk Magyarországért
+  - title: Tanítsunk Magyarországért
+    folder: tanitsunk_magyarorszagert
+    icon: heart
+    menu: tm
+    submenu:
+      - title: Tájékoztató
+        folder: tanitsunk_magyarorszagert
+        url: tajekoztato
+        page: 'tajekoztato'
+      - title: A programban résztvevő iskolák
+        folder: tanitsunk_magyarorszagert
+        url: a_programban_resztvevo_iskolak
+        page: 'a_programban_resztvevo_iskolak'
+      - title: Pályázat mentorálásra
+        folder: tanitsunk_magyarorszagert
+        url: palyazat_mentoralasra
+        page: 'palyazat_mentoralasra'
+      - title: TM partnerek
+        folder: tanitsunk_magyarorszagert
+        url: tm_partnerek
+        page: 'tm_partnerek'
+      - title: Gyakran ismételt kérdések
+        folder: tanitsunk_magyarorszagert
+        url: gyakran_ismetelt_kerdesek
+        page: 'gyakran_ismetelt_kerdesek'
+      - title: Etikai elvekek és adatvédelem
+        folder: tanitsunk_magyarorszagert
+        url: etikai_elvek_es_adatvedelem
+        page: 'etikai_elvek_es_adatvedelem'
+      - title: Kapcsolat TM
+        folder: tanitsunk_magyarorszagert
+        url: kapcsolat_tm
+        page: 'kapcsolat_tm'
+      - title: Tanítsunk Magyarországért honlap
+        folder: tanitsunk_magyarorszagert
+        url: tanitsunk_magyarorszagert_honlap
+        page: 'tanitsunk_magyarorszagert_honlap'
+
+#Kapcsolat
+  - title: Kapcsolat
+    page: kapcsolat
+    url: kapcsolat
+    icon: telephone
+
+
+
+
 
 site:
   title: SZTE Junior Akadémia

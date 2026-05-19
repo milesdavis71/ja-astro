@@ -1,7 +1,11 @@
 ---
 type MenuItem = {
-  label: string
+  title?: string
+  label?: string
   url?: string
+  page?: string
+  folder?: string
+  submenu?: MenuItem[]
   items?: MenuItem[]
 }
 
@@ -18,6 +22,32 @@ function normalizePath(path?: string) {
 
   const normalized = path.replace(/\/+$/, '')
   return normalized || '/'
+}
+
+function getItemLabel(menuItem: MenuItem) {
+  return menuItem.title ?? menuItem.label ?? ''
+}
+
+function getItemUrl(menuItem: MenuItem) {
+  if (!menuItem.url) {
+    return undefined
+  }
+
+  if (/^(https?:)?\/\//.test(menuItem.url)) {
+    return menuItem.url
+  }
+
+  const rawUrl = menuItem.url.replace(/^\/+|\/+$/g, '')
+
+  if (!rawUrl || rawUrl === 'index') {
+    return '/'
+  }
+
+  if (menuItem.folder && rawUrl !== menuItem.folder && !rawUrl.startsWith(`${menuItem.folder}/`)) {
+    return `/${menuItem.folder}/${rawUrl}`
+  }
+
+  return `/${rawUrl}`
 }
 
 function isLinkActive(itemUrl?: string) {
@@ -39,16 +69,18 @@ function isLinkActive(itemUrl?: string) {
 }
 
 function hasActiveTrail(menuItem: MenuItem): boolean {
-  if (isLinkActive(menuItem.url)) {
+  if (isLinkActive(getItemUrl(menuItem))) {
     return true
   }
 
-  return (menuItem.items ?? []).some(hasActiveTrail)
+  return (menuItem.submenu ?? menuItem.items ?? []).some(hasActiveTrail)
 }
 
-const children = item.items ?? []
+const label = getItemLabel(item)
+const href = getItemUrl(item)
+const children = item.submenu ?? item.items ?? []
 const hasChildren = children.length > 0
-const isActive = isLinkActive(item.url)
+const isActive = isLinkActive(href)
 const isInActiveTrail = hasActiveTrail(item)
 
 const levelClasses = [
@@ -80,15 +112,15 @@ const idleRowClasses = 'text-gray-700 hover:bg-gray-50 hover:text-blue-600'
       <div x-data={`{ open: ${isInActiveTrail ? 'true' : 'false'} }`} class="space-y-1">
         <div class="flex items-start gap-2">
           {
-            item.url ? (
+            href ? (
               <a
-                href={item.url}
+                href={href}
                 aria-current={isActive ? 'page' : undefined}
                 class={`min-w-0 flex-1 no-underline ${sharedRowClasses} ${
                   isActive ? activeRowClasses : isInActiveTrail ? trailRowClasses : idleRowClasses
                 }`}
               >
-                {item.label}
+                {label}
               </a>
             ) : (
               <span
@@ -96,7 +128,7 @@ const idleRowClasses = 'text-gray-700 hover:bg-gray-50 hover:text-blue-600'
                   isInActiveTrail ? trailRowClasses : 'text-gray-800'
                 }`}
               >
-                {item.label}
+                {label}
               </span>
             )
           }
@@ -108,7 +140,7 @@ const idleRowClasses = 'text-gray-700 hover:bg-gray-50 hover:text-blue-600'
             }`}
             @click="open = !open"
             :aria-expanded="open.toString()"
-            aria-label={`${item.label} submenu`}
+            aria-label={`${label} submenu`}
           >
             <svg
               class="h-4 w-4 transition-transform duration-200"
@@ -134,16 +166,16 @@ const idleRowClasses = 'text-gray-700 hover:bg-gray-50 hover:text-blue-600'
           {children.map((child) => <Astro.self item={child} currentPath={currentPath} depth={depth + 1} />)}
         </ul>
       </div>
-    ) : item.url ? (
+    ) : href ? (
       <a
-        href={item.url}
+        href={href}
         aria-current={isActive ? 'page' : undefined}
         class={`block no-underline ${sharedRowClasses} ${isActive ? activeRowClasses : idleRowClasses}`}
       >
-        {item.label}
+        {label}
       </a>
     ) : (
-      <span class={`block ${sharedRowClasses} text-gray-800`}>{item.label}</span>
+      <span class={`block ${sharedRowClasses} text-gray-800`}>{label}</span>
     )
   }
 </li>
