@@ -1,8 +1,6 @@
 ---
 import TeacherCard from './TeacherCard.astro'
-import teachersData from '../data/teachers.yml'
-const { showImage = true } = Astro.props
-const teachers = teachersData
+const { teachers = [], showImage = true } = Astro.props
 ---
 
 <section>

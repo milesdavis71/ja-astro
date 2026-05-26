@@ -1,0 +1,30 @@
+---
+import DefaultLayout from "../layouts/DefaultLayout.astro";
+
+export const frontmatter = {
+  title: "Keresés",
+  description: "Gyors keresés a Junior Akadémia oldalain",
+  sidebarNewsCount: 3,
+};
+---
+
+<DefaultLayout {frontmatter}>
+  <section class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+    <form action="/kereses" method="get" class="relative" role="search">
+      <label for="search-page-input" class="sr-only">Keresés</label>
+      <input
+        id="search-page-input"
+        name="q"
+        type="search"
+        placeholder="Keresés az oldalon..."
+        class="block w-full rounded-md border border-gray-300 py-3 pl-11 pr-4 text-base text-gray-900 shadow-sm focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700/20"
+      />
+      <svg class="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd" />
+      </svg>
+    </form>
+    <p class="mt-4 text-sm text-gray-600">
+      A keresőfelület előkészítve. A tényleges keresési találatok a keresőindex bevezetése után jelennek meg.
+    </p>
+  </section>
+</DefaultLayout>

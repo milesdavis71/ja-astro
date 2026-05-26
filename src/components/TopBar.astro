@@ -1,70 +1,105 @@
 ---
-// src/components/TopBar.astro
-import global from "../data/global.yml";
-
-const { site } = global;
 const { showToc } = Astro.props;
+
+const headerLinks = [
+  { label: "Ösztöndíjak", href: "/osztondijak" },
+  {
+    label: "Érettségi felkészítők",
+    href: "/tanfolyamok/emelt_szintu_erettsegire_felkeszito_tanfolyamok",
+  },
+  {
+    label: "Osztálykirándulások",
+    href: "/programok/osztalykirandulasok",
+  },
+  {
+    label: "Tanítsunk Magyarországért",
+    href: "/tanitsunk_magyarorszagert/tajekoztato",
+  },
+];
 ---
 
 <header class="sticky top-0 z-40 w-full flex-none border-b border-gray-200 shadow-sm" style="background-color: var(--primary-color);">
-  <div class="max-w-[1440px] mx-auto">
-    <div class="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
-      <!-- Desktop nézet -->
-<div class="flex items-center gap-4">
-  <a href="/" class="flex items-center gap-2">
-    <img
-      src="/images/ja-logo-magenta-blue-fekvo-for-dark-bg.svg"
-      alt="SZTE Junior Akadémia logó"
-      class="h-8 w-auto"
-    />
-  </a>
-</div>
-      <div class="hidden lg:flex items-center">
-        <div class="relative">
+  <div class="mx-auto max-w-[1440px]">
+    <div class="flex h-16 items-center gap-3 px-4 sm:px-6 lg:px-8">
+      <a href="/" class="flex shrink-0 items-center gap-2">
+        <img
+          src="/images/ja-logo-magenta-blue-fekvo-for-dark-bg.svg"
+          alt="SZTE Junior Akadémia logó"
+          class="h-8 w-auto max-w-[170px] sm:max-w-none"
+        />
+      </a>
+
+      <nav class="ml-2 hidden min-w-0 flex-1 items-center justify-center gap-1 xl:flex" aria-label="Kiemelt területek">
+        {headerLinks.map((link) => (
+          <a
+            href={link.href}
+            class="rounded-md px-3 py-2 text-sm font-medium text-white/90 transition hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          >
+            {link.label}
+          </a>
+        ))}
+      </nav>
+
+      <div class="ml-auto hidden items-center gap-2 lg:flex">
+        <form action="/kereses" method="get" class="relative w-64" role="search">
+          <label for="site-search" class="sr-only">Keresés</label>
           <input
+            id="site-search"
+            name="q"
             type="search"
             placeholder="Keresés..."
-            class="block w-full rounded-md border-0 py-1.5 pl-10 pr-4 bg-white/10 text-white ring-1 ring-inset ring-white/20 placeholder:text-white/60 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6"
+            class="block w-full rounded-md border-0 bg-white/10 py-2 pl-10 pr-3 text-sm text-white ring-1 ring-inset ring-white/20 placeholder:text-white/60 transition focus:bg-white/15 focus:ring-2 focus:ring-inset focus:ring-white"
           />
-          <div class="absolute inset-y-0 left-0 flex items-center pl-3">
-            <svg class="h-5 w-5 text-white/60" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
-            </svg>
-          </div>
-        </div>
+          <svg class="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-white/60" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd" />
+          </svg>
+        </form>
+        <a
+          href="/kapcsolat"
+          class="rounded-md bg-white px-4 py-2 text-sm font-semibold text-blue-900 shadow-sm transition hover:bg-white/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        >
+          Kapcsolat
+        </a>
       </div>
 
-      <!-- Mobil nézet -->
-      <div class="lg:hidden flex items-center justify-between w-full">
-        <button
-          type="button"
-          class="inline-flex items-center gap-2 rounded-md border border-white/30 px-3 py-2 text-sm font-medium text-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-          aria-controls="mobile-menu"
-          :aria-expanded="sidebarOpen"
-          @click="sidebarOpen = true; tocOpen = false"
+      <div class="ml-auto flex items-center gap-2 lg:hidden">
+        <a
+          href="/kereses"
+          class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/30 text-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          aria-label="Keresés"
         >
-          <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
+          <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd" />
           </svg>
-          <span>Menü</span>
-        </button>
-        <div class="text-base font-semibold text-white text-center flex-1 mx-3 truncate">{site.title}</div>
-        {showToc ? (
+        </a>
+
+        {showToc && (
           <button
             type="button"
-            class="inline-flex items-center gap-2 rounded-md border border-white/30 px-3 py-2 text-sm font-medium text-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/30 text-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             aria-controls="mobile-toc"
             :aria-expanded="tocOpen"
             @click="tocOpen = true; sidebarOpen = false"
+            aria-label="Tartalom"
           >
-            <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" aria-hidden="true">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 7h14M5 12h9M5 17h6" />
             </svg>
-            <span>Tartalom</span>
           </button>
-        ) : (
-          <div class="w-[101px]"></div> <!-- Placeholder to balance the layout -->
         )}
+
+        <button
+          type="button"
+          class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/30 text-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          aria-controls="mobile-menu"
+          :aria-expanded="sidebarOpen"
+          @click="sidebarOpen = true; tocOpen = false"
+          aria-label="Menü"
+        >
+          <svg class="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+        </button>
       </div>
     </div>
   </div>
