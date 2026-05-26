@@ -1,10 +1,470 @@
 ---
 import DefaultLayout from '../../layouts/DefaultLayout.astro'
+import { GALLERY_ROOT_CONFIG, getGalleryCatalogItems, type GalleryCatalogItem } from '../../utils/galleryCatalog'
 
-export const frontmatter = {
-  title: 'Fotoalbumok',
-  sidebarNewsCount: 3,
+type GalleryCard = {
+  title: string
+  description: string
+  image: string
+  href: string
+  meta: string
+  linkLabel: string
 }
+
+type CategorySection = {
+  title: string
+  description: string
+  href: string
+  image: string
+  count: number
+}
+
+const frontmatter = {
+  title: 'Fotoalbumok',
+  description: 'A Junior Akademia programjai, versenyei, taborai es kozossegi esemenyei kepekben.',
+  sidebarNewsCount: 0,
+}
+
+const allItems = await getGalleryCatalogItems()
+
+const latestCards: GalleryCard[] = allItems.slice(0, 8).map((item) => ({
+  title: item.title,
+  description: item.rootLabel,
+  image: item.coverImage,
+  href: item.routePath,
+  meta: `${item.year || 'Korabbi'} - ${item.imageCount} kep`,
+  linkLabel: 'Galeria megnyitasa',
+}))
+
+const categoryCards: CategorySection[] = Object.entries(GALLERY_ROOT_CONFIG)
+  .map(([rootKey, config]) => {
+    const items = allItems.filter((item) => item.rootKey === rootKey)
+    if (items.length === 0) return null
+
+    return {
+      title: config.label,
+      description: config.description,
+      href: config.categoryHref,
+      image: items[0].coverImage,
+      count: items.length,
+    }
+  })
+  .filter(Boolean) as CategorySection[]
+
+const highlightedSeries = [
+  { title: 'TM taborok', href: '#tanitsunk-magyarorszagert', meta: '2021-2026' },
+  { title: 'Juniorok Viadala dontok', href: '#szte-juniorok-viadala', meta: '2023-2026' },
+  { title: 'Talent es zirzen dijatadok', href: '#osztondijak-es-dijatadok', meta: '2022-2026' },
+  { title: 'Prezilimpia es workshopok', href: '#workshopok-es-treningek', meta: '2020-2024' },
+]
+
+const yearLinks = [...new Set(allItems.map((item) => item.year).filter(Boolean))].sort((a, b) => (b || 0) - (a || 0))
+
+const groupedByRoot = categoryCards.map((category) => ({
+  ...category,
+  groups: Object.entries(
+    allItems
+      .filter((item) => item.rootLabel === category.title)
+      .reduce<Record<string, GalleryCatalogItem[]>>((accumulator, item) => {
+        accumulator[item.sectionLabel] ||= []
+        accumulator[item.sectionLabel].push(item)
+        return accumulator
+      }, {})
+  ).sort((left, right) => left[0].localeCompare(right[0], 'hu')),
+}))
 ---
 
-<DefaultLayout {frontmatter} />
+<DefaultLayout {frontmatter}>
+  <section class="gallery-hub">
+    <header class="gallery-hub__hero">
+      <p class="gallery-hub__eyebrow">Junior Akademia</p>
+      <h1 class="gallery-hub__title">Galeriak</h1>
+      <p class="gallery-hub__description">
+        A Junior Akademia programjai, versenyei, taborai es kozossegi esemenyei kepekben.
+      </p>
+    </header>
+
+    <section class="gallery-hub__section">
+      <div class="gallery-hub__section-head">
+        <h2>Legfrissebb galeriak</h2>
+        <p>A legujabb esemenyek a jelenlegi allomanyok alapjan.</p>
+      </div>
+      <div class="gallery-card-grid">
+        {latestCards.map((card) => (
+          <article class="gallery-card">
+            <img src={card.image} alt={card.title} class="gallery-card__image" loading="lazy" />
+            <div class="gallery-card__body">
+              <p class="gallery-card__meta">{card.meta}</p>
+              <h3 class="gallery-card__title">{card.title}</h3>
+              <p class="gallery-card__description">{card.description}</p>
+              <a href={card.href} class="gallery-card__link">{card.linkLabel}</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="gallery-hub__section">
+      <div class="gallery-hub__section-head">
+        <h2>Bongeszes programok szerint</h2>
+        <p>A jelenlegi mappastruktura alapjan osszerendezett fo temakorok.</p>
+      </div>
+      <div class="gallery-category-grid">
+        {categoryCards.map((category) => (
+          <a href={category.href} class="gallery-category-card">
+            <img src={category.image} alt={category.title} class="gallery-category-card__image" loading="lazy" />
+            <div class="gallery-category-card__overlay">
+              <p class="gallery-category-card__count">{category.count} galeria</p>
+              <h3>{category.title}</h3>
+              <p>{category.description}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="gallery-hub__section">
+      <div class="gallery-hub__section-head">
+        <h2>Kiemelt esemenysorozatok</h2>
+        <p>Visszatero programok, amelyeket erdemes kulon kiemelni.</p>
+      </div>
+      <div class="gallery-series-grid">
+        {highlightedSeries.map((series) => (
+          <a href={series.href} class="gallery-series-card">
+            <span class="gallery-series-card__meta">{series.meta}</span>
+            <strong>{series.title}</strong>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="gallery-hub__section">
+      <div class="gallery-hub__section-head">
+        <h2>Bongeszes ev szerint</h2>
+        <p>Gyors ugras a legaktivabb evekhez.</p>
+      </div>
+      <div class="gallery-year-links">
+        {yearLinks.map((year) => (
+          <a href={`#year-${year}`} class="gallery-year-link">
+            {year}
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="gallery-hub__section">
+      <div class="gallery-hub__section-head">
+        <h2>Osszes galeria</h2>
+        <p>Programonkent es alkategoriankent rendezett teljes attekintes.</p>
+      </div>
+
+      <div class="gallery-group-list">
+        {groupedByRoot.map((category) => (
+          <section id={category.href.replace('#', '')} class="gallery-group">
+            <header class="gallery-group__head">
+              <h3>{category.title}</h3>
+              <p>{category.description}</p>
+            </header>
+
+            <div class="gallery-subgroup-list">
+              {category.groups.map(([groupName, items]) => (
+                <section class="gallery-subgroup">
+                  <div class="gallery-subgroup__head">
+                    <h4>{groupName}</h4>
+                    {items.some((item) => item.year) && (
+                      <div class="gallery-subgroup__years">
+                        {[...new Set(items.map((item) => item.year).filter(Boolean))].map((year) => (
+                          <span id={`year-${year}`}>{year}</span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  <div class="gallery-card-grid">
+                    {items.map((item) => (
+                      <article class="gallery-card gallery-card--compact">
+                        <img src={item.coverImage} alt={item.title} class="gallery-card__image" loading="lazy" />
+                        <div class="gallery-card__body">
+                          <p class="gallery-card__meta">
+                            {item.year || 'Korabbi'} - {item.imageCount} kep
+                          </p>
+                          <h5 class="gallery-card__title">{item.title}</h5>
+                          <p class="gallery-card__description">{item.rootLabel}</p>
+                          <a href={item.routePath} class="gallery-card__link">Galeria megnyitasa</a>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+    </section>
+  </section>
+</DefaultLayout>
+
+<style>
+  .gallery-hub {
+    margin: 0 auto;
+    max-width: 1280px;
+    padding: 1rem 0 4rem;
+  }
+
+  .gallery-hub__hero {
+    border-radius: 28px;
+    padding: 1.5rem;
+    background:
+      radial-gradient(circle at top left, rgba(255, 255, 255, 0.6), transparent 34%),
+      linear-gradient(135deg, #eff6ff 0%, #dbeafe 45%, #f8fafc 100%);
+    border: 1px solid #dbeafe;
+  }
+
+  .gallery-hub__eyebrow {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #1d4ed8;
+  }
+
+  .gallery-hub__title {
+    margin: 0.5rem 0 0;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.05;
+    color: #0f172a;
+  }
+
+  .gallery-hub__description {
+    margin: 0.9rem 0 0;
+    max-width: 60ch;
+    font-size: 1rem;
+    color: #334155;
+  }
+
+  .gallery-hub__section {
+    margin-top: 2rem;
+  }
+
+  .gallery-hub__section-head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-bottom: 1rem;
+  }
+
+  .gallery-hub__section-head h2,
+  .gallery-group__head h3,
+  .gallery-subgroup__head h4 {
+    margin: 0;
+    color: #0f172a;
+  }
+
+  .gallery-hub__section-head p,
+  .gallery-group__head p {
+    margin: 0;
+    color: #475569;
+  }
+
+  .gallery-card-grid {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .gallery-card {
+    overflow: hidden;
+    border-radius: 22px;
+    border: 1px solid #e2e8f0;
+    background: #fff;
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.06);
+  }
+
+  .gallery-card__image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    background: #e2e8f0;
+  }
+
+  .gallery-card__body {
+    padding: 1rem;
+  }
+
+  .gallery-card__meta {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #2563eb;
+  }
+
+  .gallery-card__title {
+    margin: 0.45rem 0 0;
+    font-size: 1.05rem;
+    color: #0f172a;
+  }
+
+  .gallery-card__description {
+    margin: 0.45rem 0 0;
+    color: #475569;
+    font-size: 0.95rem;
+  }
+
+  .gallery-card__link {
+    display: inline-flex;
+    margin-top: 0.9rem;
+    align-items: center;
+    border-radius: 999px;
+    background: #0f172a;
+    color: #fff;
+    padding: 0.55rem 0.9rem;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  .gallery-category-grid {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .gallery-category-card {
+    position: relative;
+    display: block;
+    min-height: 240px;
+    overflow: hidden;
+    border-radius: 24px;
+    text-decoration: none;
+  }
+
+  .gallery-category-card__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(1.05);
+  }
+
+  .gallery-category-card__overlay {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    min-height: 240px;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.45rem;
+    padding: 1.2rem;
+    color: #fff;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.1), rgba(15, 23, 42, 0.82));
+  }
+
+  .gallery-category-card__overlay h3,
+  .gallery-category-card__overlay p {
+    margin: 0;
+  }
+
+  .gallery-category-card__count {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .gallery-series-grid,
+  .gallery-year-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .gallery-series-card,
+  .gallery-year-link {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    border-radius: 18px;
+    border: 1px solid #cbd5e1;
+    background: #fff;
+    color: #0f172a;
+    text-decoration: none;
+    padding: 0.8rem 1rem;
+    font-weight: 700;
+  }
+
+  .gallery-series-card__meta {
+    font-size: 0.8rem;
+    color: #2563eb;
+  }
+
+  .gallery-group-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .gallery-group {
+    border-top: 1px solid #e2e8f0;
+    padding-top: 1.5rem;
+  }
+
+  .gallery-group__head {
+    margin-bottom: 1rem;
+  }
+
+  .gallery-subgroup-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .gallery-subgroup__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .gallery-subgroup__years {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .gallery-subgroup__years span {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    padding: 0.3rem 0.7rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  @media (min-width: 640px) {
+    .gallery-card-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .gallery-category-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .gallery-card-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .gallery-category-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

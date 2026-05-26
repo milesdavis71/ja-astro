@@ -1,0 +1,47 @@
+---
+import GalleryPageGrid from '../../components/GalleryPageGrid.astro'
+import DefaultLayout from '../../layouts/DefaultLayout.astro'
+import {
+  getGalleryCatalogItems,
+  getGalleryCategoryBackLink,
+  humanizeGallerySlug,
+  type GalleryCatalogItem,
+} from '../../utils/galleryCatalog'
+
+type Props = {
+  item: GalleryCatalogItem
+}
+
+export async function getStaticPaths() {
+  const items = await getGalleryCatalogItems()
+
+  return items.map((item) => ({
+    params: { slug: item.relativePath },
+    props: { item },
+  }))
+}
+
+const { item } = Astro.props as Props
+
+const fallbackTitle = humanizeGallerySlug(item.slug)
+const pageTitle = item.title || fallbackTitle
+const eventTitle = `${item.rootLabel}: ${pageTitle}`
+
+const frontmatter = {
+  title: `${pageTitle} | Galeriak`,
+  description: `${item.rootLabel} fotoalbum: ${pageTitle}.`,
+  sidebarNewsCount: 0,
+}
+---
+
+<DefaultLayout {frontmatter}>
+  <GalleryPageGrid
+    title={eventTitle}
+    photographer="SZTE Junior Akademia"
+    galleryFolder={item.folder}
+    backToEventUrl={getGalleryCategoryBackLink(item)}
+    backToEventLabel={`Vissza ide: ${item.rootLabel}`}
+    backToGalleriesUrl="/galeriak/fotoalbumok"
+    backToGalleriesLabel="Vissza a galeriakhoz"
+  />
+</DefaultLayout>
