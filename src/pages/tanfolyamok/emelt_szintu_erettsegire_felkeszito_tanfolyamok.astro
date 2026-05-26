@@ -1,5 +1,6 @@
 ---
 import DefaultLayout from '../../layouts/DefaultLayout.astro'
+import Button from '../../components/button.astro'
 
 export const frontmatter = {
   title: 'Emelt szintű érettségire felkészítő tanfolyamok',
@@ -7,4 +8,76 @@ export const frontmatter = {
 }
 ---
 
-<DefaultLayout {frontmatter} />
+<DefaultLayout {frontmatter}>
+  <section class="course-redirect">
+    <a
+      href="https://erettsegifelk.hu/"
+      class="course-redirect__image-link"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Érettségifelkészítő tanfolyamok részletei az erettsegifelk.hu oldalon"
+    >
+      <img
+        src="/images/emelt-szintu-erettsegi-felkeszito-tanfolyam.jpg"
+        alt="Emelt szintű érettségire felkészítő tanfolyam"
+        class="course-redirect__image"
+      />
+    </a>
+
+    <div class="course-redirect__content">
+      <h2>Minden információ az érettségifelk.hu oldalon</h2>
+      <p>
+        A JA érettségifelkészítő tanfolyamaihoz kapcsolódó részletek, tantárgyak, időpontok és
+        jelentkezési információk az erettsegifelk.hu oldalon érhetők el.
+      </p>
+      <Button
+        text="Tovább az erettsegifelk.hu oldalra"
+        link="https://erettsegifelk.hu/"
+        target="_blank"
+        icon="lucide:external-link"
+      />
+    </div>
+  </section>
+</DefaultLayout>
+
+<style>
+  .course-redirect {
+    display: grid;
+    gap: 1.5rem;
+    align-items: center;
+    max-width: 960px;
+  }
+
+  .course-redirect__image-link {
+    display: block;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+  }
+
+  .course-redirect__image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  .course-redirect__content {
+    max-width: 620px;
+  }
+
+  .course-redirect__content h2 {
+    color: #1b3f7b;
+  }
+
+  .course-redirect__content p {
+    margin-bottom: 1.25rem;
+  }
+
+  @media (min-width: 900px) {
+    .course-redirect {
+      grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+    }
+  }
+</style>

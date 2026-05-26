@@ -79,22 +79,7 @@ menu:
         folder: tanfolyamok
         url: emelt_szintu_erettsegire_felkeszito_tanfolyamok 
         page: 'emelt_szintu_erettsegire_felkeszito_tanfolyamok'
-      - title: Érettségi felkészítő tanfolyamok tanárai
-        folder: tanfolyamok
-        url: erettsegi_felkeszito_tanfolyamok_tanarai
-        page: 'erettsegi_felkeszito_tanfolyamok_tanarai'
-      - title: Tantermi érettségi felkészítő tanfolyamok órarendje
-        folder: tanfolyamok
-        url: tantermi_erettsegi_felkeszito_tanfolyamok_orarendje
-        page: 'tantermi_erettsegi_felkeszito_tanfolyamok_orarendje'
-      - title: Online érettségi felkészítő tanfolyamok órarendje
-        url: online_erettsegi_felkeszito_tanfolyamok_orarendje
-        page: 'online_erettsegi_felkeszito_tanfolyamok_orarendje'
-        folder: tanfolyamok
-      - title: Tanfolyamdíj visszatérítés
-        url: tanfolyamdij_visszaterites
-        folder: tanfolyamok
-        page: 'tanfolyamdij_visszaterites'
+ 
         
 #Ösztöndíjak
   - title: Ösztöndíjak
