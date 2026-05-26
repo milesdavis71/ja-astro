@@ -76,14 +76,6 @@ const groupedByRoot = categoryCards.map((category) => ({
 
 <DefaultLayout {frontmatter}>
   <section class="gallery-hub">
-    <header class="gallery-hub__hero">
-      <p class="gallery-hub__eyebrow">Junior Akadémia</p>
-      <h1 class="gallery-hub__title">Galériák</h1>
-      <p class="gallery-hub__description">
-        A Junior Akadémia programjai, versenyei, táborai és közösségi eseményei képekben.
-      </p>
-    </header>
-
     <section class="gallery-hub__section">
       <div class="gallery-hub__section-head">
         <h2>Legfrissebb galériák</h2>
@@ -210,38 +202,6 @@ const groupedByRoot = categoryCards.map((category) => ({
     margin: 0 auto;
     max-width: 1280px;
     padding: 1rem 0 4rem;
-  }
-
-  .gallery-hub__hero {
-    border-radius: 28px;
-    padding: 1.5rem;
-    background:
-      radial-gradient(circle at top left, rgba(255, 255, 255, 0.6), transparent 34%),
-      linear-gradient(135deg, #eff6ff 0%, #dbeafe 45%, #f8fafc 100%);
-    border: 1px solid #dbeafe;
-  }
-
-  .gallery-hub__eyebrow {
-    margin: 0;
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #1d4ed8;
-  }
-
-  .gallery-hub__title {
-    margin: 0.5rem 0 0;
-    font-size: clamp(2rem, 4vw, 3.2rem);
-    line-height: 1.05;
-    color: #0f172a;
-  }
-
-  .gallery-hub__description {
-    margin: 0.9rem 0 0;
-    max-width: 60ch;
-    font-size: 1rem;
-    color: #334155;
   }
 
   .gallery-hub__section {
