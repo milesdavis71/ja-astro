@@ -20,8 +20,8 @@ type CategorySection = {
 }
 
 const frontmatter = {
-  title: 'Fotoalbumok',
-  description: 'A Junior Akademia programjai, versenyei, taborai es kozossegi esemenyei kepekben.',
+  title: 'Fotóalbumok',
+  description: 'A Junior Akadémia programjai, versenyei, táborai és közösségi eseményei képekben.',
   sidebarNewsCount: 0,
 }
 
@@ -32,8 +32,8 @@ const latestCards: GalleryCard[] = allItems.slice(0, 8).map((item) => ({
   description: item.rootLabel,
   image: item.coverImage,
   href: item.routePath,
-  meta: `${item.year || 'Korabbi'} - ${item.imageCount} kep`,
-  linkLabel: 'Galeria megnyitasa',
+  meta: `${item.year || 'Korábbi'} - ${item.imageCount} kép`,
+  linkLabel: 'Galéria megnyitása',
 }))
 
 const categoryCards: CategorySection[] = Object.entries(GALLERY_ROOT_CONFIG)
@@ -52,10 +52,10 @@ const categoryCards: CategorySection[] = Object.entries(GALLERY_ROOT_CONFIG)
   .filter(Boolean) as CategorySection[]
 
 const highlightedSeries = [
-  { title: 'TM taborok', href: '#tanitsunk-magyarorszagert', meta: '2021-2026' },
-  { title: 'Juniorok Viadala dontok', href: '#szte-juniorok-viadala', meta: '2023-2026' },
-  { title: 'Talent es zirzen dijatadok', href: '#osztondijak-es-dijatadok', meta: '2022-2026' },
-  { title: 'Prezilimpia es workshopok', href: '#workshopok-es-treningek', meta: '2020-2024' },
+  { title: 'TM táborok', href: '#tanitsunk-magyarorszagert', meta: '2021-2026' },
+  { title: 'Juniorok Viadala döntők', href: '#szte-juniorok-viadala', meta: '2023-2026' },
+  { title: 'Talent és Zirzen díjátadók', href: '#osztondijak-es-dijatadok', meta: '2022-2026' },
+  { title: 'Prezilimpia és workshopok', href: '#workshopok-es-treningek', meta: '2020-2024' },
 ]
 
 const yearLinks = [...new Set(allItems.map((item) => item.year).filter(Boolean))].sort((a, b) => (b || 0) - (a || 0))
@@ -77,17 +77,17 @@ const groupedByRoot = categoryCards.map((category) => ({
 <DefaultLayout {frontmatter}>
   <section class="gallery-hub">
     <header class="gallery-hub__hero">
-      <p class="gallery-hub__eyebrow">Junior Akademia</p>
-      <h1 class="gallery-hub__title">Galeriak</h1>
+      <p class="gallery-hub__eyebrow">Junior Akadémia</p>
+      <h1 class="gallery-hub__title">Galériák</h1>
       <p class="gallery-hub__description">
-        A Junior Akademia programjai, versenyei, taborai es kozossegi esemenyei kepekben.
+        A Junior Akadémia programjai, versenyei, táborai és közösségi eseményei képekben.
       </p>
     </header>
 
     <section class="gallery-hub__section">
       <div class="gallery-hub__section-head">
-        <h2>Legfrissebb galeriak</h2>
-        <p>A legujabb esemenyek a jelenlegi allomanyok alapjan.</p>
+        <h2>Legfrissebb galériák</h2>
+        <p>A legújabb események a jelenlegi állományok alapján.</p>
       </div>
       <div class="gallery-card-grid">
         {latestCards.map((card) => (
@@ -106,15 +106,15 @@ const groupedByRoot = categoryCards.map((category) => ({
 
     <section class="gallery-hub__section">
       <div class="gallery-hub__section-head">
-        <h2>Bongeszes programok szerint</h2>
-        <p>A jelenlegi mappastruktura alapjan osszerendezett fo temakorok.</p>
+        <h2>Böngészés programok szerint</h2>
+        <p>A jelenlegi mappastruktúra alapján összerendezett fő témakörök.</p>
       </div>
       <div class="gallery-category-grid">
         {categoryCards.map((category) => (
           <a href={category.href} class="gallery-category-card">
             <img src={category.image} alt={category.title} class="gallery-category-card__image" loading="lazy" />
             <div class="gallery-category-card__overlay">
-              <p class="gallery-category-card__count">{category.count} galeria</p>
+              <p class="gallery-category-card__count">{category.count} galéria</p>
               <h3>{category.title}</h3>
               <p>{category.description}</p>
             </div>
@@ -125,8 +125,8 @@ const groupedByRoot = categoryCards.map((category) => ({
 
     <section class="gallery-hub__section">
       <div class="gallery-hub__section-head">
-        <h2>Kiemelt esemenysorozatok</h2>
-        <p>Visszatero programok, amelyeket erdemes kulon kiemelni.</p>
+        <h2>Kiemelt eseménysorozatok</h2>
+        <p>Visszatérő programok, amelyeket érdemes külön kiemelni.</p>
       </div>
       <div class="gallery-series-grid">
         {highlightedSeries.map((series) => (
@@ -140,8 +140,8 @@ const groupedByRoot = categoryCards.map((category) => ({
 
     <section class="gallery-hub__section">
       <div class="gallery-hub__section-head">
-        <h2>Bongeszes ev szerint</h2>
-        <p>Gyors ugras a legaktivabb evekhez.</p>
+        <h2>Böngészés év szerint</h2>
+        <p>Gyors ugrás a legaktívabb évekhez.</p>
       </div>
       <div class="gallery-year-links">
         {yearLinks.map((year) => (
@@ -154,8 +154,8 @@ const groupedByRoot = categoryCards.map((category) => ({
 
     <section class="gallery-hub__section">
       <div class="gallery-hub__section-head">
-        <h2>Osszes galeria</h2>
-        <p>Programonkent es alkategoriankent rendezett teljes attekintes.</p>
+        <h2>Összes galéria</h2>
+        <p>Programonként és alkategóriánként rendezett teljes áttekintés.</p>
       </div>
 
       <div class="gallery-group-list">
@@ -186,11 +186,11 @@ const groupedByRoot = categoryCards.map((category) => ({
                         <img src={item.coverImage} alt={item.title} class="gallery-card__image" loading="lazy" />
                         <div class="gallery-card__body">
                           <p class="gallery-card__meta">
-                            {item.year || 'Korabbi'} - {item.imageCount} kep
+                            {item.year || 'Korábbi'} - {item.imageCount} kép
                           </p>
                           <h5 class="gallery-card__title">{item.title}</h5>
                           <p class="gallery-card__description">{item.rootLabel}</p>
-                          <a href={item.routePath} class="gallery-card__link">Galeria megnyitasa</a>
+                          <a href={item.routePath} class="gallery-card__link">Galéria megnyitása</a>
                         </div>
                       </article>
                     ))}

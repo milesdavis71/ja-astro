@@ -28,43 +28,43 @@ export const GALLERY_ROOT_CONFIG: Record<
   }
 > = {
   'tanitsunk-mo-ert': {
-    label: 'Tanitsunk Magyarorszagert',
-    description: 'Taborok, palyaorientacios napok, nyilt napok es kozossegi programok.',
+    label: 'Tanítsunk Magyarországért',
+    description: 'Táborok, pályaorientációs napok, nyílt napok és közösségi programok.',
     categoryHref: '#tanitsunk-magyarorszagert',
   },
   'szte-juniorok-viadala-sakk-viadal': {
     label: 'SZTE Juniorok Viadala',
-    description: 'Dontok, elodontok, sakkviadal es kapcsolodo versenyek.',
+    description: 'Döntők, elődöntők, sakkviadal és kapcsolódó versenyek.',
     categoryHref: '#szte-juniorok-viadala',
   },
   'ja-eloadasok': {
-    label: 'Junior Akademia eloadasok',
-    description: 'Tudomanyos es ismeretterjeszto eloadasok kulonfele temakban.',
+    label: 'Junior Akadémia előadások',
+    description: 'Tudományos és ismeretterjesztő előadások különféle témákban.',
     categoryHref: '#junior-akademia-eloadasok',
   },
   'egyeb-programok': {
-    label: 'Egyeb programok',
-    description: 'Dijatadok, workshopok, prezilimpia es kulonleges rendezvenyek.',
+    label: 'Egyéb programok',
+    description: 'Díjátadók, workshopok, prezilimpia és különleges rendezvények.',
     categoryHref: '#egyeb-programok',
   },
   kpp: {
-    label: 'Kozepiskolai Partneri Program',
-    description: 'Igazgatoi ertekezletek, egyuttmukodesek es partnerintezmenyi esemenyek.',
+    label: 'Középiskolai Partneri Program',
+    description: 'Igazgatói értekezletek, együttműködések és partnerintézményi események.',
     categoryHref: '#kozepiskolai-partneri-program',
   },
   osztalykirandulasok: {
-    label: 'Osztalykirandulasok',
-    description: 'Iskolai csoportok latogatasai ev es intezmeny szerint.',
+    label: 'Osztálykirándulások',
+    description: 'Iskolai csoportok látogatásai év és intézmény szerint.',
     categoryHref: '#osztalykirandulasok',
   },
   'prezentacios-technikak-workshopok-2020': {
-    label: 'Workshopok es treningek',
-    description: 'Prezentacios technikak, keszsegfejlesztes es egyeb tematikus alkalmak.',
+    label: 'Workshopok és tréningek',
+    description: 'Prezentációs technikák, készségfejlesztés és egyéb tematikus alkalmak.',
     categoryHref: '#workshopok-es-treningek',
   },
   'talent-dijatadok': {
-    label: 'Osztondijak es dijatadok',
-    description: 'Talent es mas elismeresek unnepi pillanatai.',
+    label: 'Ösztöndíjak és díjátadók',
+    description: 'Talent és más elismerések ünnepi pillanatai.',
     categoryHref: '#osztondijak-es-dijatadok',
   },
 }
@@ -77,8 +77,66 @@ function titleCaseWord(word: string) {
   return word.charAt(0).toUpperCase() + word.slice(1)
 }
 
-export function humanizeGallerySlug(value: string) {
+function applyHungarianTitleCorrections(value: string) {
+  const corrections: Record<string, string> = {
+    Akademia: 'Akadémia',
+    Eloadasok: 'Előadások',
+    Eloadas: 'Előadás',
+    Donto: 'Döntő',
+    Dontok: 'Döntők',
+    Elodonto: 'Elődöntő',
+    Elodontok: 'Elődöntők',
+    Tabor: 'Tábor',
+    Taborok: 'Táborok',
+    Nyilt: 'Nyílt',
+    Fotoalbum: 'Fotóalbum',
+    Foto: 'Fotó',
+    Galeria: 'Galéria',
+    Kep: 'Kép',
+    Kepekben: 'Képekben',
+    Kapcsolodo: 'Kapcsolódó',
+    Kulon: 'Külön',
+    Kozossegi: 'Közösségi',
+    Palyaorientacios: 'Pályaorientációs',
+    Prevencios: 'Prevenciós',
+    Egyeb: 'Egyéb',
+    Dijatadok: 'Díjátadók',
+    Osztondijak: 'Ösztöndíjak',
+    Osztondij: 'Ösztöndíj',
+    Tanitsunk: 'Tanítsunk',
+    Magyarorszagert: 'Magyarországért',
+    Kozepiskolai: 'Középiskolai',
+    Osztalykirandulasok: 'Osztálykirándulások',
+    Prezentacios: 'Prezentációs',
+    Keszsegfejleszto: 'Készségfejlesztő',
+    Keszsegfejlesztes: 'Készségfejlesztés',
+    Treningek: 'Tréningek',
+    Tudomanyos: 'Tudományos',
+    Ismeretterjeszto: 'Ismeretterjesztő',
+    Kulonfele: 'Különféle',
+    Temakban: 'Témákban',
+    Igazgatoi: 'Igazgatói',
+    Ertekezletek: 'Értekezletek',
+    Egyuttmukodesek: 'Együttműködések',
+    Partnerintezmenyi: 'Partnerintézményi',
+    Esemenyek: 'Események',
+    Ev: 'Év',
+    Evi: 'Évi',
+    Intezmeny: 'Intézmény',
+    Latogatasai: 'Látogatásai',
+    Unnepi: 'Ünnepi',
+    Mas: 'Más',
+  }
+
   return value
+    .split(' ')
+    .map((word) => corrections[word] || word)
+    .join(' ')
+}
+
+export function humanizeGallerySlug(value: string) {
+  return applyHungarianTitleCorrections(
+    value
     .replace(/^_+/, '')
     .replaceAll('_', ' ')
     .replaceAll('-', ' ')
@@ -87,6 +145,7 @@ export function humanizeGallerySlug(value: string) {
     .split(' ')
     .map(titleCaseWord)
     .join(' ')
+  )
 }
 
 function extractYear(value: string) {
@@ -103,52 +162,52 @@ function extractSeasonWeight(value: string) {
 
 function getSectionLabel(rootKey: string, segments: string[], slug: string) {
   if (rootKey === 'tanitsunk-mo-ert') {
-    if (slug.includes('tabor')) return 'TM taborok'
-    if (slug.includes('palyaorientacios')) return 'Palyaorientacios napok'
-    if (slug.includes('prevencios')) return 'Prevencios napok'
-    if (slug.includes('nyilt-nap')) return 'Nyilt napok'
-    return 'Kulon esemenyek'
+    if (slug.includes('tabor')) return 'TM táborok'
+    if (slug.includes('palyaorientacios')) return 'Pályaorientációs napok'
+    if (slug.includes('prevencios')) return 'Prevenciós napok'
+    if (slug.includes('nyilt-nap')) return 'Nyílt napok'
+    return 'Külön események'
   }
 
   if (rootKey === 'szte-juniorok-viadala-sakk-viadal') {
-    if (slug.includes('donto')) return 'Dontok'
-    if (slug.includes('elodonto')) return 'Elodontok'
+    if (slug.includes('donto')) return 'Döntők'
+    if (slug.includes('elodonto')) return 'Elődöntők'
     if (slug.includes('sakk')) return 'Sakkviadal'
-    if (slug.includes('plakat')) return 'Plakatverseny'
-    return 'Kapcsolodo esemenyek'
+    if (slug.includes('plakat')) return 'Plakátverseny'
+    return 'Kapcsolódó események'
   }
 
   if (rootKey === 'egyeb-programok') {
-    if (segments[1] === 'osztondij-atadok') return 'Osztondijak es dijatadok'
+    if (segments[1] === 'osztondij-atadok') return 'Ösztöndíjak és díjátadók'
     if (segments[1] === 'prezilimpia-donto') return 'Prezilimpia'
-    if (slug.includes('kommunikacios')) return 'Keszsegfejleszto treningek'
-    return 'Egyeb programok'
+    if (slug.includes('kommunikacios')) return 'Készségfejlesztő tréningek'
+    return 'Egyéb programok'
   }
 
   if (rootKey === 'kpp') {
-    if (slug.includes('igazgatoi')) return 'Igazgatoi ertekezletek'
-    if (slug.includes('egyuttmukodesi')) return 'Egyuttmukodesek'
-    if (slug.includes('prospektustarto')) return 'Prospektustarto-atadasok'
-    return 'KPP esemenyek'
+    if (slug.includes('igazgatoi')) return 'Igazgatói értekezletek'
+    if (slug.includes('egyuttmukodesi')) return 'Együttműködések'
+    if (slug.includes('prospektustarto')) return 'Prospektustartó-átadások'
+    return 'KPP események'
   }
 
   if (rootKey === 'osztalykirandulasok') {
-    return segments[1] ? `${segments[1]}. evi osztalykirandulasok` : 'Osztalykirandulasok'
+    return segments[1] ? `${segments[1]}. évi osztálykirándulások` : 'Osztálykirándulások'
   }
 
   if (rootKey === 'prezentacios-technikak-workshopok-2020') {
-    return 'Prezentacios technikak'
+    return 'Prezentációs technikák'
   }
 
   if (rootKey === 'talent-dijatadok') {
-    return 'Talent dijatadok'
+    return 'Talent díjátadók'
   }
 
   if (rootKey === 'ja-eloadasok') {
-    return 'Junior Akademia eloadasok'
+    return 'Junior Akadémia előadások'
   }
 
-  return GALLERY_ROOT_CONFIG[rootKey]?.label || 'Galeriak'
+  return GALLERY_ROOT_CONFIG[rootKey]?.label || 'Galériák'
 }
 
 async function collectGalleryFolders(currentDir: string, relativeSegments: string[] = []): Promise<string[]> {

@@ -19,12 +19,12 @@ const news = Object.entries(postModules)
 
     return {
       id: post.frontmatter?.id ?? index + 1,
-      title: post.frontmatter?.title || 'Cim nelkul',
+      title: post.frontmatter?.title || 'Cím nélkül',
       slug: file.split('/').pop()?.replace(/\.mdx?$/, '') || `news-${index + 1}`,
       date: rawDate ? new Date(rawDate).toISOString().split('T')[0] : '2026-03-01',
       excerpt: post.frontmatter?.excerpt || '',
       image: post.frontmatter?.image || '/images/ja-logo-magenta-blue-fekvo-for-dark-bg.svg',
-      category: 'Hir',
+      category: 'Hír',
       draft: post.frontmatter?.draft === true,
     }
   })

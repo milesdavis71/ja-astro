@@ -30,7 +30,7 @@ function isAllowedImage(file: string) {
 }
 
 function buildAlt(index: number) {
-  return `Galeria kep ${index + 1}`
+  return `Galéria kép ${index + 1}`
 }
 
 function findThumbName(file: string, availableFiles: Set<string>) {

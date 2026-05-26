@@ -28,8 +28,8 @@ const pageTitle = item.title || fallbackTitle
 const eventTitle = `${item.rootLabel}: ${pageTitle}`
 
 const frontmatter = {
-  title: `${pageTitle} | Galeriak`,
-  description: `${item.rootLabel} fotoalbum: ${pageTitle}.`,
+  title: `${pageTitle} | Galériák`,
+  description: `${item.rootLabel} fotóalbum: ${pageTitle}.`,
   sidebarNewsCount: 0,
 }
 ---
@@ -37,11 +37,11 @@ const frontmatter = {
 <DefaultLayout {frontmatter}>
   <GalleryPageGrid
     title={eventTitle}
-    photographer="SZTE Junior Akademia"
+    photographer="SZTE Junior Akadémia"
     galleryFolder={item.folder}
     backToEventUrl={getGalleryCategoryBackLink(item)}
     backToEventLabel={`Vissza ide: ${item.rootLabel}`}
     backToGalleriesUrl="/galeriak/fotoalbumok"
-    backToGalleriesLabel="Vissza a galeriakhoz"
+    backToGalleriesLabel="Vissza a galériákhoz"
   />
 </DefaultLayout>

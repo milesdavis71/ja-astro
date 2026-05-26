@@ -16,9 +16,9 @@ const {
   photographer = '',
   galleryFolder,
   backToEventUrl = '/news',
-  backToEventLabel = 'Vissza az esemenyhez',
+  backToEventLabel = 'Vissza az eseményhez',
   backToGalleriesUrl = '/fotoalbumok',
-  backToGalleriesLabel = 'Vissza a galeriakhoz',
+  backToGalleriesLabel = 'Vissza a galériákhoz',
 } = Astro.props
 
 const galleryId = `gallery-page-${Astro.url.pathname.replace(/[^a-zA-Z0-9]/g, '-')}`
@@ -37,8 +37,8 @@ const initialImages = await getGalleryImages(galleryFolder)
     <header class="gallery-page__head">
       <h1 class="gallery-page__title">{title}</h1>
       <p class="gallery-page__meta">
-        {photographer && <span>Foto: {photographer} | </span>}
-        <span data-gallery-total data-gallery-id={galleryId}>0</span> foto
+        {photographer && <span>Fotó: {photographer} | </span>}
+        <span data-gallery-total data-gallery-id={galleryId}>0</span> fotó
       </p>
     </header>
 
@@ -49,29 +49,29 @@ const initialImages = await getGalleryImages(galleryFolder)
 
     <div class="gallery-page__actions">
       <button type="button" class="gallery-page__load-more" data-gallery-load-more data-gallery-id={galleryId}>
-        Tovabbiak betoltese
+        Továbbiak betöltése
       </button>
     </div>
   </div>
 
   <button type="button" class="gallery-page__to-top" data-gallery-to-top data-gallery-id={galleryId}>
-    Ugras a tetejere
+    Ugrás a tetejére
   </button>
 
   <div class="gallery-lightbox hidden" data-gallery-lightbox data-gallery-id={galleryId} role="dialog" aria-modal="true">
     <div class="gallery-lightbox__top">
       <div class="gallery-lightbox__counter" data-gallery-counter data-gallery-id={galleryId}>1 / 1</div>
       <div class="gallery-lightbox__buttons">
-        <button type="button" class="gallery-lightbox__button" data-gallery-share data-gallery-id={galleryId}>Megosztas</button>
-        <button type="button" class="gallery-lightbox__button" data-gallery-copy-link data-gallery-id={galleryId}>Masolas link</button>
-        <button type="button" class="gallery-lightbox__button" data-gallery-open-new data-gallery-id={galleryId}>Megnyitas uj lapon</button>
+        <button type="button" class="gallery-lightbox__button" data-gallery-share data-gallery-id={galleryId}>Megosztás</button>
+        <button type="button" class="gallery-lightbox__button" data-gallery-copy-link data-gallery-id={galleryId}>Link másolása</button>
+        <button type="button" class="gallery-lightbox__button" data-gallery-open-new data-gallery-id={galleryId}>Megnyitás új lapon</button>
         <button type="button" class="gallery-lightbox__button" data-gallery-fullscreen data-gallery-id={galleryId}>Fullscreen</button>
-        <button type="button" class="gallery-lightbox__button" data-gallery-close data-gallery-id={galleryId}>Bezaras</button>
+        <button type="button" class="gallery-lightbox__button" data-gallery-close data-gallery-id={galleryId}>Bezárás</button>
       </div>
     </div>
 
-    <button type="button" class="gallery-lightbox__zone gallery-lightbox__zone--left" aria-label="Elozo kep" data-gallery-prev-zone data-gallery-id={galleryId}></button>
-    <button type="button" class="gallery-lightbox__zone gallery-lightbox__zone--right" aria-label="Kovetkezo kep" data-gallery-next-zone data-gallery-id={galleryId}></button>
+    <button type="button" class="gallery-lightbox__zone gallery-lightbox__zone--left" aria-label="Előző kép" data-gallery-prev-zone data-gallery-id={galleryId}></button>
+    <button type="button" class="gallery-lightbox__zone gallery-lightbox__zone--right" aria-label="Következő kép" data-gallery-next-zone data-gallery-id={galleryId}></button>
 
     <div class="gallery-lightbox__stage" data-gallery-stage data-gallery-id={galleryId}>
       <img src="" alt="" class="gallery-lightbox__image" data-gallery-image data-gallery-id={galleryId} />
@@ -175,7 +175,7 @@ const initialImages = await getGalleryImages(galleryFolder)
         currentIndex = index < 0 ? max : index > max ? 0 : index
         const image = images[currentIndex]
         lightboxImage.src = image.src
-        lightboxImage.alt = image.alt || `Galeria kep ${currentIndex + 1}`
+        lightboxImage.alt = image.alt || `Galéria kép ${currentIndex + 1}`
         updateCounter()
         preloadAround(currentIndex)
         resetZoom()
@@ -228,11 +228,11 @@ const initialImages = await getGalleryImages(galleryFolder)
         button.className = 'gallery-thumb'
         button.setAttribute('data-gallery-thumb', '')
         button.setAttribute('data-gallery-index', String(index))
-        button.setAttribute('aria-label', `${index + 1}. kep megnyitasa`)
+        button.setAttribute('aria-label', `${index + 1}. kép megnyitása`)
 
         const img = document.createElement('img')
         img.src = image.thumb || image.src
-        img.alt = image.alt || `Galeria kep ${index + 1}`
+        img.alt = image.alt || `Galéria kép ${index + 1}`
         img.loading = 'lazy'
         img.decoding = 'async'
         img.className = 'gallery-thumb__image is-loading'
