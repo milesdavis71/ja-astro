@@ -98,6 +98,29 @@
   }
 }
 
+h1.page-title-bar,
+.main-content-column {
+  min-width: 0;
+}
+
+.main-content-column {
+  flex: 1 1 0%;
+  width: auto;
+  margin: 1.25rem;
+}
+
+h1.page-title-bar {
+  margin-bottom: 1rem;
+  border: 1px solid rgb(226 232 240);
+  border-radius: 0.375rem;
+  background-color: rgb(226 232 240 / 0.8);
+  padding: 0.5rem 0.75rem;
+  color: #1b3f7b;
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
 [x-cloak] {
   display: none !important;
 }

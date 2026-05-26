@@ -2,11 +2,11 @@
 const { frontmatter } = Astro.props
 const contentClass = frontmatter?.contentClass || ''
 ---
-<main class={`flex-1 w-full ${contentClass}`}>
+<main class={`main-content-column ${contentClass}`}>
   <!-- Page Title -->
   {frontmatter?.title && frontmatter?.showPageTitle !== false && !frontmatter?.hidePageTitle && (
     <header class="mb-8">
-      <h1 class="text-xl font-bold border-b border-gray-200 pb-3 mb-4">
+      <h1 class="page-title-bar">
         {frontmatter.title}
       </h1>
       {frontmatter?.description && (
