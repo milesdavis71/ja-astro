@@ -8,7 +8,7 @@ const schools = ['Budapesti Gimnázium', 'Szegedi Technikum', 'Debreceni Akadém
   <form id="main-form" class="space-y-4">
     <select id="school-select" name="school" required class="w-full rounded border p-3">
       <option value="">Válassza ki az iskoláját...</option>
-      {schools.map((s) => <option value={s}>{s}</option>)}
+      {schools.map((school) => <option value={school}>{school}</option>)}
       <option value="none">Nincs a listában</option>
     </select>
 
@@ -17,11 +17,11 @@ const schools = ['Budapesti Gimnázium', 'Szegedi Technikum', 'Debreceni Akadém
     </div>
 
     <div id="form-content" class="space-y-4">
-      <div class="grid grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <input
           type="email"
           name="email"
-          placeholder="Saját Email (Belépéshez)"
+          placeholder="Saját email (belépéshez)"
           required
           class="rounded border p-2"
         />
@@ -36,18 +36,35 @@ const schools = ['Budapesti Gimnázium', 'Szegedi Technikum', 'Debreceni Akadém
 
       <hr />
       <h3 class="font-bold text-gray-700">Csapattársak adatai (3 fő)</h3>
+
       <div class="space-y-2">
-        <input
-          type="text"
-          name="s1_n"
-          placeholder="1. társ neve"
-          required
-          class="w-full rounded border p-2"
-        />
+        <input type="text" name="s1_n" placeholder="1. társ neve" required class="w-full rounded border p-2" />
         <input
           type="email"
           name="s1_e"
           placeholder="1. társ email"
+          required
+          class="w-full rounded border p-2"
+        />
+      </div>
+
+      <div class="space-y-2">
+        <input type="text" name="s2_n" placeholder="2. társ neve" required class="w-full rounded border p-2" />
+        <input
+          type="email"
+          name="s2_e"
+          placeholder="2. társ email"
+          required
+          class="w-full rounded border p-2"
+        />
+      </div>
+
+      <div class="space-y-2">
+        <input type="text" name="s3_n" placeholder="3. társ neve" required class="w-full rounded border p-2" />
+        <input
+          type="email"
+          name="s3_e"
+          placeholder="3. társ email"
           required
           class="w-full rounded border p-2"
         />
@@ -65,13 +82,21 @@ const schools = ['Budapesti Gimnázium', 'Szegedi Technikum', 'Debreceni Akadém
 </div>
 
 <script>
-  const select = document.getElementById('school-select') as HTMLSelectElement
+  const select = document.getElementById('school-select') as HTMLSelectElement | null
   const error = document.getElementById('error-msg')
   const content = document.getElementById('form-content')
-  const btn = document.getElementById('sub-btn')
-  const mainForm = document.getElementById('main-form')
+  const mainForm = document.getElementById('main-form') as HTMLFormElement | null
+  const submitBtn = document.getElementById('sub-btn') as HTMLButtonElement | null
 
-  if (select && error && content && btn && mainForm) {
+  const readJsonResponse = async (response: Response) => {
+    const payload = await response.json().catch(() => null)
+    if (!response.ok) {
+      throw new Error(payload?.message || `HTTP ${response.status}`)
+    }
+    return payload
+  }
+
+  if (select && error && content && mainForm && submitBtn) {
     select.addEventListener('change', () => {
       if (select.value === 'none') {
         error.classList.remove('hidden')
@@ -82,50 +107,45 @@ const schools = ['Budapesti Gimnázium', 'Szegedi Technikum', 'Debreceni Akadém
       }
     })
 
-    mainForm.addEventListener('submit', async (e) => {
-      e.preventDefault()
-      const formData = new FormData(e.target as HTMLFormElement)
-      const data = Object.fromEntries(formData)
+    mainForm.addEventListener('submit', async (event) => {
+      event.preventDefault()
 
-      const submitBtn = document.getElementById('sub-btn') as HTMLButtonElement
+      if (select.value === 'none') {
+        error.classList.remove('hidden')
+        content.classList.add('hidden')
+        return
+      }
+
+      const formData = new FormData(mainForm)
+      const payload = Object.fromEntries(formData)
       const originalText = submitBtn.textContent
 
       try {
         submitBtn.disabled = true
         submitBtn.textContent = 'Küldés folyamatban...'
 
-        const res = await fetch('/api/handler.php?action=register_student', {
+        const response = await fetch('/api/handler.php?action=register_student', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(data),
+          body: JSON.stringify(payload),
         })
 
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`)
+        const result = await readJsonResponse(response)
+        if (!result?.success) {
+          throw new Error(result?.message || 'A jelentkezés nem sikerült.')
         }
 
-        const result = await res.json()
-
-        if (result.success) {
-          alert(
-            'Sikeres regisztráció!' +
-              (result.email_sent
-                ? '\nVisszaigazoló email elküldve.'
-                : '\nMegjegyzés: A visszaigazoló emailt nem sikerült elküldeni.')
-          )
-          // Reset form
-          ;(e.target as HTMLFormElement).reset()
-        } else {
-          alert('Hiba: ' + (result.message || 'Ismeretlen hiba'))
-        }
-      } catch (error: any) {
-        console.error('Form submission error:', error)
         alert(
-          'Szerver hiba történt. Ellenőrizd a PHP futását!\n\nHiba részletek: ' +
-            (error?.message || 'Ismeretlen hiba')
+          'Sikeres regisztráció!' +
+            (result.email_sent
+              ? '\nVisszaigazoló email elküldve.'
+              : '\nMegjegyzés: A visszaigazoló emailt nem sikerült elküldeni.')
         )
+        mainForm.reset()
+      } catch (error: any) {
+        alert('Hiba: ' + (error?.message || 'Ismeretlen hiba'))
       } finally {
         submitBtn.disabled = false
         submitBtn.textContent = originalText

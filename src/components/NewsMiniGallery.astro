@@ -1,9 +1,5 @@
 ---
-type GalleryImage = {
-  src: string
-  thumb?: string
-  alt?: string
-}
+import { getGalleryImages, type GalleryImage } from '../utils/gallery'
 
 interface Props {
   images?: GalleryImage[]
@@ -12,8 +8,9 @@ interface Props {
 }
 
 const { images = [], galleryFolder = '', galleryUrl = '#' } = Astro.props
-const previewImages = images.slice(0, 9)
-const imageCount = images.length
+const resolvedImages = images.length > 0 ? images : await getGalleryImages(galleryFolder)
+const previewImages = resolvedImages.slice(0, 9)
+const imageCount = resolvedImages.length
 const galleryId = `news-mini-gallery-${Astro.url.pathname.replace(/[^a-zA-Z0-9]/g, '-')}`
 ---
 
@@ -147,6 +144,10 @@ const galleryId = `news-mini-gallery-${Astro.url.pathname.replace(/[^a-zA-Z0-9]/
               img.alt = image.alt || `Galéria kép ${index + 1}`
               img.className = 'h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]'
               img.loading = 'lazy'
+              img.addEventListener('error', () => {
+                if (img.src === image.src || !image.src) return
+                img.src = image.src
+              })
 
               button.appendChild(img)
               button.addEventListener('click', () => openModal(index))
@@ -217,18 +218,6 @@ const galleryId = `news-mini-gallery-${Astro.url.pathname.replace(/[^a-zA-Z0-9]/
             { passive: true }
           )
 
-          if (images.length === 0 && galleryFolder) {
-            fetch(`/api/gallery_preview.php?folder=${encodeURIComponent(galleryFolder)}`)
-              .then((response) => (response.ok ? response.json() : Promise.reject(new Error('API hiba'))))
-              .then((data) => {
-                if (!Array.isArray(data?.images) || data.images.length === 0) return
-
-                images = data.images.slice(0, 9)
-                renderThumbs()
-                setCount(typeof data.total === 'number' ? data.total : images.length)
-              })
-              .catch(() => {})
-          }
         })()
       </script>
     </section>

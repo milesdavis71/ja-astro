@@ -1,9 +1,5 @@
 ---
-interface GalleryImage {
-  src: string
-  thumb?: string
-  alt?: string
-}
+import { getGalleryImages } from '../utils/gallery'
 
 interface Props {
   title: string
@@ -26,6 +22,7 @@ const {
 } = Astro.props
 
 const galleryId = `gallery-page-${Astro.url.pathname.replace(/[^a-zA-Z0-9]/g, '-')}`
+const initialImages = await getGalleryImages(galleryFolder)
 ---
 
 <section class="gallery-page" data-gallery-page data-gallery-id={galleryId}>
@@ -86,6 +83,7 @@ const galleryId = `gallery-page-${Astro.url.pathname.replace(/[^a-zA-Z0-9]/g, '-
     define:vars={{
       galleryId,
       galleryFolder,
+      initialImages,
     }}
   >
     (() => {
@@ -111,7 +109,7 @@ const galleryId = `gallery-page-${Astro.url.pathname.replace(/[^a-zA-Z0-9]/g, '-
       if (!grid || !lightbox || !lightboxImage || !lightboxStage) return
 
       /** @type {Array<{src: string, thumb?: string, alt?: string}>} */
-      let images = []
+      let images = Array.isArray(initialImages) ? [...initialImages] : []
       let renderedCount = 0
       let currentIndex = 0
       let isOpen = false
@@ -240,6 +238,14 @@ const galleryId = `gallery-page-${Astro.url.pathname.replace(/[^a-zA-Z0-9]/g, '-
         img.className = 'gallery-thumb__image is-loading'
         img.addEventListener('load', () => {
           img.classList.remove('is-loading')
+        })
+        img.addEventListener('error', () => {
+          if (img.src === image.src || !image.src) {
+            img.classList.remove('is-loading')
+            return
+          }
+
+          img.src = image.src
         })
 
         const overlay = document.createElement('span')
@@ -479,18 +485,11 @@ const galleryId = `gallery-page-${Astro.url.pathname.replace(/[^a-zA-Z0-9]/g, '-
         })
       }
 
-      fetch(`/api/gallery_preview.php?folder=${encodeURIComponent(galleryFolder)}&limit=0`)
-        .then((response) => (response.ok ? response.json() : Promise.reject(new Error('API hiba'))))
-        .then((data) => {
-          if (!Array.isArray(data?.images) || data.images.length === 0) return
-          images = data.images
-          if (totalElement) {
-            totalElement.textContent = String(data.total || images.length)
-          }
-          initGrid()
-          parseHashAndOpen()
-        })
-        .catch(() => {})
+      if (totalElement) {
+        totalElement.textContent = String(images.length)
+      }
+      initGrid()
+      parseHashAndOpen()
 
       initEvents()
     })()

@@ -1,223 +1,367 @@
 <?php
 
-// Turn off error reporting for production to avoid output before JSON
-error_reporting(0);
-ini_set('display_errors', 0);
+declare(strict_types=1);
 
-// Start output buffering to catch any accidental output
+error_reporting(0);
+ini_set('display_errors', '0');
+
 ob_start();
 
-header("Content-Type: application/json");
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
+header('Content-Type: application/json; charset=utf-8');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
 
-// PHPMailer betöltése
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-use PHPMailer\PHPMailer\SMTP;
-
-require_once 'libs/PHPMailer/Exception.php';
-require_once 'libs/PHPMailer/PHPMailer.php';
-require_once 'libs/PHPMailer/SMTP.php';
-
-try {
-    $db = new PDO('sqlite:viadal_database.sqlite');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (Exception $e) {
-    http_response_code(500);
-    echo json_encode(["success" => false, "message" => "Adatbázis kapcsolati hiba: " . $e->getMessage()]);
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(204);
     exit;
 }
 
-$action = $_GET['action'] ?? '';
-$data = json_decode(file_get_contents('php://input'), true);
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
 
-// Amazon SES konfiguráció
-define('SMTP_HOST', 'email-smtp.eu-north-1.amazonaws.com');
-define('SMTP_PORT', 587);
-define('SMTP_USERNAME', 'AKIAQGVCWMZBAAR7HKQO');
-define('SMTP_PASSWORD', 'BFdJYJZQR2RTT1feOJNKz9srtIuVRcLOYZgn5x/lzAS6');
-define('SENDER_EMAIL', 'info@juniorakademia.hu');
-define('SENDER_NAME', 'Junior Akadémia');
+require_once __DIR__ . '/libs/PHPMailer/Exception.php';
+require_once __DIR__ . '/libs/PHPMailer/PHPMailer.php';
+require_once __DIR__ . '/libs/PHPMailer/SMTP.php';
+require_once __DIR__ . '/smtp_config_loader.php';
 
-/**
- * Email küldése a regisztrált diáknak
- */
-function sendConfirmationEmail($toEmail, $school, $studentName = '')
+function json_response(array $payload, int $status = 200): void
+{
+    http_response_code($status);
+    echo json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    exit;
+}
+
+function get_request_data(): array
+{
+    $rawBody = file_get_contents('php://input');
+    if (is_string($rawBody) && trim($rawBody) !== '') {
+        $decoded = json_decode($rawBody, true);
+        if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+            return $decoded;
+        }
+    }
+
+    return $_POST;
+}
+
+function clean_text($value): string
+{
+    return trim((string)($value ?? ''));
+}
+
+function clean_email($value): string
+{
+    return strtolower(trim((string)($value ?? '')));
+}
+
+function get_smtp_config(): array
+{
+    return load_smtp_config(__DIR__ . '/smtp_config.php');
+}
+
+function create_database_connection(): PDO
+{
+    $databasePath = __DIR__ . '/viadal_database.sqlite';
+    $db = new PDO('sqlite:' . $databasePath);
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $db->exec('PRAGMA foreign_keys = ON');
+
+    $db->exec(
+        'CREATE TABLE IF NOT EXISTS students (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            school TEXT NOT NULL,
+            email TEXT NOT NULL UNIQUE,
+            password TEXT NOT NULL,
+            s1_name TEXT NOT NULL DEFAULT "",
+            s1_email TEXT NOT NULL DEFAULT "",
+            s2_name TEXT NOT NULL DEFAULT "",
+            s2_email TEXT NOT NULL DEFAULT "",
+            s3_name TEXT NOT NULL DEFAULT "",
+            s3_email TEXT NOT NULL DEFAULT "",
+            created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+        )'
+    );
+
+    return $db;
+}
+
+function validate_registration_payload(array $data): array
+{
+    $school = clean_text($data['school'] ?? '');
+    $email = clean_email($data['email'] ?? '');
+    $password = (string)($data['password'] ?? '');
+
+    $students = [
+        ['name' => clean_text($data['s1_n'] ?? ''), 'email' => clean_email($data['s1_e'] ?? '')],
+        ['name' => clean_text($data['s2_n'] ?? ''), 'email' => clean_email($data['s2_e'] ?? '')],
+        ['name' => clean_text($data['s3_n'] ?? ''), 'email' => clean_email($data['s3_e'] ?? '')],
+    ];
+
+    if ($school === '' || $school === 'none') {
+        json_response(['success' => false, 'message' => 'Érvényes iskola kiválasztása kötelező.'], 422);
+    }
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        json_response(['success' => false, 'message' => 'Érvényes email cím megadása kötelező.'], 422);
+    }
+
+    if (strlen($password) < 8) {
+        json_response(['success' => false, 'message' => 'A jelszónak legalább 8 karakter hosszúnak kell lennie.'], 422);
+    }
+
+    foreach ($students as $index => $student) {
+        if ($student['name'] === '') {
+            json_response(['success' => false, 'message' => ($index + 1) . '. diáktárs neve kötelező.'], 422);
+        }
+
+        if (!filter_var($student['email'], FILTER_VALIDATE_EMAIL)) {
+            json_response(['success' => false, 'message' => ($index + 1) . '. diáktárs email címe érvénytelen.'], 422);
+        }
+    }
+
+    return [
+        'school' => $school,
+        'email' => $email,
+        'password' => $password,
+        's1_n' => $students[0]['name'],
+        's1_e' => $students[0]['email'],
+        's2_n' => $students[1]['name'],
+        's2_e' => $students[1]['email'],
+        's3_n' => $students[2]['name'],
+        's3_e' => $students[2]['email'],
+    ];
+}
+
+function validate_login_payload(array $data): array
+{
+    $email = clean_email($data['email'] ?? '');
+    $password = (string)($data['password'] ?? '');
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL) || $password === '') {
+        json_response(['success' => false, 'message' => 'Az email cím és a jelszó megadása kötelező.'], 422);
+    }
+
+    return ['email' => $email, 'password' => $password];
+}
+
+function build_student_response(array $student): array
+{
+    return [
+        'id' => (int)$student['id'],
+        'school' => $student['school'],
+        'email' => $student['email'],
+        's1_name' => $student['s1_name'],
+        's1_email' => $student['s1_email'],
+        's2_name' => $student['s2_name'],
+        's2_email' => $student['s2_email'],
+        's3_name' => $student['s3_name'],
+        's3_email' => $student['s3_email'],
+        'created_at' => $student['created_at'],
+    ];
+}
+
+function send_confirmation_email(array $smtpConfig, string $toEmail, string $school): bool
 {
     try {
         $mail = new PHPMailer(true);
-
-        // SMTP beállítások
         $mail->isSMTP();
-        $mail->Host = SMTP_HOST;
-        $mail->Port = SMTP_PORT;
+        $mail->Host = $smtpConfig['host'];
+        $mail->Port = $smtpConfig['port'];
         $mail->SMTPAuth = true;
-        $mail->Username = SMTP_USERNAME;
-        $mail->Password = SMTP_PASSWORD;
+        $mail->Username = $smtpConfig['username'];
+        $mail->Password = $smtpConfig['password'];
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->CharSet = 'UTF-8';
 
-        // Küldő beállítások
-        $mail->setFrom(SENDER_EMAIL, SENDER_NAME);
+        $mail->setFrom($smtpConfig['sender_email'], $smtpConfig['sender_name']);
         $mail->addAddress($toEmail);
-
-        // Email tartalom
         $mail->isHTML(true);
-        $mail->Subject = 'Sikeres regisztráció - Junior Akadémia Viadal';
+        $mail->Subject = 'Sikeres regisztráció - Junior Akadémia Viadala';
 
-        $htmlBody = "
+        $mail->Body = '
         <!DOCTYPE html>
-        <html>
+        <html lang="hu">
         <head>
-            <meta charset='UTF-8'>
-            <style>
-                body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-                .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-                .header { background-color: #4CAF50; color: white; padding: 20px; text-align: center; }
-                .content { padding: 30px; background-color: #f9f9f9; }
-                .footer { margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 12px; color: #777; }
-            </style>
+          <meta charset="UTF-8">
+          <style>
+            body { font-family: Arial, sans-serif; line-height: 1.6; color: #1f2937; }
+            .wrapper { max-width: 640px; margin: 0 auto; padding: 24px; }
+            .header { background: #2563eb; color: #ffffff; padding: 20px 24px; border-radius: 12px 12px 0 0; }
+            .content { background: #f8fafc; padding: 24px; border: 1px solid #e5e7eb; border-top: 0; border-radius: 0 0 12px 12px; }
+          </style>
         </head>
         <body>
-            <div class='container'>
-                <div class='header'>
-                    <h1>Junior Akadémia Viadal</h1>
-                </div>
-                <div class='content'>
-                    <h2>Kedves " . htmlspecialchars($studentName ?: 'Résztvevő') . "!</h2>
-                    <p>Köszönjük, hogy regisztráltál a Junior Akadémia Viadalra!</p>
-                    <p><strong>Regisztrációs adataid:</strong></p>
-                    <ul>
-                        <li><strong>Iskola:</strong> " . htmlspecialchars($school) . "</li>
-                        <li><strong>Email cím:</strong> " . htmlspecialchars($toEmail) . "</li>
-                    </ul>
-                    <p>A viadal részleteiről és a további információkról később értesíteni fogunk.</p>
-                    <p>Ha bármilyen kérdésed van, keress minket a " . SENDER_EMAIL . " email címen.</p>
-                    <p>Üdvözlettel,<br>A Junior Akadémia csapata</p>
-                </div>
-                <div class='footer'>
-                    <p>Ez egy automatikus üzenet, kérjük ne válaszolj rá.</p>
-                    <p>© " . date('Y') . " Junior Akadémia. Minden jog fenntartva.</p>
-                </div>
+          <div class="wrapper">
+            <div class="header">
+              <h1>Junior Akadémia Viadala</h1>
             </div>
+            <div class="content">
+              <p>Köszönjük a regisztrációt.</p>
+              <p><strong>Iskola:</strong> ' . htmlspecialchars($school, ENT_QUOTES, 'UTF-8') . '</p>
+              <p><strong>Email cím:</strong> ' . htmlspecialchars($toEmail, ENT_QUOTES, 'UTF-8') . '</p>
+              <p>A szerkesztéshez később ugyanezzel az email címmel és jelszóval tud bejelentkezni.</p>
+            </div>
+          </div>
         </body>
-        </html>
-        ";
+        </html>';
 
-        $mail->Body = $htmlBody;
+        $mail->AltBody =
+            "Köszönjük a regisztrációt a Junior Akadémia Viadalára.\n\n" .
+            "Iskola: {$school}\n" .
+            "Email cím: {$toEmail}\n\n" .
+            "A szerkesztéshez később ugyanezzel az email címmel és jelszóval tud bejelentkezni.";
 
-        // Alternatív szöveges tartalom
-        $textBody = "Kedves " . ($studentName ?: 'Résztvevő') . "!\n\n" .
-            "Köszönjük, hogy regisztráltál a Junior Akadémia Viadalra!\n\n" .
-            "Regisztrációs adataid:\n" .
-            "- Iskola: " . $school . "\n" .
-            "- Email cím: " . $toEmail . "\n\n" .
-            "A viadal részleteiről és a további információkról később értesíteni fogunk.\n\n" .
-            "Ha bármilyen kérdésed van, keress minket a " . SENDER_EMAIL . " email címen.\n\n" .
-            "Üdvözlettel,\n" .
-            "A Junior Akadémia csapata\n\n" .
-            "© " . date('Y') . " Junior Akadémia. Minden jog fenntartva.";
-
-        $mail->AltBody = $textBody;
-
-        // Email küldése
         $mail->send();
         return true;
-    } catch (Exception $e) {
-        // Naplózzuk a hibát, de ne akadályozzuk meg a regisztrációt
-        error_log("Email küldési hiba: " . $mail->ErrorInfo);
+    } catch (Exception $exception) {
+        error_log('Email sending failed: ' . $exception->getMessage());
         return false;
     }
 }
 
-try {
-    // DIÁK BEJELENTKEZÉS ÉS ADATOK LEKÉRÉSE
-    if ($action === 'login_student') {
-        $stmt = $db->prepare("SELECT * FROM students WHERE email = ?");
-        $stmt->execute([$data['email']]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+function handle_login(PDO $db, array $data): void
+{
+    $payload = validate_login_payload($data);
 
-        if ($user && password_verify($data['password'], $user['password'])) {
-            unset($user['password']); // Biztonság: jelszót nem küldünk vissza
-            echo json_encode(["success" => true, "user" => $user]);
-        } else {
-            echo json_encode(["success" => false, "message" => "Hibás email cím vagy jelszó!"]);
-        }
+    $statement = $db->prepare(
+        'SELECT id, school, email, password, s1_name, s1_email, s2_name, s2_email, s3_name, s3_email, created_at
+         FROM students
+         WHERE email = :email
+         LIMIT 1'
+    );
+    $statement->execute([':email' => $payload['email']]);
+    $student = $statement->fetch();
+
+    if (!$student || !password_verify($payload['password'], $student['password'])) {
+        json_response(['success' => false, 'message' => 'Hibás email cím vagy jelszó.'], 401);
     }
 
-    // DIÁK REGISZTRÁCIÓ
-    elseif ($action === 'register_student') {
-        // Ellenőrizzük, hogy az email már létezik-e
-        $stmt = $db->prepare("SELECT COUNT(*) FROM students WHERE email = ?");
-        $stmt->execute([$data['email']]);
-        $exists = $stmt->fetchColumn();
-
-        if ($exists > 0) {
-            echo json_encode(["success" => false, "message" => "Ez az email cím már regisztrálva van!"]);
-            return;
-        }
-
-        // Jelszó hash-elése
-        $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
-
-        // Új diák beszúrása
-        $stmt = $db->prepare("INSERT INTO students (school, email, password, s1_name, s1_email, s2_name, s2_email, s3_name, s3_email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->execute([
-            $data['school'],
-            $data['email'],
-            $hashedPassword,
-            $data['s1_n'] ?? '',
-            $data['s1_e'] ?? '',
-            $data['s2_n'] ?? '',
-            $data['s2_e'] ?? '',
-            $data['s3_n'] ?? '',
-            $data['s3_e'] ?? ''
+    if (password_needs_rehash($student['password'], PASSWORD_DEFAULT)) {
+        $update = $db->prepare('UPDATE students SET password = :password WHERE id = :id');
+        $update->execute([
+            ':password' => password_hash($payload['password'], PASSWORD_DEFAULT),
+            ':id' => $student['id'],
         ]);
-
-        // Sikeres regisztráció után email küldése
-        $emailSent = sendConfirmationEmail($data['email'], $data['school'], '');
-
-        $response = [
-            "success" => true,
-            "message" => "Sikeres regisztráció!"
-        ];
-
-        if (!$emailSent) {
-            $response["email_sent"] = false;
-            $response["email_message"] = "A regisztráció sikeres, de a visszaigazoló emailt nem sikerült elküldeni.";
-        } else {
-            $response["email_sent"] = true;
-            $response["email_message"] = "Visszaigazoló email elküldve.";
-        }
-
-        echo json_encode($response);
     }
 
-    // DIÁK ADATOK FRISSÍTÉSE
-    elseif ($action === 'update_student') {
-        // Újra ellenőrizzük a jelszót a módosítás előtt a biztonság kedvéért
-        $stmt = $db->prepare("SELECT password FROM students WHERE email = ?");
-        $stmt->execute([$data['email']]);
-        $passHash = $stmt->fetchColumn();
+    json_response(['success' => true, 'user' => build_student_response($student)]);
+}
 
-        if ($passHash && password_verify($data['password'], $passHash)) {
-            $stmt = $db->prepare("UPDATE students SET s1_name=?, s1_email=?, s2_name=?, s2_email=?, s3_name=?, s3_email=? WHERE email=?");
-            $stmt->execute([
-                $data['s1_n'],
-                $data['s1_e'],
-                $data['s2_n'],
-                $data['s2_e'],
-                $data['s3_n'],
-                $data['s3_e'],
-                $data['email']
-            ]);
-            echo json_encode(["success" => true]);
-        } else {
-            echo json_encode(["success" => false, "message" => "Biztonsági hiba: Érvénytelen munkamenet."]);
-        }
+function handle_registration(PDO $db, array $data, array $smtpConfig): void
+{
+    $payload = validate_registration_payload($data);
+
+    $existsStatement = $db->prepare('SELECT COUNT(*) FROM students WHERE email = :email');
+    $existsStatement->execute([':email' => $payload['email']]);
+    if ((int)$existsStatement->fetchColumn() > 0) {
+        json_response(['success' => false, 'message' => 'Ez az email cím már regisztrálva van.'], 409);
     }
-} catch (Exception $e) {
-    http_response_code(500);
-    echo json_encode(["success" => false, "message" => $e->getMessage()]);
+
+    $insert = $db->prepare(
+        'INSERT INTO students (
+            school, email, password, s1_name, s1_email, s2_name, s2_email, s3_name, s3_email
+        ) VALUES (
+            :school, :email, :password, :s1_name, :s1_email, :s2_name, :s2_email, :s3_name, :s3_email
+        )'
+    );
+
+    $db->beginTransaction();
+    try {
+        $insert->execute([
+            ':school' => $payload['school'],
+            ':email' => $payload['email'],
+            ':password' => password_hash($payload['password'], PASSWORD_DEFAULT),
+            ':s1_name' => $payload['s1_n'],
+            ':s1_email' => $payload['s1_e'],
+            ':s2_name' => $payload['s2_n'],
+            ':s2_email' => $payload['s2_e'],
+            ':s3_name' => $payload['s3_n'],
+            ':s3_email' => $payload['s3_e'],
+        ]);
+        $db->commit();
+    } catch (Throwable $throwable) {
+        if ($db->inTransaction()) {
+            $db->rollBack();
+        }
+        throw $throwable;
+    }
+
+    $emailSent = send_confirmation_email($smtpConfig, $payload['email'], $payload['school']);
+
+    json_response([
+        'success' => true,
+        'message' => 'Sikeres regisztráció.',
+        'email_sent' => $emailSent,
+        'email_message' => $emailSent
+            ? 'Visszaigazoló email elküldve.'
+            : 'A regisztráció sikeres, de a visszaigazoló emailt nem sikerült elküldeni.',
+    ]);
+}
+
+function handle_update(PDO $db, array $data): void
+{
+    $payload = validate_registration_payload($data);
+
+    $statement = $db->prepare('SELECT id, password FROM students WHERE email = :email LIMIT 1');
+    $statement->execute([':email' => $payload['email']]);
+    $student = $statement->fetch();
+
+    if (!$student || !password_verify($payload['password'], $student['password'])) {
+        json_response(['success' => false, 'message' => 'Hibás email cím vagy jelszó.'], 401);
+    }
+
+    $update = $db->prepare(
+        'UPDATE students
+         SET school = :school,
+             s1_name = :s1_name,
+             s1_email = :s1_email,
+             s2_name = :s2_name,
+             s2_email = :s2_email,
+             s3_name = :s3_name,
+             s3_email = :s3_email
+         WHERE id = :id'
+    );
+
+    $update->execute([
+        ':school' => $payload['school'],
+        ':s1_name' => $payload['s1_n'],
+        ':s1_email' => $payload['s1_e'],
+        ':s2_name' => $payload['s2_n'],
+        ':s2_email' => $payload['s2_e'],
+        ':s3_name' => $payload['s3_n'],
+        ':s3_email' => $payload['s3_e'],
+        ':id' => $student['id'],
+    ]);
+
+    json_response(['success' => true, 'message' => 'Az adatok sikeresen frissítve lettek.']);
+}
+
+try {
+    $db = create_database_connection();
+    $smtpConfig = get_smtp_config();
+    $action = clean_text($_GET['action'] ?? '');
+    $data = get_request_data();
+
+    if ($action === '') {
+        json_response(['success' => false, 'message' => 'Hiányzó művelet.'], 400);
+    }
+
+    if ($action === 'login_student') {
+        handle_login($db, $data);
+    }
+
+    if ($action === 'register_student') {
+        handle_registration($db, $data, $smtpConfig);
+    }
+
+    if ($action === 'update_student') {
+        handle_update($db, $data);
+    }
+
+    json_response(['success' => false, 'message' => 'Ismeretlen művelet.'], 404);
+} catch (Throwable $throwable) {
+    error_log('Handler error: ' . $throwable->getMessage());
+    json_response(['success' => false, 'message' => 'Szerveroldali hiba történt.'], 500);
 }

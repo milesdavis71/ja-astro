@@ -1,7 +1,6 @@
 ---
 import DefaultLayout from '../layouts/DefaultLayout.astro'
 
-// Az iskolák listája - tetszőlegesen bővíthető
 const schools = [
   'Budapesti Fazekas Mihály Gyakorló Általános Iskola és Gimnázium',
   'Szegedi Radnóti Miklós Kísérleti Gimnázium',
@@ -26,7 +25,7 @@ const schools = [
             class="w-full rounded-md border-2 p-3 outline-none focus:border-blue-500"
           >
             <option value="">-- Válassz a listából --</option>
-            {schools.map((s) => <option value={s}>{s}</option>)}
+            {schools.map((school) => <option value={school}>{school}</option>)}
             <option value="none">Nincs a listában</option>
           </select>
         </div>
@@ -58,13 +57,7 @@ const schools = [
             <div class="rounded border bg-gray-50 p-4">
               <h3 class="mb-2 font-bold text-blue-600">1. Diáktárs</h3>
               <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
-                <input
-                  type="text"
-                  name="s1_n"
-                  placeholder="Név"
-                  required
-                  class="rounded border p-2"
-                />
+                <input type="text" name="s1_n" placeholder="Név" required class="rounded border p-2" />
                 <input
                   type="email"
                   name="s1_e"
@@ -78,13 +71,7 @@ const schools = [
             <div class="rounded border bg-gray-50 p-4">
               <h3 class="mb-2 font-bold text-blue-600">2. Diáktárs</h3>
               <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
-                <input
-                  type="text"
-                  name="s2_n"
-                  placeholder="Név"
-                  required
-                  class="rounded border p-2"
-                />
+                <input type="text" name="s2_n" placeholder="Név" required class="rounded border p-2" />
                 <input
                   type="email"
                   name="s2_e"
@@ -98,13 +85,7 @@ const schools = [
             <div class="rounded border bg-gray-50 p-4">
               <h3 class="mb-2 font-bold text-blue-600">3. Diáktárs</h3>
               <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
-                <input
-                  type="text"
-                  name="s3_n"
-                  placeholder="Név"
-                  required
-                  class="rounded border p-2"
-                />
+                <input type="text" name="s3_n" placeholder="Név" required class="rounded border p-2" />
                 <input
                   type="email"
                   name="s3_e"
@@ -138,13 +119,21 @@ const schools = [
 </DefaultLayout>
 
 <script>
-  const form = document.getElementById('registration-form') as HTMLFormElement
-  const schoolSelect = document.getElementById('school-select') as HTMLSelectElement
+  const form = document.getElementById('registration-form') as HTMLFormElement | null
+  const schoolSelect = document.getElementById('school-select') as HTMLSelectElement | null
   const schoolError = document.getElementById('school-error')
   const formContent = document.getElementById('form-content')
   const successMsg = document.getElementById('success-msg')
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null
 
-  // Iskolaválasztó logika
+  const readJsonResponse = async (response: Response) => {
+    const payload = await response.json().catch(() => null)
+    if (!response.ok) {
+      throw new Error(payload?.message || `HTTP ${response.status}`)
+    }
+    return payload
+  }
+
   schoolSelect?.addEventListener('change', () => {
     if (schoolSelect.value === 'none') {
       schoolError?.classList.remove('hidden')
@@ -155,38 +144,46 @@ const schools = [
     }
   })
 
-  // Beküldés a PHP-nek
-  form?.addEventListener('submit', async (e) => {
-    e.preventDefault()
-    const btn = document.getElementById('submit-btn') as HTMLButtonElement
-    btn.disabled = true
-    btn.innerText = 'Küldés...'
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault()
+    if (!form || !schoolSelect || !submitBtn) return
+
+    if (schoolSelect.value === 'none') {
+      schoolError?.classList.remove('hidden')
+      formContent?.classList.add('hidden')
+      return
+    }
 
     const formData = new FormData(form)
-    const data = Object.fromEntries(formData)
+    const payload = Object.fromEntries(formData)
+    const originalLabel = submitBtn.innerText
+
+    submitBtn.disabled = true
+    submitBtn.innerText = 'Küldés...'
 
     try {
-      // Itt hívjuk a PHP-t
-      const res = await fetch('/api/handler.php?action=register_student', {
+      const response = await fetch('/api/handler.php?action=register_student', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload),
       })
 
-      const result = await res.json()
-
-      if (result.success) {
-        form.classList.add('hidden')
-        successMsg?.classList.remove('hidden')
-      } else {
-        alert('Hiba: ' + result.message)
-        btn.disabled = false
-        btn.innerText = 'Jelentkezés beküldése'
+      const result = await readJsonResponse(response)
+      if (!result?.success) {
+        throw new Error(result?.message || 'A regisztráció nem sikerült.')
       }
-    } catch (err) {
-      alert('Szerver hiba történt. Ellenőrizd a PHP futását!')
-      btn.disabled = false
-      btn.innerText = 'Jelentkezés beküldése'
+
+      form.classList.add('hidden')
+      successMsg?.classList.remove('hidden')
+
+      if (!result.email_sent && result.email_message) {
+        alert(result.email_message)
+      }
+    } catch (error: any) {
+      alert('A regisztráció nem sikerült.\n\n' + (error?.message || 'Ismeretlen hiba'))
+    } finally {
+      submitBtn.disabled = false
+      submitBtn.innerText = originalLabel
     }
   })
 </script>
