@@ -1,5 +1,5 @@
 ---
-import DefaultLayout from '../layouts/DefaultLayout.astro'
+import TwoColumnLayout from '../layouts/TwoColumnLayout.astro'
 import NewsCards from '../components/NewsCards.astro'
 import HighlightedActivities from '../components/HighlightedActivities.astro'
 
@@ -7,7 +7,7 @@ export const frontmatter = {
   title: '',
   metaTitle: 'Főoldal',
   showPageTitle: false,
-  contentClass: 'pt-0',
+  contentClass: 'pt-0 home-main-content',
 }
 
 const postModules = import.meta.glob('../content/news/*.mdx', { eager: true })
@@ -39,15 +39,16 @@ const featuredNews = newsPosts
   .slice(0, 3)
 ---
 
-<DefaultLayout {frontmatter}>
+<TwoColumnLayout {frontmatter}>
   <HighlightedActivities featured onlyFirst />
 
+  <HighlightedActivities skipFirst flush columns="grid-cols-1 gap-4 md:grid-cols-2" />
+
   <section id="news" class="bg-gray-50 py-4">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-7xl">
       <h2 id="hirek" class="text-center">Hírek</h2>
       <NewsCards items={featuredNews} />
     </div>
   </section>
 
-  <HighlightedActivities slot="rightSidebar" sidebar skipFirst />
-</DefaultLayout>
+</TwoColumnLayout>

@@ -109,6 +109,10 @@ h1.page-title-bar,
   margin: 1rem;
 }
 
+.main-content-column.home-main-content {
+  margin-top: 0;
+}
+
 @media (min-width: 640px) {
   .main-content-column {
     margin: 1.5rem;
