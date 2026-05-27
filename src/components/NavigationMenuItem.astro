@@ -123,13 +123,17 @@ const idleRowClasses = 'text-gray-700 hover:bg-gray-50 hover:text-blue-600'
                 {label}
               </a>
             ) : (
-              <span
-                class={`min-w-0 flex-1 ${sharedRowClasses} ${
+              <button
+                type="button"
+                class={`min-w-0 flex-1 text-left ${sharedRowClasses} ${
                   isInActiveTrail ? trailRowClasses : 'text-gray-800'
                 }`}
+                @click="open = !open"
+                :aria-expanded="open.toString()"
+                aria-label={`${label} submenu`}
               >
                 {label}
-              </span>
+              </button>
             )
           }
 
