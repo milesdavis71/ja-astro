@@ -56,7 +56,7 @@ const headerLinks = [
         </form>
         <a
           href="/kapcsolat"
-          class="rounded-md bg-white px-4 py-2 text-sm font-semibold text-blue-900 shadow-sm transition hover:bg-white/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          class="rounded-md bg-[var(--button-color)] px-4 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-white/30 transition hover:bg-[var(--button-hover-color)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
         >
           Kapcsolat
         </a>
@@ -65,7 +65,7 @@ const headerLinks = [
       <div class="ml-auto flex items-center gap-2 lg:hidden">
         <a
           href="/kereses"
-          class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/30 text-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/30 bg-[var(--button-color)] text-white hover:bg-[var(--button-hover-color)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           aria-label="Keresés"
         >
           <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -76,7 +76,7 @@ const headerLinks = [
         {showToc && (
           <button
             type="button"
-            class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/30 text-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/30 bg-[var(--button-color)] text-white hover:bg-[var(--button-hover-color)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             aria-controls="mobile-toc"
             :aria-expanded="tocOpen"
             @click="tocOpen = true; sidebarOpen = false"
@@ -90,7 +90,7 @@ const headerLinks = [
 
         <button
           type="button"
-          class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/30 text-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/30 bg-[var(--button-color)] text-white hover:bg-[var(--button-hover-color)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           aria-controls="mobile-menu"
           :aria-expanded="sidebarOpen"
           @click="sidebarOpen = true; tocOpen = false"

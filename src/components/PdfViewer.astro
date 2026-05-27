@@ -22,14 +22,14 @@ const { pdfUrl, debug = import.meta.env.DEV } = Astro.props
         <button
           @click="prevPage()"
           :disabled="pageNum <= 1"
-          class="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-400"
+          class="rounded bg-[var(--button-color)] px-4 py-2 text-white hover:bg-[var(--button-hover-color)] disabled:cursor-not-allowed disabled:bg-gray-400"
         >
           ◀ Előző
         </button>
         <button
           @click="nextPage()"
           :disabled="pageNum >= pageCount"
-          class="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-400"
+          class="rounded bg-[var(--button-color)] px-4 py-2 text-white hover:bg-[var(--button-hover-color)] disabled:cursor-not-allowed disabled:bg-gray-400"
         >
           Következő ▶
         </button>
@@ -39,19 +39,19 @@ const { pdfUrl, debug = import.meta.env.DEV } = Astro.props
       <div class="flex items-center gap-2">
         <button
           @click="zoomOut()"
-          class="rounded bg-gray-200 px-4 py-2 hover:bg-gray-300"
+          class="rounded bg-[var(--button-color)] px-4 py-2 text-white hover:bg-[var(--button-hover-color)]"
           title="Kicsinyítés"
         >
           −
         </button>
         <button
           @click="zoomIn()"
-          class="rounded bg-gray-200 px-4 py-2 hover:bg-gray-300"
+          class="rounded bg-[var(--button-color)] px-4 py-2 text-white hover:bg-[var(--button-hover-color)]"
           title="Nagyítás"
         >
           +
         </button>
-        <button @click="fitToPage()" class="rounded bg-gray-200 px-4 py-2 hover:bg-gray-300">
+        <button @click="fitToPage()" class="rounded bg-[var(--button-color)] px-4 py-2 text-white hover:bg-[var(--button-hover-color)]">
           Laphoz igazít
         </button>
       </div>

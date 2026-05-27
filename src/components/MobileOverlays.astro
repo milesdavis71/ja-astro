@@ -36,7 +36,7 @@ const { showToc } = Astro.props;
     <p class="text-base font-semibold text-gray-900">Navigáció</p>
     <button
       type="button"
-      class="text-sm font-medium text-gray-600 hover:text-gray-900"
+      class="rounded-md bg-[var(--button-color)] px-3 py-2 text-sm font-medium text-white transition hover:bg-[var(--button-hover-color)]"
       @click="sidebarOpen = false"
     >
       Bezár
@@ -67,7 +67,7 @@ const { showToc } = Astro.props;
       <p class="text-base font-semibold text-gray-900">Tartalomjegyzék</p>
       <button
         type="button"
-        class="text-sm font-medium text-gray-600 hover:text-gray-900"
+        class="rounded-md bg-[var(--button-color)] px-3 py-2 text-sm font-medium text-white transition hover:bg-[var(--button-hover-color)]"
         @click="tocOpen = false"
       >
         Bezár

@@ -21,6 +21,8 @@ interface Props {
   skipFirst?: boolean
   columns?: string
   flush?: boolean
+  hideImage?: boolean
+  compact?: boolean
 }
 
 const {
@@ -30,6 +32,8 @@ const {
   skipFirst = false,
   columns,
   flush = false,
+  hideImage = false,
+  compact = false,
 } = Astro.props
 
 const dataSource = Array.isArray(highlightedActivitiesData)
@@ -62,17 +66,19 @@ const frameClasses = sidebar
 const gridClasses = sidebar
   ? 'grid grid-cols-1 gap-4'
   : `grid ${columns ?? 'grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3'}`
+const compactClass = compact ? ' highlighted-activities--compact' : ''
 ---
 
 {
   highlightedActivities.length > 0 &&
     (featured ? (
-      <section id="kiemelt-tevekenyseg-kiemelt" class="bg-white py-4">
+      <section id="kiemelt-tevekenyseg-kiemelt" class="bg-white py-2">
         <div class={frameClasses}>
           {highlightedActivities.map((activity) => (
             <article class="featured-activity">
-              <div class="featured-activity__grid">
-                <div class="featured-activity__media">
+              <div class={`featured-activity__grid ${hideImage ? 'featured-activity__grid--text-only' : ''}`}>
+                {!hideImage && (
+                  <div class="featured-activity__media">
                   {activity.image ? (
                     <div class="featured-activity__image-frame">
                       <img
@@ -87,7 +93,11 @@ const gridClasses = sidebar
                       Kép: <code>{'/public/images/kiemelt-tevekenysegek/'}</code>
                     </div>
                   )}
-                </div>
+                    <div class="featured-activity__cta featured-activity__cta--media">
+                      <Button link={activity.link} text={activity.ctaLabel} />
+                    </div>
+                  </div>
+                )}
 
                 <div class="featured-activity__content">
                   <h2 class="featured-activity__title">{activity.title}</h2>
@@ -95,9 +105,11 @@ const gridClasses = sidebar
                     <p class="featured-activity__description">{activity.description}</p>
                   )}
 
-                  <div class="featured-activity__cta">
-                    <Button link={activity.link} text={activity.ctaLabel} />
-                  </div>
+                  {hideImage && (
+                    <div class="featured-activity__cta">
+                      <Button link={activity.link} text={activity.ctaLabel} />
+                    </div>
+                  )}
                 </div>
               </div>
             </article>
@@ -105,7 +117,7 @@ const gridClasses = sidebar
         </div>
       </section>
     ) : (
-      <section id="kiemelt-tevekenysegek" class={sectionClasses}>
+      <section id="kiemelt-tevekenysegek" class={`${sectionClasses}${compactClass}`}>
         <div class={outerClasses}>
           <div class={frameClasses}>
             <div class={`mb-5 ${sidebar ? '' : 'text-center'}`}>
@@ -207,9 +219,16 @@ const gridClasses = sidebar
   .featured-activity__image {
     display: block;
     width: 100%;
-    aspect-ratio: 16 / 10;
     object-fit: cover;
     border-radius: 0.35rem;
+  }
+
+  .activity-card__image {
+    aspect-ratio: 16 / 10;
+  }
+
+  .featured-activity__image {
+    aspect-ratio: 16 / 9;
   }
 
   .activity-card__image-placeholder,
@@ -246,7 +265,7 @@ const gridClasses = sidebar
     font-size: 0.875rem;
     font-weight: 600;
     color: white;
-    background-color: var(--secondary-color);
+    background-color: var(--button-color);
     transition:
       background-color 150ms ease,
       box-shadow 150ms ease;
@@ -254,12 +273,16 @@ const gridClasses = sidebar
 
   .group:hover .activity-card__cta,
   .group:focus-visible .activity-card__cta {
-    background-color: var(--primary-color);
+    background-color: var(--button-hover-color);
   }
 
   .featured-activity__grid {
     display: grid;
     gap: 1rem;
+  }
+
+  .featured-activity__grid--text-only {
+    display: block;
   }
 
   .featured-activity__content {
@@ -290,19 +313,86 @@ const gridClasses = sidebar
     text-align: center;
   }
 
+  .featured-activity__cta--media {
+    margin-top: 0.75rem;
+  }
+
+  .featured-activity__grid--text-only .featured-activity__cta {
+    text-align: left;
+  }
+
   .featured-activity__cta :global(.btn) {
-    background-color: var(--secondary-color);
+    background-color: var(--button-color);
     color: white !important;
   }
 
   .featured-activity__cta :global(.btn:hover) {
-    background-color: var(--primary-color);
+    background-color: var(--button-hover-color);
   }
 
   @media (min-width: 768px) {
     .featured-activity__grid {
       grid-template-columns: 2fr 3fr;
       align-items: start;
+    }
+
+    .featured-activity__grid--text-only {
+      display: block;
+    }
+
+    .highlighted-activities--compact .activity-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(7rem, 0.9fr);
+      grid-template-rows: auto 1fr;
+      min-height: 8.5rem;
+    }
+
+    .highlighted-activities--compact .activity-card__top {
+      grid-column: 1;
+      grid-row: 1;
+      padding: 0.55rem 0.7rem;
+      border-right: 1px solid rgb(from var(--primary-color) r g b / 12%);
+      border-bottom: 0;
+    }
+
+    .highlighted-activities--compact .activity-card__title {
+      font-size: 0.86rem;
+      line-height: 1.3;
+    }
+
+    .highlighted-activities--compact .activity-card__body {
+      display: contents;
+    }
+
+    .highlighted-activities--compact .activity-card__image-frame {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      height: 100%;
+      min-height: 0;
+      border: 0;
+      border-left: 1px solid rgb(203 213 225);
+      border-radius: 0;
+      padding: 0;
+    }
+
+    .highlighted-activities--compact .activity-card__image {
+      height: 100%;
+      aspect-ratio: auto;
+      border-radius: 0;
+    }
+
+    .highlighted-activities--compact .activity-card__description {
+      display: none;
+    }
+
+    .highlighted-activities--compact .activity-card__cta {
+      grid-column: 1;
+      grid-row: 2;
+      align-self: end;
+      justify-self: start;
+      margin: 0.7rem;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.8rem;
     }
   }
 </style>

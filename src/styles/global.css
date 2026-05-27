@@ -83,11 +83,12 @@
   }
 
   .btn-secondary {
-    @apply bg-gray-200 text-gray-800;
+    background-color: var(--button-color);
+    color: white !important;
   }
 
   .btn-secondary:hover {
-    @apply bg-gray-300;
+    background-color: var(--button-hover-color);
   }
   /* --- END BUTTON STYLES --- */
 

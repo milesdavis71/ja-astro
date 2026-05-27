@@ -127,7 +127,7 @@ const defaultYear = years[0]?.year ?? '2024'
     <div class="flex flex-wrap items-center gap-2">
       <button
         type="button"
-        class="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-[var(--link-hover-color)] hover:text-[var(--link-hover-color)] disabled:cursor-not-allowed disabled:opacity-50"
+        class="rounded-lg border border-[var(--button-color)] bg-[var(--button-color)] px-4 py-2 text-sm font-medium text-white transition hover:border-[var(--button-hover-color)] hover:bg-[var(--button-hover-color)] disabled:cursor-not-allowed disabled:opacity-50"
         data-pagination-prev
       >
         Előző
@@ -137,7 +137,7 @@ const defaultYear = years[0]?.year ?? '2024'
 
       <button
         type="button"
-        class="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-[var(--link-hover-color)] hover:text-[var(--link-hover-color)] disabled:cursor-not-allowed disabled:opacity-50"
+        class="rounded-lg border border-[var(--button-color)] bg-[var(--button-color)] px-4 py-2 text-sm font-medium text-white transition hover:border-[var(--button-hover-color)] hover:bg-[var(--button-hover-color)] disabled:cursor-not-allowed disabled:opacity-50"
         data-pagination-next
       >
         Következő
@@ -213,8 +213,8 @@ const defaultYear = years[0]?.year ?? '2024'
         button.textContent = String(page)
         button.className =
           page === currentPage
-            ? 'rounded-lg border border-[var(--button-color)] bg-[var(--button-color)] px-4 py-2 text-sm font-semibold text-white'
-            : 'rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-[var(--link-hover-color)] hover:text-[var(--link-hover-color)]'
+            ? 'rounded-lg border border-[var(--button-color)] bg-[var(--button-color)] px-4 py-2 text-sm font-semibold text-white transition hover:border-[var(--button-hover-color)] hover:bg-[var(--button-hover-color)]'
+            : 'rounded-lg border border-[var(--button-color)] bg-[var(--button-color)] px-4 py-2 text-sm font-medium text-white transition hover:border-[var(--button-hover-color)] hover:bg-[var(--button-hover-color)]'
         button.setAttribute('aria-label', `${page}. oldal`)
         button.setAttribute('aria-current', page === currentPage ? 'page' : 'false')
         button.addEventListener('click', () => syncView(year, page))
@@ -243,8 +243,8 @@ const defaultYear = years[0]?.year ?? '2024'
         const isActive = tab.getAttribute('data-year-tab') === year
         tab.setAttribute('aria-selected', isActive ? 'true' : 'false')
         tab.className = isActive
-          ? 'rounded-full border border-[var(--button-color)] bg-[var(--button-color)] px-5 py-2 text-sm font-semibold text-white transition'
-          : 'rounded-full border border-gray-300 px-5 py-2 text-sm font-semibold text-gray-700 transition hover:border-[var(--link-hover-color)] hover:text-[var(--link-hover-color)]'
+          ? 'rounded-full border border-[var(--button-color)] bg-[var(--button-color)] px-5 py-2 text-sm font-semibold text-white transition hover:border-[var(--button-hover-color)] hover:bg-[var(--button-hover-color)]'
+          : 'rounded-full border border-[var(--button-color)] bg-[var(--button-color)] px-5 py-2 text-sm font-semibold text-white transition hover:border-[var(--button-hover-color)] hover:bg-[var(--button-hover-color)]'
       })
 
       if (select instanceof HTMLSelectElement) {
