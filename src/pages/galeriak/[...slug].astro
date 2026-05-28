@@ -1,5 +1,6 @@
 ---
 import GalleryPageGrid from '../../components/GalleryPageGrid.astro'
+import GroupedGalleryPageGrid from '../../components/GroupedGalleryPageGrid.astro'
 import DefaultLayout from '../../layouts/DefaultLayout.astro'
 import {
   getGalleryCatalogItems,
@@ -32,16 +33,24 @@ const frontmatter = {
   description: `${item.rootLabel} fotóalbum: ${pageTitle}.`,
   sidebarNewsCount: 0,
 }
+
+const commonGalleryProps = {
+  title: eventTitle,
+  photographer: 'SZTE Junior Akadémia',
+  galleryFolder: item.folder,
+  backToEventUrl: getGalleryCategoryBackLink(item),
+  backToEventLabel: `Vissza ide: ${item.rootLabel}`,
+  backToGalleriesUrl: '/galeriak/fotoalbumok',
+  backToGalleriesLabel: 'Vissza a galériákhoz',
+}
 ---
 
 <DefaultLayout {frontmatter}>
-  <GalleryPageGrid
-    title={eventTitle}
-    photographer="SZTE Junior Akadémia"
-    galleryFolder={item.folder}
-    backToEventUrl={getGalleryCategoryBackLink(item)}
-    backToEventLabel={`Vissza ide: ${item.rootLabel}`}
-    backToGalleriesUrl="/galeriak/fotoalbumok"
-    backToGalleriesLabel="Vissza a galériákhoz"
-  />
+  {
+    item.isGrouped ? (
+      <GroupedGalleryPageGrid {...commonGalleryProps} />
+    ) : (
+      <GalleryPageGrid {...commonGalleryProps} />
+    )
+  }
 </DefaultLayout>

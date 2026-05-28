@@ -1,6 +1,11 @@
 import { readdir } from 'node:fs/promises'
 import path from 'node:path'
 import { getGalleryImages } from './gallery'
+import {
+  getGroupedGalleryCover,
+  getGroupedGalleryImageCount,
+  isGroupedGalleryFolder,
+} from './groupedGallery'
 
 export type GalleryCatalogItem = {
   folder: string
@@ -17,6 +22,7 @@ export type GalleryCatalogItem = {
   seasonWeight: number
   imageCount: number
   coverImage: string
+  isGrouped: boolean
 }
 
 export const GALLERY_ROOT_CONFIG: Record<
@@ -212,6 +218,12 @@ function getSectionLabel(rootKey: string, segments: string[], slug: string) {
 
 async function collectGalleryFolders(currentDir: string, relativeSegments: string[] = []): Promise<string[]> {
   const entries = await readdir(currentDir, { withFileTypes: true })
+  const folder = '/' + path.posix.join('images', 'galeriak', ...relativeSegments)
+
+  if (isGroupedGalleryFolder(folder)) {
+    return [folder]
+  }
+
   const hasFull = entries.some((entry) => entry.isDirectory() && entry.name === 'full')
   const hasThumb = entries.some((entry) => entry.isDirectory() && entry.name === 'thumb')
 
@@ -233,8 +245,11 @@ export async function getGalleryCatalogItems(): Promise<GalleryCatalogItem[]> {
   const allItems: GalleryCatalogItem[] = []
 
   for (const folder of allFolders) {
-    const images = await getGalleryImages(folder)
-    if (images.length === 0) continue
+    const isGrouped = isGroupedGalleryFolder(folder)
+    const images = isGrouped ? [] : await getGalleryImages(folder)
+    const groupedImageCount = isGrouped ? await getGroupedGalleryImageCount(folder) : 0
+    const imageCount = isGrouped ? groupedImageCount : images.length
+    if (imageCount === 0) continue
 
     const relativePath = folder.replace('/images/galeriak/', '')
     const segments = relativePath.split('/')
@@ -257,8 +272,9 @@ export async function getGalleryCatalogItems(): Promise<GalleryCatalogItem[]> {
       sectionLabel: getSectionLabel(rootKey, segments, slug),
       year: extractYear(relativePath),
       seasonWeight: extractSeasonWeight(relativePath),
-      imageCount: images.length,
-      coverImage: images[0].thumb || images[0].src,
+      imageCount,
+      coverImage: isGrouped ? await getGroupedGalleryCover(folder) : images[0].thumb || images[0].src,
+      isGrouped,
     })
   }
 

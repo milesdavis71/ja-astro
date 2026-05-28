@@ -4,6 +4,7 @@ import path from 'node:path'
 export type GalleryImage = {
   src: string
   thumb?: string
+  cover?: string
   alt?: string
 }
 
@@ -33,7 +34,7 @@ function buildAlt(index: number) {
   return `Galéria kép ${index + 1}`
 }
 
-function findThumbName(file: string, availableFiles: Set<string>) {
+function findVariantName(file: string, availableFiles: Set<string>) {
   const extension = path.extname(file)
   const name = path.basename(file, extension)
   const candidates = [
@@ -55,6 +56,12 @@ function findThumbName(file: string, availableFiles: Set<string>) {
   return candidates.find((candidate) => availableFiles.has(candidate))
 }
 
+function findCoverName(files: string[]) {
+  return files
+    .filter(isAllowedImage)
+    .find((file) => path.basename(file, path.extname(file)).toLowerCase().endsWith('_cover'))
+}
+
 export async function getGalleryImages(folder: string): Promise<GalleryImage[]> {
   if (!isGalleryFolder(folder)) return []
 
@@ -64,22 +71,25 @@ export async function getGalleryImages(folder: string): Promise<GalleryImage[]> 
 
   let fullFiles: string[] = []
   let thumbFiles: string[] = []
+  let rootFiles: string[] = []
 
   try {
-    ;[fullFiles, thumbFiles] = await Promise.all([readdir(fullPath), readdir(thumbPath)])
+    ;[fullFiles, thumbFiles, rootFiles] = await Promise.all([readdir(fullPath), readdir(thumbPath), readdir(galleryRoot)])
   } catch {
     return []
   }
 
   const thumbSet = new Set(thumbFiles.filter(isAllowedImage))
+  const coverFile = findCoverName(rootFiles)
   const sortedFiles = fullFiles.filter(isAllowedImage).sort((a, b) => a.localeCompare(b, 'hu', { numeric: true }))
 
   return sortedFiles.map((file, index) => {
-    const thumbFile = findThumbName(file, thumbSet)
+    const thumbFile = findVariantName(file, thumbSet)
 
     return {
       src: `${folder}/full/${file}`,
       thumb: thumbFile ? `${folder}/thumb/${thumbFile}` : undefined,
+      cover: index === 0 && coverFile ? `${folder}/${coverFile}` : undefined,
       alt: buildAlt(index),
     }
   })
