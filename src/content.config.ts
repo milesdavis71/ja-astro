@@ -11,6 +11,7 @@ const news = defineCollection({
     excerpt: z.string(),
     lead: z.string(),
     image: z.string(),
+    thumbnail: z.string().optional(),
     draft: z.boolean().optional(),
     galleryUrl: z.string().optional(),
     galleryFolder: z.string().optional(),
