@@ -56,8 +56,8 @@
           "type": "string"
         },
         {
-          "title": "Hírkártya képe",
-          "name": "image",
+          "title": "Hírkártya bélyegképe",
+          "name": "thumbnail",
           "type": "image",
           "isPreviewImage": true
         }

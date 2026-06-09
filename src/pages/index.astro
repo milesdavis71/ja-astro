@@ -31,7 +31,10 @@ const featuredNews = newsPosts
         ? new Date(post.frontmatter.date).toISOString().split('T')[0]
         : '2026-02-23',
       excerpt: post.frontmatter?.excerpt || '',
-      image: post.frontmatter?.image || '/images/ja-logo-magenta-blue-fekvo-for-dark-bg.svg',
+      image:
+        post.frontmatter?.thumbnail ||
+        post.frontmatter?.image ||
+        '/images/ja-logo-magenta-blue-fekvo-for-dark-bg.svg',
       category: 'Hír',
     }
   })
