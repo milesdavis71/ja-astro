@@ -46,11 +46,6 @@
           "default": false
         },
         {
-          "title": "id",
-          "name": "id",
-          "type": "number"
-        },
-        {
           "title": "excerpt",
           "name": "excerpt",
           "type": "string"
@@ -61,9 +56,10 @@
           "type": "string"
         },
         {
-          "title": "image",
+          "title": "Hírkártya képe",
           "name": "image",
-          "type": "image"
+          "type": "image",
+          "isPreviewImage": true
         }
       ]
     }
