@@ -114,9 +114,50 @@ h1.page-title-bar,
   margin-top: 0;
 }
 
-.centered-italic {
+figcaption,
+.prose figcaption {
+  display: block;
+  width: 100%;
+  margin: 0.5rem 0 1.5rem;
+  color: rgb(75 85 99);
   text-align: center;
+  font-size: 85%;
   font-style: italic;
+  line-height: 1.5;
+}
+
+blockquote,
+.prose blockquote {
+  margin: 1.5rem 0;
+  border: 0;
+  border-left: 15px solid rgb(209 213 219);
+  padding: 0.15rem 0 0.15rem 1.25rem;
+  color: rgb(8 35 116);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.0625rem;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.55;
+  quotes: none;
+}
+
+blockquote::before,
+blockquote::after,
+.prose blockquote::before,
+.prose blockquote::after {
+  content: none;
+}
+
+blockquote p,
+.prose blockquote p {
+  margin: 0;
+  color: inherit;
+  font: inherit;
+}
+
+blockquote > :last-child,
+.prose blockquote > :last-child {
+  margin-bottom: 0;
 }
 
 .prose ol {
@@ -133,6 +174,10 @@ h1.page-title-bar,
 
 .prose li {
   margin-block: 0.25em;
+}
+
+.news-content > hr:first-child {
+  display: none;
 }
 
 @media (min-width: 640px) {
